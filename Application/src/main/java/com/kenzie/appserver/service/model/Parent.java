@@ -11,20 +11,16 @@ public class Parent {
 
     // parent class to include children?
     private List<Child> children;
+    //doesnt like to store nonprimitive data types inside a list
+    // list of children ids (strings)
 
-    public Parent() {
-        children = new ArrayList<>();
-        //would this generate a unique parentId?
+
+    //public void addMyChild(Child child){children.add(child);}
+
+    public Parent( String username){
         this.parentId = UUID.randomUUID().toString();
-    }
-    public void addMyChild(Child child){
-        children.add(child);
-    }
-
-    public Parent(String parentId, String username){
-        this.parentId = parentId;
         this.username = username;
-        this.childTaskCompletedTask = new HashMap<>();
+        //need an id
     }
     // parent should be able to monitor a child's progress... to track and retrieve info about
     // the child's overall progress and completion of tasks
