@@ -15,12 +15,12 @@ public class TaskService {
     // maybe?
     private Parent parent;
     // maybe?
-    private TaDahTaskList taDahTaskList;
+    private Task task;
 
-    public TaskService(TaskRepository taskRepository, Parent parent, TaDahTaskList taDahTaskList) {
+    public TaskService(TaskRepository taskRepository, Parent parent, Task task) {
         this.taskRepository = taskRepository;
         this.parent = parent;
-        this.taDahTaskList = taDahTaskList;
+        this.task = task;
     }
 }
     // TaskService interacts with the model classes
