@@ -1,41 +1,56 @@
 package com.kenzie.appserver.service.model;
 
-public class Reward {
-    private String name;
-    private String description;
-    public Reward(String name, String description) {
-        this.name = name;
-        this.description = description;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class Rewards {
+    private List<String> rewards;
+    private List<String> stickers;
+    public Rewards() {
+        rewards = new ArrayList<>();
+        stickers = new ArrayList<>();
+        childsRewards();
+        childsStickers();
+
+        // can use Random to call random reward or sticker returned if we want
     }
-    public String getName() {
-        return name;
+    private void childsRewards() {
+        rewards.add("Pizza party");
+        rewards.add("$10 in cash");
+        rewards.add("Ice cream treat from any store");
+        rewards.add("Small toy from toy store");
+        rewards.add("Movie night with friends");
     }
-    public void setName(String name) {
-        this.name = name;
+    private void childsStickers() {
+        stickers.add("Heart");
+        stickers.add("smiley face");
+        stickers.add("zebra");
+        stickers.add("Thomas the Train");
+        stickers.add("Superhero");
     }
-    public String getDescription() {
-        return description;
+    public String getRewardForCompletedTask() {
+        Random random = new Random();
+        int randomIndex = random.nextInt(rewards.size());
+        return  rewards.get(randomIndex);
     }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public static void giveChildReward(Child child, Task task){
-        Reward reward = getRewardForCompletedTask(task);
-        if (reward != null) {
-            System.out.println("Awesome job," + child.getUsername() + "You earned a reward"
-                    + reward.getName());
-        } else {
-            System.out.println("No reward for this task");
+    public String getStickerForCompletedTask(){
+       Random random = new Random();
+       int randomIndex = random.nextInt(stickers.size());
+       return stickers.get(randomIndex);
         }
-    }
-    private static Reward getRewardForCompletedTask(Task task) {
-        if (task.getTaskId().equals("task1")) {
-            return new Reward("Puppy Sticker Pack", "A 10 pack of stickers from the Dollar Tree");
-        } else if
-        (task.getTaskId().equals("task2")) {
-            return new Reward("Train Sticker", "Get 5 train stickers from Mom");
+    private static Rewards getRewardForCompletedTask(Task task) {
+        if (task.isCompleted()) {
+            return new Rewards();
             }
             //if nothing
+            return null;
+        }
+        private static Rewards getStickerForCompletedTask(Task task){
+        if(task.isCompleted()){
+            return new Rewards();
+        }
+        //if nothing
             return null;
         }
     }
