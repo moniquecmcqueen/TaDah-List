@@ -1,6 +1,8 @@
 package com.kenzie.appserver.service.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Child {
@@ -18,22 +20,30 @@ public class Child {
         this.age = age;
         this.taskCompletedTask = new HashMap<>();
     }
-    public void markTaskAsCompleted(Task task){
-        taskCompletedTask.put(task.getTaskId(),true);
-}
+
+    public void markTaskAsCompleted(Task task) {
+        taskCompletedTask.put(task.getTaskId(), true);
+    }
+
     public void markTaskAsIncomplete(Task task) {
-        taskCompletedTask.put(task.getTaskId(),false);
-}
-   // if we want to get the number of completed task
+        taskCompletedTask.put(task.getTaskId(), false);
+    }
+
+    // if we want to get the number of completed task
     // we can delete if we want
     public int getTotalNumberOfCompletedTask() {
         int count = 0;
-        for(boolean isCompleted : taskCompletedTask.values()) {
+        for (boolean isCompleted : taskCompletedTask.values()) {
             if (isCompleted) {
                 count++;
             }
         }
         return count;
+    }
+
+    // gets tasks
+    public List<String> getTasks() {
+        return new ArrayList<>(taskCompletedTask.keySet());
     }
     // if we want to get the total number of task
 
@@ -72,5 +82,9 @@ public class Child {
 
     public void setTaskCompletedTask(Map<String, Boolean> taskCompletedTask) {
         this.taskCompletedTask = taskCompletedTask;
+    }
+
+    public void deleteTask(String taskId) {
+        taskCompletedTask.remove(taskId);
     }
 }
