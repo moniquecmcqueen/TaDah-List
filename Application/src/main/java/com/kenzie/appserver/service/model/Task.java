@@ -2,9 +2,11 @@ package com.kenzie.appserver.service.model;
 
 public class Task {
     private String taskId;
-    private String taskDescription;
+
+   // private String taskDescription; is a description section apart of the program design - rebecca
     private String taskTitle;
-    private boolean completed;
+    private boolean completed = Boolean.FALSE;
+    //set boolean to equal false by default - rebecca
 
     // constructor
     public Task( String taskId, String taskDescription, String taskTitle){
@@ -12,7 +14,7 @@ public class Task {
         this.taskDescription = taskDescription;
         this.taskTitle = taskTitle;
         // tasks are not completed by default because they are being made
-        this.completed = false;
+        this.completed = isCompleted();
     }
 
     public String getTaskId() {
