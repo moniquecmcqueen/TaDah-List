@@ -78,7 +78,7 @@ public class Parent {
         return new ArrayList<>();
         }
 
-    private Child getChildById(String childId){
+    public Child getChildById(String childId){
         for (Child child : children){
             if(child.getChildId().equals(childId)){
                 return child;

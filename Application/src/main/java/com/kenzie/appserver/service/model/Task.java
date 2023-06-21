@@ -4,7 +4,12 @@ public class Task {
     private String taskId;
     private String taskDescription;
     private String taskTitle;
-    private boolean completed;
+    private Boolean completed;
+
+    public Task(String taskDescription){
+        this.taskDescription = taskDescription;
+
+    }
 
     // constructor
     public Task( String taskId, String taskDescription, String taskTitle){
