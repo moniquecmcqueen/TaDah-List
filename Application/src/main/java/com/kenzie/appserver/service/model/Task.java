@@ -4,6 +4,7 @@ public class Task {
     private String taskId;
 
    // private String taskDescription; is a description section apart of the program design - rebecca
+    // I believe it is from our diagram, i think- monique
     private String taskTitle;
     private Boolean completed = Boolean.FALSE;
     //set boolean to equal false by default - rebecca
@@ -14,6 +15,8 @@ public class Task {
         //this.taskDescription = taskDescription;
         this.taskTitle = taskTitle;
         // tasks are not completed by default because they are being made-monique
+        // it should be set to false here, correct? instead of this.completed = completed
+        // this.completed = false,right?? or no?
         this.completed = completed;
         //updated constructor to take in changed to boolean default - rebecca
     }
