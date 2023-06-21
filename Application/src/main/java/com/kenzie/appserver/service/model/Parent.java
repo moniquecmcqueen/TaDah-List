@@ -1,9 +1,6 @@
 package com.kenzie.appserver.service.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Parent {
     // unique id and username to authenticate the parent
@@ -17,6 +14,8 @@ public class Parent {
 
     public Parent() {
         children = new ArrayList<>();
+        //would this generate a unique parentId?
+        this.parentId = UUID.randomUUID().toString();
     }
     public void addMyChild(Child child){
         children.add(child);

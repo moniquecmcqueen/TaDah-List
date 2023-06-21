@@ -1,9 +1,6 @@
 package com.kenzie.appserver.service.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Child {
     private String childId;
@@ -14,8 +11,14 @@ public class Child {
     // using Map to be able to retrieve task by Id and mark complete or incomplete
     private Map<String, Boolean> taskCompletedTask;
 
-    public Child(String childId, String username, int age) {
-        this.childId = childId;
+    public Child(){
+        //would this generate a unique childId
+        this.childId = UUID.randomUUID().toString();
+    }
+
+    public Child(String username, int age) {
+        //could we do this for the unique Ids?
+        this.childId = UUID.randomUUID().toString();
         this.username = username;
         this.age = age;
         this.taskCompletedTask = new HashMap<>();
