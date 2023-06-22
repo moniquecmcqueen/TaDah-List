@@ -1,52 +1,61 @@
 package com.kenzie.appserver.controller;
+import com.kenzie.appserver.service.model.Task;
 
-import com.kenzie.appserver.controller.model.ExampleCreateRequest;
-import com.kenzie.appserver.controller.model.ExampleResponse;
-import com.kenzie.appserver.service.ExampleService;
-import com.kenzie.appserver.service.model.Example;
+import com.kenzie.appserver.service.model.Child;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
-import static java.util.UUID.randomUUID;
-
+@RestController
+@RequestMapping("/children")
 public class ChildController {
-    @RestController
-    @RequestMapping("/example")
-    public static class ExampleController {
+    private List<Child> children = new ArrayList<>();
 
-        private ExampleService exampleService;
+    @PostMapping
+    public ResponseEntity<Child> createChild(@RequestBody Child child) {
+        children.add(child);
+        return ResponseEntity.status(HttpStatus.CREATED).body(child);
+    }
 
-        ExampleController(ExampleService exampleService) {
-            this.exampleService = exampleService;
-        }
+    @GetMapping
+    public ResponseEntity<List<Child>> getAllChildren() {
+        return ResponseEntity.ok(children);
+    }
 
-        @GetMapping("/{id}")
-        public ResponseEntity<ExampleResponse> get(@PathVariable("id") String id) {
-
-            Example example = exampleService.findById(id);
-            if (example == null) {
-                return ResponseEntity.notFound().build();
+    @GetMapping("/{childId}")
+    public ResponseEntity<Child> getChildById(@PathVariable String childId) {
+        for (Child child : children) {
+            if (child.getChildId().equals(childId)) {
+                return ResponseEntity.ok(child);
             }
-
-            ExampleResponse exampleResponse = new ExampleResponse();
-            exampleResponse.setId(example.getId());
-            exampleResponse.setName(example.getName());
-            return ResponseEntity.ok(exampleResponse);
         }
+        return ResponseEntity.notFound().build();
+    }
 
-        @PostMapping
-        public ResponseEntity<ExampleResponse> addNewConcert(@RequestBody ExampleCreateRequest exampleCreateRequest) {
-            Example example = new Example(randomUUID().toString(),
-                    exampleCreateRequest.getName());
-            exampleService.addNewExample(example);
-
-            ExampleResponse exampleResponse = new ExampleResponse();
-            exampleResponse.setId(example.getId());
-            exampleResponse.setName(example.getName());
-
-            return ResponseEntity.created(URI.create("/example/" + exampleResponse.getId())).body(exampleResponse);
+    @PutMapping("/{childId}")
+    public ResponseEntity<Child> updateChild(@PathVariable String childId, @RequestBody Child updatedChild) {
+        for (Child child : children) {
+            if (child.getChildId().equals(childId)) {
+                child.setUsername(updatedChild.getUsername());
+                child.setAge(updatedChild.getAge());
+                child.setTaskCompletedTask(updatedChild.getTaskCompletedTask());
+                return ResponseEntity.ok(child);
+            }
         }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{childId}")
+    public ResponseEntity<Void> deleteChild(@PathVariable String childId) {
+        for (Child child : children) {
+            if (child.getChildId().equals(childId)) {
+                children.remove(child);
+                return ResponseEntity.noContent().build();
+            }
+        }
+        return ResponseEntity.notFound().build();
     }
 }

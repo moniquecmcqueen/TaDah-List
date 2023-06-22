@@ -9,39 +9,47 @@ public class TaskController {
 
     private List<Task> tasks;
 
-    public void addTask(Task task){
+    public TaskController() {
+        tasks = new ArrayList<>();
+    }
+
+    public void addTask(Task task) {
         tasks.add(task);
     }
+
     public void removeTask(Task task) {
         tasks.remove(task);
     }
-    public List<Task> getAllTasks(){
+
+    public List<Task> getAllTasks() {
         return tasks;
     }
+
     public List<Task> getAllCompletedTasks() {
-        List<Task> theCompletedTasks = new ArrayList<>();
-        for(Task task : tasks) {
-            if(task.isCompleted()) {
-                theCompletedTasks.add(task);
+        List<Task> completedTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.isCompleted()) {
+                completedTasks.add(task);
             }
         }
-        return theCompletedTasks;
+        return completedTasks;
     }
+
     public List<Task> getAllIncompletedTasks() {
-        List<Task> theIncompletedTasks = new ArrayList<>();
-        for(Task task : tasks) {
-            if(!task.isCompleted()) {
-                theIncompletedTasks.add(task);
+        List<Task> incompletedTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (!task.isCompleted()) {
+                incompletedTasks.add(task);
             }
         }
-        return theIncompletedTasks;
+        return incompletedTasks;
     }
-    public void markTaskAsCompleted(Task task){
+
+    public void markTaskAsCompleted(Task task) {
         task.setCompleted(true);
     }
+
     public void markTaskAsIncompleted(Task task) {
         task.setCompleted(false);
     }
-}
-
 }
