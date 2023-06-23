@@ -6,6 +6,7 @@ public class Task {
    // private String taskDescription; is a description section apart of the program design - rebecca
     // I believe it is from our diagram, i think- monique
     private String taskTitle;
+    private Boolean isCompleted;
 
     // constructor
     public Task( String taskId, String taskTitle, Boolean completed){
@@ -15,7 +16,7 @@ public class Task {
         // tasks are not completed by default because they are being made-monique
         // it should be set to false here, correct? instead of this.completed = completed
         // this.completed = false,right?? or no?
-        this.completed = completed;
+        this.isCompleted = completed;
         //updated constructor to take in changed to boolean default - rebecca
     }
 
@@ -44,11 +45,11 @@ public class Task {
     }
 
     public boolean isCompleted() {
-        return completed;
+        return isCompleted;
     }
 
     public void setCompleted(boolean completed) {
-        this.completed = completed;
+        this.isCompleted = completed;
     }
 
 
@@ -57,7 +58,7 @@ public class Task {
         return "TaDahTask{" +
                 "taskId='" + taskId + '\'' +
                 ", taskTitle='" + taskTitle + '\'' +
-                ", completed=" + completed +
+                ", completed=" + isCompleted +
                 '}';
 
         //", taskDescription='" + taskDescription + '\'' ",
