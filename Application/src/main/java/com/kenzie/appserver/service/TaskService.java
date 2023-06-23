@@ -2,11 +2,15 @@ package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.model.ExampleRecord;
 import com.kenzie.appserver.repositories.ExampleRepository;
+import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.repositories.model.TaskRepository;
 import com.kenzie.appserver.service.model.Example;
 
 import com.kenzie.appserver.service.model.Task;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TaskService {
@@ -19,17 +23,25 @@ public class TaskService {
     public Task findById(String id) {
         Task taskFromBackend = taskRepository
                 .findById(id)
-                .map(example -> new Task(task., example.getName()))
+                .map(task -> new Task(task.getTaskId(), task.getTaskTitle(), task.isCompleted()))
                 .orElse(null);
 
-        return exampleFromBackend;
+        return taskFromBackend;
+    }
+    public List<Task> findAll() {
+        List<Task> taskList= new ArrayList<>();
+        taskRepository
+                .findAll()
+                .forEach(task -> taskList.add(new Task(task.getTaskId(), task.getTaskTitle(), task.isCompleted())));
+        return taskList;
     }
 
-    public Example addNewExample(Example example) {
-        ExampleRecord exampleRecord = new ExampleRecord();
-        exampleRecord.setId(example.getId());
-        exampleRecord.setName(example.getName());
-        exampleRepository.save(exampleRecord);
+    public Task addNewTask(Task task) {
+        TaskRecord taskRecord = new TaskRecord();
+        taskRecord.setTaskId(task.getTaskId());
+        taskRecord.setTaskTitle(task.getTaskTitle());
+        taskRecord.setTaskDescription(taskRecord.getTaskDescription());
+        S save = taskRepository.save(taskRecord);
         return example;
     }
 }
