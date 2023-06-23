@@ -3,88 +3,66 @@ package com.kenzie.appserver.service.model;
 import java.util.*;
 
 public class Parent {
-    // unique id and username to authenticate the parent
+    // unique id and username to authenticate the parent-monique
     private String parentId;
+    //do we want a password? private String password; -rebecca
     private String username;
-    // using Map to interact with the child class for completed task
+    // using Map to interact with the child class for completed task-monique
     private Map<String, Boolean> childTaskCompletedTask;
+    //should we be interacting with this map or creating a new list
+    private List<Task> todoList;
 
-    // parent class to include children?
     private List<Child> children;
 
-    public Parent() {
-        children = new ArrayList<>();
-        //would this generate a unique parentId?
-        this.parentId = UUID.randomUUID().toString();
-    }
-    public void addMyChild(Child child){
-        children.add(child);
-    }
+// not sure if this (private List<Child> children;) is needed yet-rebecca h
+    // parent class to include children?-monique
+    //private List<Child> children;-monique
+    //d-tables don't like to store non-primitive data types inside list-rebecca
+    // list of children ids (strings)-rebecca
 
-    public Parent(String parentId, String username){
-        this.parentId = parentId;
+
+    //public void addMyChild(Child child){children.add(child);}-monique
+    //not sure if this is needed yet-rebecca
+    public Parent(String username,List<Task>todoList) {
+        this.parentId = UUID.randomUUID().toString();
         this.username = username;
-        this.childTaskCompletedTask = new HashMap<>();
+        this.todoList = todoList;
+        //do we want a password? this.password = password; .rebecca h
+        //removed one of the parent constructors and combined the two into this one constructor-rebecca h
     }
     // parent should be able to monitor a child's progress... to track and retrieve info about
     // the child's overall progress and completion of tasks
     // - as a parent I want to be able to retrieve a task that has been completed
     //- retrieve a task that has been incompleted
-    //- view task and delete task
+    //- view task and delete task-monique
 
-    public void updateChildTadahTask(Child child, Task task, boolean isCompleted) {
-        childTaskCompletedTask.put(child.getChildId() + " " + task.getTaskId(), isCompleted);
+    //removed 7 methods and placed them in the controller classes-rebecca h
+    //added getters and setters-rebecca h
+
+    public String getParentId() {
+        return parentId;
     }
-    // check to see if task is completed? keep or delete
-    public boolean didChildCompleteTask(Child child, Task task) {
-        return childTaskCompletedTask.getOrDefault(child.getChildId() + " " +
-                task.getTaskId(), false);
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
-    // get number of child's completed task? keep or delete
-    public int getChildsCompletedTask(Child child) {
-        int count = 0;
-        for(boolean isCompleted : childTaskCompletedTask.values()) {
-            if(isCompleted){
-                count++;
-            }
-        }
-        return count;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public List<Task> getTodoList() {
+        return todoList;
+    }
+
+    public void setTodoList(List<Task> todoList) {
+        this.todoList = todoList;
 
     }
-    // deleteTasks
-    public void deleteChildTask( String childId,String taskId){
-        Child child = getChildById(childId);
-        if(child != null){
-            child.deleteTask(taskId);
-        }
+    public List<Child> getChildren() {
+        return children;
     }
-    // view child tasks
-    public List<String> viewChildtask(String childId){
-        Child child = getChildById(childId);
-        if(child != null) {
-            return child.getTasks();
-        }
-        //if child not found return an empty list
-        return new ArrayList<>();
-    }
-    //get completed tasks
-    public List<String> getCompletedTask(String childId) {
-        Child child = getChildById(childId);
-        if(child != null) {
-            // how to rewrite or change this
-            return (List<String>) child.getTaskCompletedTask();
-        }
-        //if not found return empty
-        return new ArrayList<>();
-        }
-
-    public Child getChildById(String childId){
-        for (Child child : children){
-            if(child.getChildId().equals(childId)){
-                return child;
-            }
-        }
-        //if no child is found
-        return null;
-    }
-}

@@ -6,18 +6,18 @@ public class Child {
     private String childId;
     private String username;
     //if we want to use age to help with verification of child??
-    //can delete if we do not want to use
+    //can delete if we do not want to use- monique
     private int age;
-    // using Map to be able to retrieve task by Id and mark complete or incomplete
+    // using Map to be able to retrieve task by Id and mark complete or incomplete- monique
     private Map<String, Boolean> taskCompletedTask;
 
-    public Child(){
-        //would this generate a unique childId
-        this.childId = UUID.randomUUID().toString();
-    }
+//    public Child(){
+//        //would this generate a unique childId
+//        this.childId = UUID.randomUUID().toString();
+//    } do we need this constructor - rebecca
 
     public Child(String username, int age) {
-        //could we do this for the unique Ids?
+        //could we do this for the unique Ids? - monique
         this.childId = UUID.randomUUID().toString();
         this.username = username;
         this.age = age;
@@ -33,7 +33,7 @@ public class Child {
     }
 
     // if we want to get the number of completed task
-    // we can delete if we want
+    // we can delete if we want- monique
     public int getTotalNumberOfCompletedTask() {
         int count = 0;
         for (boolean isCompleted : taskCompletedTask.values()) {
@@ -48,7 +48,7 @@ public class Child {
     public List<String> getTasks() {
         return new ArrayList<>(taskCompletedTask.keySet());
     }
-    // if we want to get the total number of task
+    // if we want to get the total number of task- monique
 
     public int getTotalNumberOfTask() {
         return taskCompletedTask.size();
