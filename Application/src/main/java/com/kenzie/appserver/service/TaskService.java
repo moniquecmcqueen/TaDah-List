@@ -41,7 +41,7 @@ public class TaskService {
         taskRecord.setTaskId(task.getTaskId());
         taskRecord.setTaskTitle(task.getTaskTitle());
         taskRecord.setTaskDescription(taskRecord.getTaskDescription());
-        S save = taskRepository.save(taskRecord);
+        taskRepository.save(taskRecord)
         return example;
     }
 }
