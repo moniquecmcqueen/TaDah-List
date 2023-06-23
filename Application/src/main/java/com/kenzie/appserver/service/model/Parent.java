@@ -66,16 +66,3 @@ public class Parent {
     public List<Child> getChildren() {
         return children;
     }
-
-    public void setChildren(List<Child> children) {
-        this.children = children;
-    }
-
-    public void addChild(Child child) {
-        children.add(child);
-    }
-
-    public void removeChild(Child child) {
-        children.remove(child);
-    }
-}

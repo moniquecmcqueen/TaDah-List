@@ -6,8 +6,6 @@ public class Task {
    // private String taskDescription; is a description section apart of the program design - rebecca
     // I believe it is from our diagram, i think- monique
     private String taskTitle;
-    private Boolean completed = Boolean.FALSE;
-    //set boolean to equal false by default - rebecca
 
     // constructor
     public Task( String taskId, String taskTitle, Boolean completed){
