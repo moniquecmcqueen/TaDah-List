@@ -2,22 +2,24 @@ package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.model.ExampleRecord;
 import com.kenzie.appserver.repositories.ExampleRepository;
+import com.kenzie.appserver.repositories.model.TaskRepository;
 import com.kenzie.appserver.service.model.Example;
 
+import com.kenzie.appserver.service.model.Task;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ExampleService {
-    private ExampleRepository exampleRepository;
+public class TaskService {
+    private TaskRepository taskRepository;
 
-    public ExampleService(ExampleRepository exampleRepository) {
-        this.exampleRepository = exampleRepository;
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
     }
 
-    public Example findById(String id) {
-        Example exampleFromBackend = exampleRepository
+    public Task findById(String id) {
+        Task taskFromBackend = taskRepository
                 .findById(id)
-                .map(example -> new Example(example.getId(), example.getName()))
+                .map(example -> new Task(task., example.getName()))
                 .orElse(null);
 
         return exampleFromBackend;
