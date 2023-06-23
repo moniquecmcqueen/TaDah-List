@@ -2,6 +2,7 @@ package com.kenzie.appserver.service.model;
 
 public class Task {
     private String taskId;
+    private Boolean completed;
 
    // private String taskDescription; is a description section apart of the program design - rebecca
     // I believe it is from our diagram, i think- monique

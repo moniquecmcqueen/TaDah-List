@@ -7,6 +7,7 @@ public class Child {
     private String username;
     //if we want to use age to help with verification of child??
     //can delete if we do not want to use- monique
+    //I dont think this is necessary- brandon
     private int age;
     // using Map to be able to retrieve task by Id and mark complete or incomplete- monique
     private Map<String, Boolean> taskCompletedTask;
@@ -19,6 +20,7 @@ public class Child {
     public Child(String username, int age) {
         //could we do this for the unique Ids? - monique
         this.childId = UUID.randomUUID().toString();
+        //might need to check to make sure this id does not exist in our child repository if were doing it this way
         this.username = username;
         this.age = age;
         this.taskCompletedTask = new HashMap<>();
