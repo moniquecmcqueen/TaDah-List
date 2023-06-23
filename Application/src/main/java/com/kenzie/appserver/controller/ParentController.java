@@ -1,70 +1,142 @@
 package com.kenzie.appserver.controller;
 
+ branbranch
+import com.kenzie.appserver.service.model.Parent;
 import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Task;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+@RestController
+@RequestMapping("/parents")
 public class ParentController {
+    private List<Parent> parents = new ArrayList<>();
 
-    private Map<String, Boolean> childTaskCompletedTask;
+    @PostMapping
+    public ResponseEntity<Parent> createParent(@RequestBody Parent parent) {
+        parents.add(parent);
+        return ResponseEntity.status(HttpStatus.CREATED).body(parent);
+    }
 
-    public void updateChildTadahTask(Child child, Task task, boolean isCompleted) {
-        childTaskCompletedTask.put(child.getChildId() + " " + task.getTaskId(), isCompleted);
+    @GetMapping
+    public ResponseEntity<List<Parent>> getAllParents() {
+        return ResponseEntity.ok(parents);
     }
-    // check to see if task is completed? keep or delete
-    public boolean didChildCompleteTask(Child child, Task task) {
-        return childTaskCompletedTask.getOrDefault(child.getChildId() + " " +
-                task.getTaskId(), false);
-    }
-    // get number of child's completed task? keep or delete
-    public int getChildsCompletedTask(Child child) {
-        int count = 0;
-        for(boolean isCompleted : childTaskCompletedTask.values()) {
-            if(isCompleted){
-                count++;
+
+    @GetMapping("/{parentId}")
+    public ResponseEntity<Parent> getParentById(@PathVariable String parentId) {
+        for (Parent parent : parents) {
+            if (parent.getParentId().equals(parentId)) {
+                return ResponseEntity.ok(parent);
             }
         }
-        return count;
-
-    }
-    // deleteTasks
-    public void deleteChildTask( String childId,String taskId){
-        Child child = getChildById(childId);
-        if(child != null){
-            child.deleteTask(taskId);
-        }
-    }
-    // view child tasks
-    public List<String> viewChildtask(String childId){
-        Child child = getChildById(childId);
-        if(child != null) {
-            return child.getTasks();
-        }
-        //if child not found return an empty list
-        return new ArrayList<>();
-    }
-    //get completed tasks
-    public List<String> getCompletedTask(String childId) {
-        Child child = getChildById(childId);
-        if(child != null) {
-            // how to rewrite or change this
-            return (List<String>) child.getTaskCompletedTask();
-        }
-        //if not found return empty
-        return new ArrayList<>();
+        return ResponseEntity.notFound().build();
     }
 
-    private Child getChildById(String childId){
-        for (Child child : children){
-            if(child.getChildId().equals(childId)){
-                return child;
+    @PutMapping("/{parentId}")
+    public ResponseEntity<Parent> updateParent(@PathVariable String parentId, @RequestBody Parent updatedParent) {
+        for (Parent parent : parents) {
+            if (parent.getParentId().equals(parentId)) {
+                parent.setUsername(updatedParent.getUsername());
+                parent.setTodoList(updatedParent.getTodoList());
+                parent.setChildren(updatedParent.getChildren());
+                return ResponseEntity.ok(parent);
             }
         }
-        //if no child is found
-        return null;
+        return ResponseEntity.notFound().build();
     }
 
+    @DeleteMapping("/{parentId}")
+    public ResponseEntity<Void> deleteParent(@PathVariable String parentId) {
+        Parent parentToRemove = null;
+        for (Parent parent : parents) {
+            if (parent.getParentId().equals(parentId)) {
+                parentToRemove = parent;
+                break;
+            }
+        }
+        if (parentToRemove != null) {
+            parents.remove(parentToRemove);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/{parentId}/children")
+    public ResponseEntity<Child> addChild(@PathVariable String parentId, @RequestBody Child child) {
+        Parent parent = getParentById(parentId).getBody();
+        if (parent != null) {
+            parent.addChild(child);
+            return ResponseEntity.status(HttpStatus.CREATED).body(child);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{parentId}/children/{childId}")
+    public ResponseEntity<Void> removeChild(@PathVariable String parentId, @PathVariable String childId) {
+        Parent parent = getParentById(parentId).getBody();
+        if (parent != null) {
+            Child childToRemove = null;
+            for (Child child : parent.getChildren()) {
+                if (child.getChildId().equals(childId)) {
+                    childToRemove = child;
+                    break;
+                }
+            }
+            if (childToRemove != null) {
+                parent.removeChild(childToRemove);
+                return ResponseEntity.noContent().build();
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/{parentId}/children/{childId}/tasks")
+    public ResponseEntity<Task> addTaskToChild(
+            @PathVariable String parentId,
+            @PathVariable String childId,
+            @RequestBody Task task
+    ) {
+        Parent parent = getParentById(parentId).getBody();
+        if (parent != null) {
+            Child childToUpdate = null;
+            for (Child child : parent.getChildren()) {
+                if (child.getChildId().equals(childId)) {
+                    childToUpdate = child;
+                    break;
+                }
+            }
+            if (childToUpdate != null) {
+                childToUpdate.getTaskCompletedTask().put(task.getTaskId(), task.isCompleted());
+                return ResponseEntity.status(HttpStatus.CREATED).body(task);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{parentId}/children/{childId}/tasks/{taskId}")
+    public ResponseEntity<Void> removeTaskFromChild(
+            @PathVariable String parentId,
+            @PathVariable String childId,
+            @PathVariable String taskId
+    ) {
+        Parent parent = getParentById(parentId).getBody();
+        if (parent != null) {
+            Child childToUpdate = null;
+            for (Child child : parent.getChildren()) {
+                if (child.getChildId().equals(childId)) {
+                    childToUpdate = child;
+                    break;
+                }
+            }
+            if (childToUpdate != null) {
+                childToUpdate.getTaskCompletedTask().remove(taskId);
+                return ResponseEntity.noContent().build();
+            }
+        }
+        return ResponseEntity.notFound().build();
 }

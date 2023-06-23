@@ -12,6 +12,7 @@ public class Parent {
     //should we be interacting with this map or creating a new list
     private List<Task> todoList;
 
+    private List<Child> children;
 
 // not sure if this (private List<Child> children;) is needed yet-rebecca h
     // parent class to include children?-monique
@@ -62,4 +63,6 @@ public class Parent {
         this.todoList = todoList;
 
     }
-}
+    public List<Child> getChildren() {
+        return children;
+    }
