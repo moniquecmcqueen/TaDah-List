@@ -1,110 +1,142 @@
 package com.kenzie.appserver.controller;
+
+import com.kenzie.appserver.service.model.Parent;
 import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Task;
-import com.kenzie.appserver.service.model.Parent;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+@RestController
+@RequestMapping("/parents")
 public class ParentController {
     private List<Parent> parents = new ArrayList<>();
 
-    public void updateChildTadahTask(Child child, Task task, boolean isCompleted) {
-        if (isCompleted) {
-            child.markTaskAsCompleted(task);
-        } else {
-            child.markTaskAsIncomplete(task);
-        }
+    @PostMapping
+    public ResponseEntity<Parent> createParent(@RequestBody Parent parent) {
+        parents.add(parent);
+        return ResponseEntity.status(HttpStatus.CREATED).body(parent);
     }
 
-
-    public boolean didChildCompleteTask(String parentId, String childId, String taskId) {
-        Parent parent = getParentById(parentId);
-        if (parent != null) {
-            Child child = getChildById(parent, childId);
-            if (child != null) {
-                Map<String, Boolean> taskCompletedTask = child.getTaskCompletedTask();
-                return taskCompletedTask.getOrDefault(taskId, false);
-            }
-        }
-        return false;
+    @GetMapping
+    public ResponseEntity<List<Parent>> getAllParents() {
+        return ResponseEntity.ok(parents);
     }
 
-    public int getChildsCompletedTask(String parentId, String childId) {
-        Parent parent = getParentById(parentId);
-        if (parent != null) {
-            Child child = getChildById(parent, childId);
-            if (child != null) {
-                Map<String, Boolean> taskCompletedTask = child.getTaskCompletedTask();
-                int count = 0;
-                for (boolean isCompleted : taskCompletedTask.values()) {
-                    if (isCompleted) {
-                        count++;
-                    }
-                }
-                return count;
-            }
-        }
-        return 0;
-    }
-
-    public void deleteChildTask(String parentId, String childId, String taskId) {
-        Parent parent = getParentById(parentId);
-        if (parent != null) {
-            Child child = getChildById(parent, childId);
-            if (child != null) {
-                child.deleteTask(taskId);
-            }
-        }
-    }
-
-    public List<String> viewChildTask(String parentId, String childId) {
-        Parent parent = getParentById(parentId);
-        if (parent != null) {
-            Child child = getChildById(parent, childId);
-            if (child != null) {
-                return child.getTasks();
-            }
-        }
-        return new ArrayList<>();
-    }
-
-    public List<String> getCompletedTask(String parentId, String childId) {
-        Parent parent = getParentById(parentId);
-        if (parent != null) {
-            Child child = getChildById(parent, childId);
-            if (child != null) {
-                List<String> completedTasks = new ArrayList<>();
-                Map<String, Boolean> taskCompletedTask = child.getTaskCompletedTask();
-                for (Map.Entry<String, Boolean> entry : taskCompletedTask.entrySet()) {
-                    if (entry.getValue()) {
-                        completedTasks.add(entry.getKey());
-                    }
-                }
-                return completedTasks;
-            }
-        }
-        return new ArrayList<>();
-    }
-
-    private Parent getParentById(String parentId) {
+    @GetMapping("/{parentId}")
+    public ResponseEntity<Parent> getParentById(@PathVariable String parentId) {
         for (Parent parent : parents) {
             if (parent.getParentId().equals(parentId)) {
-                return parent;
+                return ResponseEntity.ok(parent);
             }
         }
-        return null;
+        return ResponseEntity.notFound().build();
     }
 
-    private Child getChildById(Parent parent, String childId) {
-        for (Child child : parent.getChildren()) {
-            if (child.getChildId().equals(childId)) {
-                return child;
+    @PutMapping("/{parentId}")
+    public ResponseEntity<Parent> updateParent(@PathVariable String parentId, @RequestBody Parent updatedParent) {
+        for (Parent parent : parents) {
+            if (parent.getParentId().equals(parentId)) {
+                parent.setUsername(updatedParent.getUsername());
+                parent.setTodoList(updatedParent.getTodoList());
+                parent.setChildren(updatedParent.getChildren());
+                return ResponseEntity.ok(parent);
             }
         }
-        return null;
+        return ResponseEntity.notFound().build();
     }
 
+    @DeleteMapping("/{parentId}")
+    public ResponseEntity<Void> deleteParent(@PathVariable String parentId) {
+        Parent parentToRemove = null;
+        for (Parent parent : parents) {
+            if (parent.getParentId().equals(parentId)) {
+                parentToRemove = parent;
+                break;
+            }
+        }
+        if (parentToRemove != null) {
+            parents.remove(parentToRemove);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 
+    @PostMapping("/{parentId}/children")
+    public ResponseEntity<Child> addChild(@PathVariable String parentId, @RequestBody Child child) {
+        Parent parent = getParentById(parentId).getBody();
+        if (parent != null) {
+            parent.addChild(child);
+            return ResponseEntity.status(HttpStatus.CREATED).body(child);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{parentId}/children/{childId}")
+    public ResponseEntity<Void> removeChild(@PathVariable String parentId, @PathVariable String childId) {
+        Parent parent = getParentById(parentId).getBody();
+        if (parent != null) {
+            Child childToRemove = null;
+            for (Child child : parent.getChildren()) {
+                if (child.getChildId().equals(childId)) {
+                    childToRemove = child;
+                    break;
+                }
+            }
+            if (childToRemove != null) {
+                parent.removeChild(childToRemove);
+                return ResponseEntity.noContent().build();
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/{parentId}/children/{childId}/tasks")
+    public ResponseEntity<Task> addTaskToChild(
+            @PathVariable String parentId,
+            @PathVariable String childId,
+            @RequestBody Task task
+    ) {
+        Parent parent = getParentById(parentId).getBody();
+        if (parent != null) {
+            Child childToUpdate = null;
+            for (Child child : parent.getChildren()) {
+                if (child.getChildId().equals(childId)) {
+                    childToUpdate = child;
+                    break;
+                }
+            }
+            if (childToUpdate != null) {
+                childToUpdate.getTaskCompletedTask().put(task.getTaskId(), task.isCompleted());
+                return ResponseEntity.status(HttpStatus.CREATED).body(task);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{parentId}/children/{childId}/tasks/{taskId}")
+    public ResponseEntity<Void> removeTaskFromChild(
+            @PathVariable String parentId,
+            @PathVariable String childId,
+            @PathVariable String taskId
+    ) {
+        Parent parent = getParentById(parentId).getBody();
+        if (parent != null) {
+            Child childToUpdate = null;
+            for (Child child : parent.getChildren()) {
+                if (child.getChildId().equals(childId)) {
+                    childToUpdate = child;
+                    break;
+                }
+            }
+            if (childToUpdate != null) {
+                childToUpdate.getTaskCompletedTask().remove(taskId);
+                return ResponseEntity.noContent().build();
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

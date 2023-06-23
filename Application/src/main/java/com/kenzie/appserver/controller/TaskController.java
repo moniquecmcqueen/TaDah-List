@@ -1,55 +1,65 @@
 package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.service.model.Task;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RestController
+@RequestMapping("/tasks")
 public class TaskController {
 
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
 
-    public TaskController() {
-        tasks = new ArrayList<>();
-    }
-
-    public void addTask(Task task) {
+    @PostMapping
+    public ResponseEntity<Task> createTask(@RequestBody Task task) {
         tasks.add(task);
+        return ResponseEntity.status(HttpStatus.CREATED).body(task);
     }
 
-    public void removeTask(Task task) {
-        tasks.remove(task);
+    @GetMapping
+    public ResponseEntity<List<Task>> getAllTasks() {
+        return ResponseEntity.ok(tasks);
     }
 
-    public List<Task> getAllTasks() {
-        return tasks;
-    }
-
-    public List<Task> getAllCompletedTasks() {
-        List<Task> completedTasks = new ArrayList<>();
+    @GetMapping("/{taskId}")
+    public ResponseEntity<Task> getTaskById(@PathVariable String taskId) {
         for (Task task : tasks) {
-            if (task.isCompleted()) {
-                completedTasks.add(task);
+            if (task.getTaskId().equals(taskId)) {
+                return ResponseEntity.ok(task);
             }
         }
-        return completedTasks;
+        return ResponseEntity.notFound().build();
     }
 
-    public List<Task> getAllIncompletedTasks() {
-        List<Task> incompletedTasks = new ArrayList<>();
+    @PutMapping("/{taskId}")
+    public ResponseEntity<Task> updateTask(@PathVariable String taskId, @RequestBody Task updatedTask) {
         for (Task task : tasks) {
-            if (!task.isCompleted()) {
-                incompletedTasks.add(task);
+            if (task.getTaskId().equals(taskId)) {
+                task.setTaskTitle(updatedTask.getTaskTitle());
+                task.setCompleted(updatedTask.isCompleted());
+                return ResponseEntity.ok(task);
             }
         }
-        return incompletedTasks;
+        return ResponseEntity.notFound().build();
     }
 
-    public void markTaskAsCompleted(Task task) {
-        task.setCompleted(true);
-    }
-
-    public void markTaskAsIncompleted(Task task) {
-        task.setCompleted(false);
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<Void> deleteTask(@PathVariable String taskId) {
+        Task taskToRemove = null;
+        for (Task task : tasks) {
+            if (task.getTaskId().equals(taskId)) {
+                taskToRemove = task;
+                break;
+            }
+        }
+        if (taskToRemove != null) {
+            tasks.remove(taskToRemove);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
