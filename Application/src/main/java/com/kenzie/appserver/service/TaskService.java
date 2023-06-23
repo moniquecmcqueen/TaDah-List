@@ -1,13 +1,21 @@
 package com.kenzie.appserver.service;
 
-import com.kenzie.appserver.repositories.model.ExampleRecord;
-import com.kenzie.appserver.repositories.ExampleRepository;
+
+
+
 import com.kenzie.appserver.repositories.model.TaskRecord;
-import com.kenzie.appserver.repositories.model.TaskRepository;
-import com.kenzie.appserver.service.model.Example;
+
+
+
+import com.kenzie.appserver.repositories.TaskRepository;
+import com.kenzie.appserver.service.model.Child;
+import com.kenzie.appserver.service.model.Parent;
+import com.kenzie.appserver.service.model.TaDahTaskList;
+
 
 import com.kenzie.appserver.service.model.Task;
 import org.springframework.stereotype.Service;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,3 +53,9 @@ public class TaskService {
         return example;
     }
 }
+
+    // TaskService interacts with the model classes
+
+
+
+

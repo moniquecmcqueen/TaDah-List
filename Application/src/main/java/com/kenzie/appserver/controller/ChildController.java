@@ -1,52 +1,93 @@
 package com.kenzie.appserver.controller;
 
-import com.kenzie.appserver.controller.model.ExampleCreateRequest;
-import com.kenzie.appserver.controller.model.ExampleResponse;
-import com.kenzie.appserver.service.ExampleService;
-import com.kenzie.appserver.service.model.Example;
+ branbranch
+import com.kenzie.appserver.service.model.Child;
+import com.kenzie.appserver.service.model.Task;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
-import static java.util.UUID.randomUUID;
-
+@RestController
+@RequestMapping("/children")
 public class ChildController {
-    @RestController
-    @RequestMapping("/example")
-    public static class ExampleController {
+    private List<Child> children = new ArrayList<>();
 
-        private ExampleService exampleService;
-
-        ExampleController(ExampleService exampleService) {
-            this.exampleService = exampleService;
-        }
-
-        @GetMapping("/{id}")
-        public ResponseEntity<ExampleResponse> get(@PathVariable("id") String id) {
-
-            Example example = exampleService.findById(id);
-            if (example == null) {
-                return ResponseEntity.notFound().build();
-            }
-
-            ExampleResponse exampleResponse = new ExampleResponse();
-            exampleResponse.setId(example.getId());
-            exampleResponse.setName(example.getName());
-            return ResponseEntity.ok(exampleResponse);
-        }
-
-        @PostMapping
-        public ResponseEntity<ExampleResponse> addNewConcert(@RequestBody ExampleCreateRequest exampleCreateRequest) {
-            Example example = new Example(randomUUID().toString(),
-                    exampleCreateRequest.getName());
-            exampleService.addNewExample(example);
-
-            ExampleResponse exampleResponse = new ExampleResponse();
-            exampleResponse.setId(example.getId());
-            exampleResponse.setName(example.getName());
-
-            return ResponseEntity.created(URI.create("/example/" + exampleResponse.getId())).body(exampleResponse);
-        }
+    @PostMapping
+    public ResponseEntity<Child> createChild(@RequestBody Child child) {
+        children.add(child);
+        return ResponseEntity.status(HttpStatus.CREATED).body(child);
     }
-}
+
+    @GetMapping
+    public ResponseEntity<List<Child>> getAllChildren() {
+        return ResponseEntity.ok(children);
+    }
+
+    @GetMapping("/{childId}")
+    public ResponseEntity<Child> getChildById(@PathVariable String childId) {
+        for (Child child : children) {
+            if (child.getChildId().equals(childId)) {
+                return ResponseEntity.ok(child);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{childId}")
+    public ResponseEntity<Child> updateChild(@PathVariable String childId, @RequestBody Child updatedChild) {
+        for (Child child : children) {
+            if (child.getChildId().equals(childId)) {
+                child.setUsername(updatedChild.getUsername());
+                child.setAge(updatedChild.getAge());
+                child.setTaskCompletedTask(updatedChild.getTaskCompletedTask());
+                return ResponseEntity.ok(child);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{childId}")
+    public ResponseEntity<Void> deleteChild(@PathVariable String childId) {
+        Child childToRemove = null;
+        for (Child child : children) {
+            if (child.getChildId().equals(childId)) {
+                childToRemove = child;
+                break;
+            }
+        }
+        if (childToRemove != null) {
+            children.remove(childToRemove);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/{childId}/tasks")
+    public ResponseEntity<Task> addTaskToChild(
+            @PathVariable String childId,
+            @RequestBody Task task
+    ) {
+        Child child = getChildById(childId).getBody();
+        if (child != null) {
+            child.getTaskCompletedTask().put(task.getTaskId(), task.isCompleted());
+            return ResponseEntity.status(HttpStatus.CREATED).body(task);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{childId}/tasks/{taskId}")
+    public ResponseEntity<Void> removeTaskFromChild(
+            @PathVariable String childId,
+            @PathVariable String taskId
+    ) {
+        Child child = getChildById(childId).getBody();
+        if (child != null) {
+            child.getTaskCompletedTask().remove(taskId);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
