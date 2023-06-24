@@ -27,7 +27,7 @@ public class TaskService {
         List<Task> taskList= new ArrayList<>();
         taskRepository
                 .findAll()
-                .forEach(task -> taskList.add(new Task(task.getTaskId(), task.getTaskTitle(), task.isCompleted())));
+                .forEach(task -> taskList.add(new Task(task.getTaskId(), task.getTaskTitle(), task.getIsCompleted())));
         return taskList;
     }
 
