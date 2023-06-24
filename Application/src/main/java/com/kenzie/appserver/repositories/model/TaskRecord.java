@@ -58,7 +58,7 @@ public class TaskRecord {
     }
 
     public void setIsCompleted(Boolean completed) {
-        isCompleted = isCompleted;
+        this.isCompleted = isCompleted;
     }
 
     @DynamoDBAttribute(attributeName = "parentId")
