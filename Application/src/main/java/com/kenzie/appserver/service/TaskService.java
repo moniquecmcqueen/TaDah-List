@@ -1,22 +1,9 @@
 package com.kenzie.appserver.service;
 
-
-
-
 import com.kenzie.appserver.repositories.model.TaskRecord;
-
-
-
 import com.kenzie.appserver.repositories.TaskRepository;
-import com.kenzie.appserver.service.model.Child;
-import com.kenzie.appserver.service.model.Parent;
-import com.kenzie.appserver.service.model.TaDahTaskList;
-
-
 import com.kenzie.appserver.service.model.Task;
 import org.springframework.stereotype.Service;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +18,7 @@ public class TaskService {
     public Task findById(String id) {
         Task taskFromBackend = taskRepository
                 .findById(id)
-                .map(task -> new Task(task.getTaskId(), task.getTaskTitle(), task.isCompleted()))
+                .map(task -> new Task(task.getTaskId(), task.getTaskTitle(), task.getIsCompleted()))
                 .orElse(null);
 
         return taskFromBackend;
@@ -49,8 +36,8 @@ public class TaskService {
         taskRecord.setTaskId(task.getTaskId());
         taskRecord.setTaskTitle(task.getTaskTitle());
         taskRecord.setTaskDescription(taskRecord.getTaskDescription());
-        S save = taskRepository.save(taskRecord);
-        return example;
+        taskRepository.save(taskRecord);
+        return task;
     }
 }
 

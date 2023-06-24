@@ -53,12 +53,12 @@ public class TaskRecord {
     }
 
     @DynamoDBAttribute(attributeName = "isCompleted")
-    public Boolean getCompleted() {
+    public Boolean getIsCompleted() {
         return isCompleted;
     }
 
-    public void setCompleted(Boolean completed) {
-        isCompleted = completed;
+    public void setIsCompleted(Boolean completed) {
+        isCompleted = isCompleted;
     }
 
     @DynamoDBAttribute(attributeName = "parentId")
@@ -69,5 +69,4 @@ public class TaskRecord {
     public void setParentId(String parentId) {
         this.parentId = parentId;
     }
-
 }
