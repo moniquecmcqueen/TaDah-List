@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="markTaskAsCompletedPage.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body class="background">
+<header class="header" id="header">
+  <div class="site-title">
+    <a class="header_home" href="index.html">Example App</a>
+  </div>
+</header>
+<div class="card">
+  <h2>Mark Task as Completed</h2>
+  <form class="card-content" id="mark-completed-form">
+    <p class="form-field">
+      <label>Task ID</label>
+      <input type="text" required class="validated-field" id="task-id">
+    </p>
+    <button type="submit" class="button" id="marktaskascompleted">Button 1</button>
+    <button type="submit" class="button" id="button2">Button 2</button>
+    <button type="submit" class="button" id="button3">Button 3</button>
+    <button type="submit" class="button" id="button4">Button 4</button>
+  </form>
+</div>
+<iframe src="marktaskascompleted.html" style="width: 100%; height: 100vh; border: none;"></iframe>
+
+<script>
+  // Usage example
+  const markTaskPage = new MarkTaskAsCompletedPage();
+  markTaskPage.mount();
+
+  // Main code
+  const markComplete = document.getElementById("marktaskascompleted");
+  const button2 = document.getElementById("button2");
+  const button3 = document.getElementById("button3");
+  const button4 = document.getElementById("button4");
+
+  // Add event listeners or perform actions for each button
+  markComplete.addEventListener("click", () => {
+    // Action for button 1
+  });
+
+  button2.addEventListener("click", () => {
+    // Action for button 2
+  });
+
+  button3.addEventListener("click", () => {
+    // Action for button 3
+  });
+
+  button4.addEventListener("click", () => {
+    // Action for button 4
+  });
+</script>
+</body>
+</html>
