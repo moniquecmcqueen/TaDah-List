@@ -1,6 +1,6 @@
 import TaskController from "../controllers/TaskController";
 
-class MarkTaskAsCompletedPage extends BaseClass {
+export default class MarkTaskAsCompletedPage extends BaseClass {
     constructor() {
         super();
         this.bindClassMethods(['onMarkCompleted']);
@@ -27,7 +27,3 @@ class MarkTaskAsCompletedPage extends BaseClass {
         }
     }
 }
-
-// Usage example
-const markTaskPage = new MarkTaskAsCompletedPage();
-markTaskPage.mount();
