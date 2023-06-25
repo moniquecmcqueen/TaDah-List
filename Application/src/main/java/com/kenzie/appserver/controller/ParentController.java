@@ -1,6 +1,5 @@
 package com.kenzie.appserver.controller;
 
- //branbranch
 import com.kenzie.appserver.service.model.Parent;
 import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Task;
@@ -15,6 +14,8 @@ import java.util.List;
 @RequestMapping("/parents")
 public class ParentController {
     private List<Parent> parents = new ArrayList<>();
+    //storing variables here- we have a object instead of a database
+    // in theory can possibly work - works until execution.
 
     @PostMapping
     public ResponseEntity<Parent> createParent(@RequestBody Parent parent) {

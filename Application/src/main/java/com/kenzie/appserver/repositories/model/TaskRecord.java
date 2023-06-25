@@ -69,4 +69,16 @@ public class TaskRecord {
     public void setParentId(String parentId) {
         this.parentId = parentId;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TaskRecord that = (TaskRecord) o;
+        return Objects.equals(taskId, that.taskId) && Objects.equals(taskDescription, that.taskDescription) && Objects.equals(taskTitle, that.taskTitle) && Objects.equals(isCompleted, that.isCompleted);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(taskId, taskDescription, taskTitle, isCompleted);
+    }
 }

@@ -16,11 +16,5 @@ import java.util.List;
 @EnableScheduling
 @SpringBootApplication
 public class Application {
-    public static void main(String[] args) {
-       // SpringApplication.run(Application.class, args);
-        List<Task> todoList = new ArrayList<>();
-        Task task = new Task("3434","hw",true);
-        todoList.add(0,task);
-
-    }
+    public static void main(String[] args) {SpringApplication.run(Application.class, args);}
 }
