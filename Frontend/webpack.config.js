@@ -36,8 +36,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
-      filename: 'index.html',
+      template: './src/marktaskascompleted.html',
+      filename: 'marktaskascompleted.html',
       inject: false
     }),
     new CopyPlugin({
