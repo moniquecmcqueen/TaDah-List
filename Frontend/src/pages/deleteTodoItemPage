@@ -1,0 +1,6 @@
+// Code for deleting a todo item
+import BaseClass from "../util/baseClass";
+
+export default class deleteTodoItemPage extends BaseClass  {
+  // Add logic for deleting a todo item here
+}

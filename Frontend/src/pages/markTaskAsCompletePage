@@ -1,6 +1,7 @@
-import TaskController from "../controllers/TaskController";
+import BaseClass from "../util/baseClass";
+import TaskController from "../../../Application/src/main/java/com/kenzie/appserver/controller/TaskController.java";
 
-class MarkTaskAsCompletedPage extends BaseClass {
+export default class MarkTaskAsCompletedPage extends BaseClass {
     constructor() {
         super();
         this.bindClassMethods(['onMarkCompleted']);
@@ -27,7 +28,3 @@ class MarkTaskAsCompletedPage extends BaseClass {
         }
     }
 }
-
-// Usage example
-const markTaskPage = new MarkTaskAsCompletedPage();
-markTaskPage.mount();
