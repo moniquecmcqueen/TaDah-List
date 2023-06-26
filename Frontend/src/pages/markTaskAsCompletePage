@@ -1,4 +1,5 @@
-import TaskController from "../controllers/TaskController";
+import BaseClass from "../util/baseClass";
+import TaskController from "../../../Application/src/main/java/com/kenzie/appserver/controller/TaskController.java";
 
 export default class MarkTaskAsCompletedPage extends BaseClass {
     constructor() {

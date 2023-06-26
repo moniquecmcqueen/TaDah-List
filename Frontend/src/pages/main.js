@@ -1,5 +1,12 @@
-import { addTodoItemPage } from './addTodoItemPage.js';
-import { deleteTodoItemPage } from './deleteTodoItemPage.js';
+// main.js
+
+// Import the addTodoItemPage module
+import addTodoItemPage from "./addTodoItemPage";
+
+// Import the deleteTodoItemPage module
+import deleteTodoItemPage from "./deleteTodoItemPage";
+
+// Import the markTaskAsCompletePage module
 import markTaskAsCompletePage from "./markTaskAsCompletePage";
 
 // Code for initializing and running your application

@@ -8,7 +8,7 @@ module.exports = {
     usedExports: true
   },
   entry: {
-    index: path.resolve(__dirname, 'src', 'main.js'),
+    index: path.resolve(__dirname, 'src', 'pages', 'main.js'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -25,6 +25,12 @@ module.exports = {
         test: /\.html$/,
         use: 'html-loader',
       },
+      // Exclude Java files from being processed by loaders
+      {
+        test: /\.java$/,
+        exclude: /node_modules/,
+        use: 'ignore-loader',
+      },
       // Other rules for handling JavaScript, CSS, etc.
     ],
   },
@@ -39,6 +45,11 @@ module.exports = {
         {
           from: path.resolve('src/css'),
           to: path.resolve("dist/css"),
+        },
+        // Include your compiled Java classes here
+        {
+          from: path.resolve('path/to/compiled/java/classes'),
+          to: path.resolve("dist/java"),
         },
       ],
     }),
