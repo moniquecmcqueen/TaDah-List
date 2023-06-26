@@ -2,6 +2,7 @@ package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.repositories.TaskRepository;
+import com.kenzie.appserver.service.model.TaDahTaskList;
 import com.kenzie.appserver.service.model.Task;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -23,11 +24,11 @@ public class TaskService {
 
         return taskFromBackend;
     }
-    public List<Task> findAll() {
-        List<Task> taskList= new ArrayList<>();
+    public TaDahTaskList findAllTasks() {
+        TaDahTaskList taDahTaskList= new TaDahTaskList();
         taskRepository
                 .findAll()
-                .forEach(task -> taskList.add(new Task(task.getTaskId(), task.getTaskTitle(), task.getIsCompleted())));
+                .forEach(task -> taDahTaskList.add(new Task(task.getTaskId(), task.getTaskTitle(), task.getIsCompleted())));
         return taskList;
     }
 
