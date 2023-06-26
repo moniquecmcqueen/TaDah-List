@@ -30,18 +30,22 @@ export default class DeleteClient extends BaseClass {
         }
     }
 
-    /
+    /**
+     * Gets the concert for the given ID.
+     * @param id Unique identifier for a concert
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The concert
+     */
     async deleteTask(taskId, errorCallback) {
         try {
-            const response = await this.client.get(`/{taskId}`);
+            const response = await this.client.delete(`/tasks/${taskId}`);
             return response.data;
         } catch (error) {
             this.handleError("deleteTask", error, errorCallback)
         }
     }
 
-        }
-    }
+
 
     /**
      * Helper method to log the error and run any error functions.
