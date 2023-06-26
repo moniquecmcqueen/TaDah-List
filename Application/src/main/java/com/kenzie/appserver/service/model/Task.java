@@ -24,7 +24,7 @@ public class Task {
     }
 
     public String getTaskId() {
-        return taskId;
+        return String.valueOf(taskId);
     }
 
     public void setTaskId(UUID taskId) {
