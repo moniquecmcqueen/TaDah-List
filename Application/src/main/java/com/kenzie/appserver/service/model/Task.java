@@ -1,8 +1,10 @@
 package com.kenzie.appserver.service.model;
 
+import java.util.UUID;
+
 public class Task {
-    private String taskId;
-    private Boolean isCompleted;
+    private UUID taskId;
+    private boolean isCompleted ;
 
    // private String taskDescription; is a description section apart of the program design - rebecca
     // I believe it is from our diagram, i think- monique
@@ -10,7 +12,7 @@ public class Task {
 
 
     // constructor
-    public Task( String taskId, String taskTitle, Boolean completed){
+    public Task(UUID taskId, String taskTitle, boolean completed){
         this.taskId = taskId;
         //this.taskDescription = taskDescription;
         this.taskTitle = taskTitle;
@@ -25,7 +27,7 @@ public class Task {
         return taskId;
     }
 
-    public void setTaskId(String taskId) {
+    public void setTaskId(UUID taskId) {
         this.taskId = taskId;
     }
 

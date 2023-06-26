@@ -10,7 +10,6 @@ import java.util.Objects;
 public class TaskRecord {
 
     private String taskId;
-    private String taskDescription;
     private String taskTitle;
     private String childId;
     private Boolean isCompleted;
@@ -23,15 +22,6 @@ public class TaskRecord {
 
     public void setTaskId(String taskId) {
         this.taskId = taskId;
-    }
-
-    @DynamoDBAttribute(attributeName = "taskDescription")
-    public String getTaskDescription() {
-        return taskDescription;
-    }
-
-    public void setTaskDescription(String taskDescription) {
-        this.taskDescription = taskDescription;
     }
 
     @DynamoDBAttribute(attributeName = "taskTitle")
@@ -74,11 +64,11 @@ public class TaskRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskRecord that = (TaskRecord) o;
-        return Objects.equals(taskId, that.taskId) && Objects.equals(taskDescription, that.taskDescription) && Objects.equals(taskTitle, that.taskTitle) && Objects.equals(isCompleted, that.isCompleted);
+        return Objects.equals(taskId, that.taskId) && Objects.equals(taskTitle, that.taskTitle) && Objects.equals(isCompleted, that.isCompleted);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(taskId, taskDescription, taskTitle, isCompleted);
+        return Objects.hash(taskId, taskTitle, isCompleted);
     }
 }
