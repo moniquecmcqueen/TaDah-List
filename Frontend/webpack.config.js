@@ -19,6 +19,21 @@ module.exports = {
     port: 8080,
     open: true,
   },
+/*  //proxy is what tells your frontend where to find the backend and what requests to send there
+  //if you  notice in the example we are sending all requests that start with /example to
+  //http://localhost:5001 which is where the backend is, when sent to the backend it will become
+  //http://localhost:5001/exemple/...
+  //for example if you sent the request /example/bob to the backend, it will be converted into
+  //http://localhost:5001/example/bob and sent to the backend that way.
+  //uncomment the following proxy section to make the example work
+//    proxy: [
+//          {
+//            context: [
+//              '/example',
+//            ],
+//            target: 'http://localhost:5001'
+//          }
+//        ]*/
   module: {
     rules: [
       {
