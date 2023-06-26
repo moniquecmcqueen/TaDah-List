@@ -29,4 +29,7 @@ public class TaskCreateRequest {
     public void setTaskTitle(String taskTitle) {
         this.taskTitle = taskTitle;
     }
+
+    public void setTaskId(String createTaskId) {
+    }
 }

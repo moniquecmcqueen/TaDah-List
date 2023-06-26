@@ -33,9 +33,8 @@ public class TaskService {
 
     public Task addNewTask(Task task) {
         TaskRecord taskRecord = new TaskRecord();
-        taskRecord.setTaskId(task.getTaskId());
+        taskRecord.setTaskId(String.valueOf(task.getTaskId()));
         taskRecord.setTaskTitle(task.getTaskTitle());
-        taskRecord.setTaskDescription(taskRecord.getTaskDescription());
         taskRepository.save(taskRecord);
         return task;
     }

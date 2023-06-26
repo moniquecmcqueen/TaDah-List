@@ -3,34 +3,36 @@ package com.kenzie.appserver.service.model;
 import java.util.*;
 
 public class Parent {
-    private String parentId;
-    private String username;
+    private UUID parentId;
+    //updated to final to always store variable with same value
+    //moved UUID to final variable declared above instead of within the method
+    private String parentUsername;
     private Map<String, Boolean> childTaskCompletedTask;
     private List<Task> todoList;
     private List<Child> children;
 
-    public Parent(String username, List<Task> todoList) {
-        this.parentId = UUID.randomUUID().toString();
-        this.username = username;
-        this.todoList = todoList;
+    public Parent(UUID parentId, String parentUsername, List<Child> children,List<Task> todoList) {
+        this.parentId = parentId;
+        this.parentUsername = parentUsername;
         this.children = new ArrayList<>();
-        this.childTaskCompletedTask = new HashMap<>();
+        this.todoList = todoList;
+
     }
 
-    public String getParentId() {
-        return parentId;
-    }
 
-    public void setParentId(String parentId) {
+    public void setParentId(UUID parentId) {
         this.parentId = parentId;
     }
 
+    public UUID getParentId(){
+        return parentId;
+    }
     public String getUsername() {
-        return username;
+        return parentUsername;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.parentUsername = username;
     }
 
     public Map<String, Boolean> getChildTaskCompletedTask() {
@@ -60,6 +62,7 @@ public class Parent {
     public void addChild(Child child) {
         children.add(child);
     }
+
 
     public void removeChild(Child child) {
         children.remove(child);
