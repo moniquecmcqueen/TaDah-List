@@ -7,6 +7,14 @@ plugins {
 group = 'com.kenzie.unit.four'
 version = '0.0.1-SNAPSHOT'
 
+sourceSets {
+    main {
+        java {
+            srcDirs += ['src/main/java', 'Application/src/main/java/com/kenzie/appserver/controller/model']
+        }
+    }
+}
+
 checkstyle {
     def suppressionFile = rootProject.file('Utilities/ATACheckstyle/configuration/checkstyle/unit3/suppressions.xml')
     configProperties.put('checkstyle.suppression.filter', suppressionFile)

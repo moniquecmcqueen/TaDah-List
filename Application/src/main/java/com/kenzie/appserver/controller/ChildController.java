@@ -41,7 +41,6 @@ public class ChildController {
         for (Child child : children) {
             if (child.getChildId().equals(childId)) {
                 child.setUsername(updatedChild.getUsername());
-                child.setAge(updatedChild.getAge());
                 child.setTaskCompletedTask(updatedChild.getTaskCompletedTask());
                 return ResponseEntity.ok(child);
             }

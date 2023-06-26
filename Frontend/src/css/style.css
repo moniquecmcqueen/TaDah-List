@@ -87,3 +87,11 @@
 .state.active {
     display: block;
 }
+.mark-completed-button {
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

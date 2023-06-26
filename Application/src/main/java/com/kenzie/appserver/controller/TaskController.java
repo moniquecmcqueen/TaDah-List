@@ -1,29 +1,35 @@
 package com.kenzie.appserver.controller;
 
+import com.kenzie.appserver.controller.model.TaskCreateRequest;
+import com.kenzie.appserver.controller.model.TaskResponse;
+import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.service.model.Task;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
 
-    private List<Task> tasks = new ArrayList<>();
+    @Autowired
+    private TaskRepository taskRepository;
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
-        tasks.add(task);
+    public ResponseEntity<TaskResponse> createTask(@RequestBody TaskCreateRequest taskCreateRequest) {
+        Task newTask = new Task();
         return ResponseEntity.status(HttpStatus.CREATED).body(task);
     }
 
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTasks() {
+    public ResponseEntity<List<TaskResponse>> getAllTasks() {
         return ResponseEntity.ok(tasks);
     }
+    //get all task shows us completed and incomplete
+
 
     @GetMapping("/{taskId}")
     public ResponseEntity<Task> getTaskById(@PathVariable String taskId) {

@@ -8,7 +8,7 @@ module.exports = {
     usedExports: true
   },
   entry: {
-    examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
+    index: path.resolve(__dirname, 'src', 'pages', 'main'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -18,36 +18,51 @@ module.exports = {
     https: false,
     port: 8080,
     open: true,
-    //proxy is what tells your frontend where to find the backend and what requests to send there
-    //if you  notice in the example we are sending all requests that start with /example to
-    //http://localhost:5001 which is where the backend is, when sent to the backend it will become
-    //http://localhost:5001/exemple/...
-    //for example if you sent the request /example/bob to the backend, it will be converted into
-    //http://localhost:5001/example/bob and sent to the backend that way.
-    //uncomment the following proxy section to make the example work
-//    proxy: [
-//          {
-//            context: [
-//              '/example',
-//            ],
-//            target: 'http://localhost:5001'
-//          }
-//        ]
+  },
+  /*proxy is what tells your frontend where to find the backend and what requests to send there
+  if you  notice in the example we are sending all requests that start with /example to
+  http://localhost:5001 which is where the backend is, when sent to the backend it will become
+  http://localhost:5001/exemple/...
+  for example if you sent the request /example/bob to the backend, it will be converted into
+  http://localhost:5001/example/bob and sent to the backend that way.
+  uncomment the following proxy section to make the example work
+   proxy: [
+         {
+           context: [
+             '/example',
+           ],
+           target: 'http://localhost:5001'
+         }
+       ],*/
+  module: {
+    rules: [
+      {
+        test: /\.html$/,
+        use: 'html-loader',
+      },
+      // Exclude Java files from being processed by loaders
+      {
+        test: /\.java$/,
+        exclude: /node_modules/,
+        use: 'ignore-loader',
+      },
+      // Other rules for handling JavaScript, CSS, etc.
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
-      filename: 'index.html',
-      inject: false
+      template: './src/main.html',
+      filename: 'main.html',
+      inject: false,
     }),
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve('src/css'),
-          to: path.resolve("dist/css")
-        }
-      ]
+          from: path.resolve('../Application/src/main/java/com/kenzie/appserver/controller/TaskController.java'),
+          to: path.resolve("dist/java"),
+        },
+      ],
     }),
-    new CleanWebpackPlugin()
-  ]
-}
+    new CleanWebpackPlugin(),
+  ],
+};

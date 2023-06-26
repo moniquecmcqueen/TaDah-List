@@ -5,33 +5,24 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @DynamoDBTable(tableName = "TaDahTasks")
 public class TaskRecord {
 
-    private String taskId;
-    private String taskDescription;
+    private UUID taskId;
     private String taskTitle;
-    private String childId;
+    private UUID childId;
     private Boolean isCompleted;
-    private String parentId;
+    private UUID parentId;
 
     @DynamoDBHashKey(attributeName = "taskId")
-    public String getTaskId() {
+    public UUID getTaskId() {
         return taskId;
     }
 
     public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
-
-    @DynamoDBAttribute(attributeName = "taskDescription")
-    public String getTaskDescription() {
-        return taskDescription;
-    }
-
-    public void setTaskDescription(String taskDescription) {
-        this.taskDescription = taskDescription;
+        this.taskId = UUID.fromString(taskId);
     }
 
     @DynamoDBAttribute(attributeName = "taskTitle")
@@ -44,12 +35,12 @@ public class TaskRecord {
     }
 
     @DynamoDBAttribute(attributeName = "childId")
-    public String getChildId() {
+    public UUID getChildId() {
         return childId;
     }
 
     public void setChildId(String childId) {
-        this.childId = childId;
+        this.childId = UUID.fromString(childId);
     }
 
     @DynamoDBAttribute(attributeName = "isCompleted")
@@ -62,23 +53,23 @@ public class TaskRecord {
     }
 
     @DynamoDBAttribute(attributeName = "parentId")
-    public String getParentId() {
+    public UUID getParentId() {
         return parentId;
     }
 
     public void setParentId(String parentId) {
-        this.parentId = parentId;
+        this.parentId = UUID.fromString(parentId);
     }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskRecord that = (TaskRecord) o;
-        return Objects.equals(taskId, that.taskId) && Objects.equals(taskDescription, that.taskDescription) && Objects.equals(taskTitle, that.taskTitle) && Objects.equals(isCompleted, that.isCompleted);
+        return Objects.equals(taskId, that.taskId) && Objects.equals(taskTitle, that.taskTitle) && Objects.equals(isCompleted, that.isCompleted);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(taskId, taskDescription, taskTitle, isCompleted);
+        return Objects.hash(taskId, taskTitle, isCompleted);
     }
 }
