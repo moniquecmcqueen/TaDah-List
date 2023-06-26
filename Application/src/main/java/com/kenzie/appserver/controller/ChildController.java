@@ -1,6 +1,5 @@
 package com.kenzie.appserver.controller;
 
-
 import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Task;
 import org.springframework.http.HttpStatus;
@@ -72,7 +71,7 @@ public class ChildController {
     ) {
         Child child = getChildById(childId).getBody();
         if (child != null) {
-            child.getTaskCompletedTask().put(task.getTaskId(), task.isCompleted());
+            child.getTaskCompletedTask().put(task.getTaskId(), task.getCompleted());
             return ResponseEntity.status(HttpStatus.CREATED).body(task);
         }
         return ResponseEntity.notFound().build();

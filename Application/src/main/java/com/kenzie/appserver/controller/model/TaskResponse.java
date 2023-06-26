@@ -24,7 +24,7 @@ public class TaskResponse {
     }
 
     public void setCompleted(Boolean isCompleted) {
-        isCompleted = isCompleted;
+        this.isCompleted = isCompleted;
     }
 
     public String getTaskTitle() {
