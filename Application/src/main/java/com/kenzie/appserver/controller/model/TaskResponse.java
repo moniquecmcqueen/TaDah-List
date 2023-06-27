@@ -23,8 +23,10 @@ public class TaskResponse {
         return isCompleted;
     }
 
-    public void setCompleted(boolean isCompleted) {
-        isCompleted = isCompleted;
+ brandonsbranch
+    public void setCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
+  main
     }
 
     public String getTaskTitle() {

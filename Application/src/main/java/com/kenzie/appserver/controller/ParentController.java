@@ -14,8 +14,6 @@ import java.util.List;
 @RequestMapping("/parents")
 public class ParentController {
     private List<Parent> parents = new ArrayList<>();
-    //storing variables here- we have a object instead of a database
-    // in theory can possibly work - works until execution.
 
     @PostMapping
     public ResponseEntity<Parent> createParent(@RequestBody Parent parent) {
@@ -112,7 +110,7 @@ public class ParentController {
                 }
             }
             if (childToUpdate != null) {
-                childToUpdate.getTaskCompletedTask().put(task.getTaskId(), task.isCompleted());
+                childToUpdate.getTaskCompletedTask().put(task.getTaskId(), task.getCompleted());
                 return ResponseEntity.status(HttpStatus.CREATED).body(task);
             }
         }

@@ -46,7 +46,7 @@ public class TaskController {
         for (Task task : tasks) {
             if (task.getTaskId().equals(taskId)) {
                 task.setTaskTitle(updatedTask.getTaskTitle());
-                task.setCompleted(updatedTask.isCompleted());
+                task.setCompleted(updatedTask.getCompleted() != null ? updatedTask.getCompleted() : false);
                 return ResponseEntity.ok(task);
             }
         }

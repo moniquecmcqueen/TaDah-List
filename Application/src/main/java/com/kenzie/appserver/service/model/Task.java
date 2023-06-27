@@ -19,7 +19,7 @@ public class Task {
         // tasks are not completed by default because they are being made-monique
         // it should be set to false here, correct? instead of this.completed = completed
         // this.completed = false,right?? or no?
-        this.isCompleted = completed;
+        this.isCompleted = false;
         //updated constructor to take in changed to boolean default - rebecca
     }
 
@@ -46,12 +46,11 @@ public class Task {
     public void setTaskTitle(String taskTitle) {
         this.taskTitle = taskTitle;
     }
-
-    public boolean isCompleted() {
-        return isCompleted;
+    public Boolean getCompleted() {
+        return isCompleted != null && isCompleted;
     }
 
-    public void setCompleted(boolean completed) {
+    public void setCompleted(Boolean completed) {
         this.isCompleted = completed;
     }
 

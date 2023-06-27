@@ -39,7 +39,8 @@
     margin-left: 20px;
 }
 
-.button, button {
+.button,
+button {
     background: #aed9ff;
     padding: 3px;
     border-radius: 3px;
@@ -49,7 +50,8 @@
     cursor: pointer;
 }
 
-.button:hover, button:hover {
+.button:hover,
+button:hover {
     background: #9cc3e4;
 }
 
@@ -63,6 +65,7 @@
 .validated-field:invalid {
     outline: 2px solid var(--error-color);
 }
+
 .validated-field:focus:invalid {
     color: var(--error-color);
 }
@@ -87,11 +90,30 @@
 .state.active {
     display: block;
 }
+
 .mark-completed-button {
     padding: 10px 20px;
     background-color: var(--primary-color);
     color: var(--secondary-color);
     border: none;
     border-radius: 4px;
+    cursor: pointer;
+}
+
+.task-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.task-checkbox {
+    margin-right: 10px;
+}
+
+.task-title {
+    flex-grow: 1;
+}
+
+.delete-button {
     cursor: pointer;
 }

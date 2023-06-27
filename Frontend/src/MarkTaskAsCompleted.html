@@ -21,5 +21,28 @@
         <button type="submit" class="mark-completed-button">Mark as Completed</button>
     </form>
 </div>
+
+<script type="text/javascript">
+    // Get the form element
+    const markCompletedForm = document.getElementById("mark-completed-form");
+
+    // Add event listener for form submission
+    markCompletedForm.addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+
+        // Get the task ID input value
+        const taskIdInput = document.getElementById("task-id");
+        const taskId = taskIdInput.value;
+
+        // Perform any necessary validation on the input
+
+        // Handle the form submission
+        // For example, you can make an API request to mark the task as completed
+
+        // Reset the form
+        markCompletedForm.reset();
+    });
+</script>
 </body>
 </html>
+
