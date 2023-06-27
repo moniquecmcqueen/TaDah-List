@@ -7,15 +7,14 @@ public class Parent {
     //updated to final to always store variable with same value
     //moved UUID to final variable declared above instead of within the method
     private String parentUsername;
-    private Map<String, Boolean> childTaskCompletedTask;
+
     private List<Task> todoList;
     private List<Child> children;
 
-    public Parent(UUID parentId, String parentUsername, List<Child> children,List<Task> todoList) {
+    public Parent(UUID parentId, String parentUsername, List<Child> children) {
         this.parentId = parentId;
         this.parentUsername = parentUsername;
         this.children = new ArrayList<>();
-        this.todoList = todoList;
 
     }
 
@@ -35,13 +34,6 @@ public class Parent {
         this.parentUsername = username;
     }
 
-    public Map<String, Boolean> getChildTaskCompletedTask() {
-        return childTaskCompletedTask;
-    }
-
-    public void setChildTaskCompletedTask(Map<String, Boolean> childTaskCompletedTask) {
-        this.childTaskCompletedTask = childTaskCompletedTask;
-    }
 
     public List<Task> getTodoList() {
         return todoList;

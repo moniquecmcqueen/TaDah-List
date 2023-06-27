@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Child {
     private UUID childId;
-    private String username;
+    private String childUsername;
     //if we want to use age to help with verification of child??
     //can delete if we do not want to use- monique
     //I dont think this is necessary- brandon
@@ -16,11 +16,11 @@ public class Child {
 //        this.childId = UUID.randomUUID().toString();
 //    } do we need this constructor - rebecca
 
-    public Child(String username, UUID childId) {
+    public Child(String childUsername, UUID childId) {
         //could we do this for the unique Ids? - monique
         this.childId = childId;
         //might need to check to make sure this id does not exist in our child repository if were doing it this way
-        this.username = username;
+        this.childUsername = childUsername;
 
         this.taskCompletedTask = new HashMap<>();
     }
@@ -60,16 +60,16 @@ public class Child {
         return childId;
     }
 
-    public void setChildId(String childId) {
-        this.childId = UUID.fromString(childId);
+//    public void setChildId(String childId) {
+//        this.childId = UUID.fromString(childId);
+//    }
+
+    public String getChildUsername() {
+        return childUsername;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setChildUsername(String childUsername) {
+        this.childUsername = childUsername;
     }
 
 

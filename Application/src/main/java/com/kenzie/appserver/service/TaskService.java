@@ -4,6 +4,7 @@ import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.service.model.TaDahTaskList;
 import com.kenzie.appserver.service.model.Task;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 @Service
 public class TaskService {
     private TaskRepository taskRepository;
-
+@Autowired
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
@@ -24,7 +25,7 @@ public class TaskService {
 
         return taskFromBackend;
     }
-    public TaDahTaskList findAllTasks() {
+    public TaDahTaskList getAllTasks() {
         TaDahTaskList taDahTaskList= new TaDahTaskList();
         taskRepository
                 .findAll()

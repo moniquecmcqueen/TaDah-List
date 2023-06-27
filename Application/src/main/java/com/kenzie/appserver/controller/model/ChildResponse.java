@@ -37,8 +37,6 @@ public class ChildResponse {
         this.childUsername = childUsername;
     }
 
-
-
     public Map<String, Boolean> getTaskCompletedTask() {
         return taskCompletedTask;
     }

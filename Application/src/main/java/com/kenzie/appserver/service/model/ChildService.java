@@ -2,10 +2,12 @@ package com.kenzie.appserver.service.model;
 
 import com.kenzie.appserver.repositories.ChildRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
+import com.kenzie.appserver.repositories.model.ChildRecord;
 import com.kenzie.appserver.repositories.model.TaskRecord;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ChildService {
     private ChildRepository childRepository;
@@ -13,10 +15,11 @@ public class ChildService {
         this.childRepository = childRepository;
     }
 
-    public Child findUsername(String username) {
+    public Child findById(String childId) {
         Child childFromBackend = childRepository
-                .findById(username)
-                .map(childUsername -> new Child(//once records added, need to add code for get username)
+                .findById(childId)
+                .map(child-> new Child(UUID.fromString(childId.toString())))
+                        //once records added, need to add code for get username)
                 .orElse(null);
 
         return childFromBackend;

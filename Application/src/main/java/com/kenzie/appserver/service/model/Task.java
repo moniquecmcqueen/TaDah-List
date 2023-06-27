@@ -6,13 +6,11 @@ public class Task {
     private UUID taskId;
     private boolean isCompleted ;
 
-   // private String taskDescription; is a description section apart of the program design - rebecca
-    // I believe it is from our diagram, i think- monique
     private String taskTitle;
 
 
     // constructor
-    public Task(UUID taskId, String taskTitle, boolean completed){
+    public Task(UUID taskId, String taskTitle, boolean isCompleted){
         this.taskId = taskId;
         //this.taskDescription = taskDescription;
         this.taskTitle = taskTitle;
@@ -23,8 +21,8 @@ public class Task {
         //updated constructor to take in changed to boolean default - rebecca
     }
 
-    public String getTaskId() {
-        return String.valueOf(taskId);
+    public UUID getTaskId() {
+        return taskId;
     }
 
     public void setTaskId(UUID taskId) {
@@ -46,12 +44,13 @@ public class Task {
     public void setTaskTitle(String taskTitle) {
         this.taskTitle = taskTitle;
     }
-    public Boolean getCompleted() {
-        return isCompleted != null && isCompleted;
+    public Boolean getIsCompleted() {
+
+        return isCompleted;
     }
 
-    public void setCompleted(Boolean completed) {
-        this.isCompleted = completed;
+    public void setIsCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 
 
@@ -60,7 +59,7 @@ public class Task {
         return "TaDahTask{" +
                 "taskId='" + taskId + '\'' +
                 ", taskTitle='" + taskTitle + '\'' +
-                ", completed=" + isCompleted +
+                ", isCompleted=" + isCompleted +
                 '}';
 
         //", taskDescription='" + taskDescription + '\'' ",
