@@ -27,6 +27,8 @@ public class TaskService {
         return taskFromBackend;
     }
 
+
+
     public List<Task> getAllTasks() {
         List<Task> taskList = new ArrayList<>();
         taskRepository
@@ -37,16 +39,18 @@ public class TaskService {
 
     public Task addNewTask(Task task) {
         TaskRecord taskRecord = new TaskRecord();
-        taskRecord.setTaskId(String.valueOf(task.getTaskId()));
+        taskRecord.setTaskId(task.getTaskId());
         taskRecord.setTaskTitle(task.getTaskTitle());
         taskRepository.save(taskRecord);
         return task;
     }
 
+
     public void deleteTask(String taskId) {
         taskRepository.deleteById(taskId);
 
     }
+
 
     public void updateTask(Task task) {
         if (taskRepository.existsById(task.getTaskId())) {

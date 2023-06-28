@@ -1,9 +1,14 @@
 package com.kenzie.appserver.service.model;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.UUID;
 
 public class Task {
+
+
     private String taskId;
+
     private boolean isCompleted ;
 
     private String taskTitle;
@@ -25,9 +30,11 @@ public class Task {
         return taskId;
     }
 
+
     public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
+
 
 
 
