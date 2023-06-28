@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/children")
-public class git statuChildController {
+public class ChildController {
     private List<Child> children = new ArrayList<>();
 
     @PostMapping
