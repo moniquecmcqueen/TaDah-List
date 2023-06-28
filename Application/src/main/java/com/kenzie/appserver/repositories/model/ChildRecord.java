@@ -6,36 +6,13 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 import java.util.Objects;
 
-public class ChildRecord {
-
-
     @DynamoDBTable(tableName = "TaDahChild")
 
-    public class ChildRecords {
+    public class ChildRecord {
 
-        private String taskId;
-        private String taskTitle;
         private String childId;
-        private Boolean isCompleted;
 
-
-        @DynamoDBHashKey(attributeName = "taskId")
-        public String getTaskId() {
-            return taskId;
-        }
-
-        public void setTaskId(String taskId) {
-            this.taskId = taskId;
-        }
-
-        @DynamoDBAttribute(attributeName = "taskTitle")
-        public String getTaskTitle() {
-            return taskTitle;
-        }
-
-        public void setTaskTitle(String taskTitle) {
-            this.taskTitle = taskTitle;
-        }
+        private String childUsername;
 
         @DynamoDBAttribute(attributeName = "childId")
         public String getChildId() {
@@ -46,27 +23,25 @@ public class ChildRecord {
             this.childId = childId;
         }
 
-        @DynamoDBAttribute(attributeName = "isCompleted")
-        public Boolean getIsCompleted() {
-            return isCompleted;
+        @DynamoDBAttribute(attributeName = "childUsername")
+        public String getChildUsername() {
+            return childUsername;
         }
 
-        public void setIsCompleted(Boolean isCompleted) {
-            this.isCompleted = isCompleted;
+        public void setChildUsername(String childUsername) {
+            this.childUsername = childUsername;
         }
-
 
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof ChildRecords)) return false;
-            ChildRecords that = (ChildRecords) o;
-            return Objects.equals(taskId, that.taskId) && Objects.equals(taskTitle, that.taskTitle) && Objects.equals(childId, that.childId) && Objects.equals(isCompleted, that.isCompleted);
+            if (!(o instanceof ChildRecord)) return false;
+            ChildRecord that = (ChildRecord) o;
+            return Objects.equals(childId, that.childId) && Objects.equals(childUsername, that.childUsername);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(taskId, taskTitle, childId, isCompleted);
+            return Objects.hash(childId, childUsername);
         }
     }
-}

@@ -3,14 +3,14 @@ package com.kenzie.appserver.service.model;
 import java.util.UUID;
 
 public class Task {
-    private UUID taskId;
+    private String taskId;
     private boolean isCompleted ;
 
     private String taskTitle;
 
 
     // constructor
-    public Task(UUID taskId, String taskTitle, boolean isCompleted){
+    public Task(String taskId, String taskTitle, boolean isCompleted){
         this.taskId = taskId;
         //this.taskDescription = taskDescription;
         this.taskTitle = taskTitle;
@@ -21,21 +21,15 @@ public class Task {
         //updated constructor to take in changed to boolean default - rebecca
     }
 
-    public UUID getTaskId() {
+    public String getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(UUID taskId) {
+    public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
 
-//    public String getTaskDescription() {
-//        return taskDescription;
-//    } dont know if needed- rebecca
 
-//    public void setTaskDescription(String taskDescription) {
-//        this.taskDescription = taskDescription;
-//    } dont know if needed- rebecca
 
     public String getTaskTitle() {
         return taskTitle;
