@@ -2,27 +2,30 @@ package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.controller.model.TaskCreateRequest;
 import com.kenzie.appserver.controller.model.TaskResponse;
-import com.kenzie.appserver.repositories.TaskRepository;
+import com.kenzie.appserver.service.TaskService;
 import com.kenzie.appserver.service.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
-import java.util.UUID;
+
+import static java.util.UUID.randomUUID;
 
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
 
     @Autowired
-    private TaskRepository taskRepository;
+    private TaskService taskService;
 
     @PostMapping
-    public ResponseEntity<TaskResponse> createTask(@RequestBody TaskCreateRequest taskCreateRequest) {
-        Task newTask = new Task();
-        return ResponseEntity.status(HttpStatus.CREATED).body(task);
+    public ResponseEntity<Task> addNewTask(@RequestBody TaskCreateRequest taskCreateRequest) {
+        Task task = new Task(randomUUID().toString(),taskCreateRequest.getTaskTitle();
+        taskService.addNewTask(task);
+        TaskResponse taskResponse = createTaskResponse(task);
+        return ResponseEntity.created(URI.create("/tasks" + taskResponse.getTaskId())).body(task);
     }
 
     @GetMapping
@@ -33,25 +36,27 @@ public class TaskController {
 
 
     @GetMapping("/{taskId}")
-    public ResponseEntity<Task> getTaskById(@PathVariable String taskId) {
-        for (Task task : tasks) {
-            if (task.getTaskId().equals(taskId)) {
-                return ResponseEntity.ok(task);
-            }
+    public ResponseEntity<TaskResponse> getTaskById(@PathVariable("taskId") String taskId) {
+        Task task = taskService.findById(taskId);
+        // If there are no tasks, then return a 204
+        if (task == null) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+        // Otherwise, convert it into a TaskResponses and return it
+        TaskResponse taskResponse = createTaskResponse(task);
+        return ResponseEntity.ok(taskResponse);
     }
 
     @PutMapping("/{taskId}")
-    public ResponseEntity<Task> updateTask(@PathVariable String taskId, @RequestBody Task updatedTask) {
-        for (Task task : tasks) {
-            if (task.getTaskId().equals(taskId)) {
-                task.setTaskTitle(updatedTask.getTaskTitle());
-                task.setCompleted(updatedTask.getCompleted() != null ? updatedTask.getCompleted() : false);
-                return ResponseEntity.ok(task);
-            }
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<TaskResponse> updateTask( @RequestBody TaskResponse taskResponse) {
+        Task task = new Task(taskResponse.getTaskId(),
+                taskResponse.getTaskTitle(),
+                taskResponse.getIsCompleted());
+       taskService.updateTask(task);
+
+        TaskResponse taskResponse1 = createTaskResponse(task);
+
+        return ResponseEntity.ok(taskResponse1);
     }
 
     @DeleteMapping("/{taskId}")
@@ -69,4 +74,13 @@ public class TaskController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    private TaskResponse createTaskResponse(Task task) {
+        TaskResponse taskResponse = new TaskResponse();
+        taskResponse.setTaskId(task.getTaskId());
+        taskResponse.setTaskTitle(task.getTaskTitle());
+        taskResponse.setCompleted(task.getIsCompleted());
+
+        return taskResponse;
+}
 }

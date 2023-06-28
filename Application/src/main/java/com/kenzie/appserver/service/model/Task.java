@@ -1,16 +1,19 @@
 package com.kenzie.appserver.service.model;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.UUID;
 
 public class Task {
-    private UUID taskId;
+
+    private final String taskId;
     private boolean isCompleted ;
 
     private String taskTitle;
 
 
     // constructor
-    public Task(UUID taskId, String taskTitle, boolean isCompleted){
+    public Task(String taskId, String taskTitle, boolean isCompleted){
         this.taskId = taskId;
         //this.taskDescription = taskDescription;
         this.taskTitle = taskTitle;
@@ -21,14 +24,9 @@ public class Task {
         //updated constructor to take in changed to boolean default - rebecca
     }
 
-    public UUID getTaskId() {
+    public String getTaskId() {
         return taskId;
     }
-
-    public void setTaskId(UUID taskId) {
-        this.taskId = taskId;
-    }
-
 //    public String getTaskDescription() {
 //        return taskDescription;
 //    } dont know if needed- rebecca

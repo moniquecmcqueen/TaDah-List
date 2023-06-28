@@ -12,7 +12,8 @@ import java.util.List;
 @Service
 public class TaskService {
     private TaskRepository taskRepository;
-@Autowired
+
+    @Autowired
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
@@ -25,8 +26,9 @@ public class TaskService {
 
         return taskFromBackend;
     }
+
     public TaDahTaskList getAllTasks() {
-        TaDahTaskList taDahTaskList= new TaDahTaskList();
+        TaDahTaskList taDahTaskList = new TaDahTaskList();
         taskRepository
                 .findAll()
                 .forEach(task -> taDahTaskList.add(new Task(task.getTaskId(), task.getTaskTitle(), task.getIsCompleted())));
@@ -35,10 +37,20 @@ public class TaskService {
 
     public Task addNewTask(Task task) {
         TaskRecord taskRecord = new TaskRecord();
-        taskRecord.setTaskId(String.valueOf(task.getTaskId()));
+        taskRecord.setTaskId(task.getTaskId());
         taskRecord.setTaskTitle(task.getTaskTitle());
         taskRepository.save(taskRecord);
         return task;
+    }
+
+    public void updateTask(Task task) {
+        if (taskRepository.existsById(task.getTaskId())) {
+            TaskRecord taskRecord = new TaskRecord();
+            taskRecord.setTaskId(task.getTaskId());
+            taskRecord.setTaskTitle(task.getTaskTitle());
+            taskRepository.save(taskRecord);
+
+        }
     }
 }
 

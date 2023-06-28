@@ -23,10 +23,7 @@ public class ParentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(parent);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Parent>> getAllParents() {
-        return ResponseEntity.ok(parents);
-    }
+
 
     @GetMapping("/{parentId}")
     public ResponseEntity<Parent> getParentById(@PathVariable String parentId) {
@@ -38,18 +35,7 @@ public class ParentController {
         return ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/{parentId}")
-    public ResponseEntity<Parent> updateParent(@PathVariable String parentId, @RequestBody Parent updatedParent) {
-        for (Parent parent : parents) {
-            if (parent.getParentId().equals(parentId)) {
-                parent.setUsername(updatedParent.getUsername());
-                parent.setTodoList(updatedParent.getTodoList());
-                parent.setChildren(updatedParent.getChildren());
-                return ResponseEntity.ok(parent);
-            }
-        }
-        return ResponseEntity.notFound().build();
-    }
+
 
     @DeleteMapping("/{parentId}")
     public ResponseEntity<Void> deleteParent(@PathVariable String parentId) {
