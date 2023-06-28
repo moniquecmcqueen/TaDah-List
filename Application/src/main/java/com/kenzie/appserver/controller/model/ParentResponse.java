@@ -55,8 +55,13 @@ public class ParentResponse {
     public void setChildren(List<Child> children) {
         this.children = children;
     }
+    public String getChildId() { return childId; }
+    public void setChildId (String childId) { this.childId = childId; }
 
-}
+    }
+
+
+
 
 
 

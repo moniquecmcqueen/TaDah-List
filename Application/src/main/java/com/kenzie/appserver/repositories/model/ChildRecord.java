@@ -13,6 +13,7 @@ import java.util.Objects;
         private String childId;
 
         private String childUsername;
+        private String taskId;
 
         @DynamoDBAttribute(attributeName = "childId")
         public String getChildId() {
@@ -30,6 +31,12 @@ import java.util.Objects;
 
         public void setChildUsername(String childUsername) {
             this.childUsername = childUsername;
+        }
+        @DynamoDBAttribute(attributeName = "taskId")
+        public String getTaskId() {return taskId; }
+
+        public void setTaskId (String taskId){
+            this.taskId = taskId;
         }
 
         @Override

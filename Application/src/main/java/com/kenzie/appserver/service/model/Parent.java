@@ -16,6 +16,10 @@ public class Parent {
         this.children = new ArrayList<>();
 
     }
+    public Parent (String parentId, String parentUsername){
+        this.parentId = parentId;
+        this.parentUsername = parentUsername;
+    }
 
 
     public void setParentId(String parentId) {

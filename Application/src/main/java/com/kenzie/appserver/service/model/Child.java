@@ -9,7 +9,7 @@ public class Child {
     //can delete if we do not want to use- monique
     //I dont think this is necessary- brandon
 
-
+    private String taskId;
 
 //    public Child(){
 //        //would this generate a unique childId
@@ -40,6 +40,10 @@ public class Child {
         this.childUsername = childUsername;
     }
 
+    public String getTaskId() {return taskId; }
 
+    public void setTaskId (String taskId){
+        this.taskId = taskId;
+    }
 
 }
