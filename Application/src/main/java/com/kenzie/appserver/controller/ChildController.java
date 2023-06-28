@@ -17,7 +17,7 @@ import static java.util.UUID.randomUUID;
 
 @RestController
 @RequestMapping("/children")
-public class ChildController {
+public class git statuChildController {
     private List<Child> children = new ArrayList<>();
 
     private ChildService childService;
