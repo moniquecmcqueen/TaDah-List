@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.UUID.randomUUID;
@@ -22,7 +23,7 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity<Task> addNewTask(@RequestBody TaskCreateRequest taskCreateRequest) {
-        Task task = new Task(randomUUID().toString(),taskCreateRequest.getTaskTitle();
+        Task task = new Task(randomUUID().toString(),taskCreateRequest.getTaskTitle());
         taskService.addNewTask(task);
         TaskResponse taskResponse = createTaskResponse(task);
         return ResponseEntity.created(URI.create("/tasks" + taskResponse.getTaskId())).body(task);
@@ -30,8 +31,17 @@ public class TaskController {
 
     @GetMapping
     public ResponseEntity<List<TaskResponse>> getAllTasks() {
-        return ResponseEntity.ok(tasks);
+        List<Task> tasks = taskService.getAllTasks();
+        if(tasks ==null) {
+            return ResponseEntity.noContent().build();
+        }
+        List<TaskResponse> taskResponseList = new ArrayList<>();
+            for(Task task : tasks)
+            taskResponseList.add(this.createTaskResponse(task));
+
+        return ResponseEntity.ok().build();
     }
+
     //get all task shows us completed and incomplete
 
 
@@ -61,17 +71,9 @@ public class TaskController {
 
     @DeleteMapping("/{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable String taskId) {
-        Task taskToRemove = null;
-        for (Task task : tasks) {
-            if (task.getTaskId().equals(taskId)) {
-                taskToRemove = task;
-                break;
-            }
-        }
-        if (taskToRemove != null) {
-            tasks.remove(taskToRemove);
-            return ResponseEntity.noContent().build();
-        }
+
+            taskService.deleteTask(taskId);
+
         return ResponseEntity.notFound().build();
     }
 

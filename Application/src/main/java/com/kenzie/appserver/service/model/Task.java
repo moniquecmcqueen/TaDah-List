@@ -25,6 +25,11 @@ public class Task {
         this.isCompleted = false;
         //updated constructor to take in changed to boolean default - rebecca
     }
+    public Task (String taskId, String taskTitle){
+        this.taskId = taskId;
+        this.taskTitle = taskTitle;
+
+    }
 
     public String getTaskId() {
         return taskId;
