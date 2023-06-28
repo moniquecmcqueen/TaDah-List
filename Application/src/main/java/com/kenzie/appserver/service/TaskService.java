@@ -27,11 +27,13 @@ public class TaskService {
         return taskFromBackend;
     }
 
-    public TaDahTaskList getAllTasks() {
-        TaDahTaskList taDahTaskList = new TaDahTaskList();
+
+
+    public List<Task> getAllTasks() {
+        List<Task> taskList = new ArrayList<>();
         taskRepository
                 .findAll()
-                .forEach(task -> taDahTaskList.add(new Task(task.getTaskId(), task.getTaskTitle(), task.getIsCompleted())));
+                .forEach(task -> taskList.add(new Task(task.getTaskId(), task.getTaskTitle(), task.getIsCompleted())));
         return taskList;
     }
 
@@ -42,6 +44,13 @@ public class TaskService {
         taskRepository.save(taskRecord);
         return task;
     }
+
+
+    public void deleteTask(String taskId) {
+        taskRepository.deleteById(taskId);
+
+    }
+
 
     public void updateTask(Task task) {
         if (taskRepository.existsById(task.getTaskId())) {

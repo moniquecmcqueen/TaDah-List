@@ -6,7 +6,9 @@ import java.util.UUID;
 
 public class Task {
 
-    private final String taskId;
+
+    private String taskId;
+
     private boolean isCompleted ;
 
     private String taskTitle;
@@ -27,13 +29,14 @@ public class Task {
     public String getTaskId() {
         return taskId;
     }
-//    public String getTaskDescription() {
-//        return taskDescription;
-//    } dont know if needed- rebecca
 
-//    public void setTaskDescription(String taskDescription) {
-//        this.taskDescription = taskDescription;
-//    } dont know if needed- rebecca
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+
+
 
     public String getTaskTitle() {
         return taskTitle;
