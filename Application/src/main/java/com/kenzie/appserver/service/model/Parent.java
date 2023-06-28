@@ -3,15 +3,14 @@ package com.kenzie.appserver.service.model;
 import java.util.*;
 
 public class Parent {
-    private UUID parentId;
+    private String parentId;
     //updated to final to always store variable with same value
     //moved UUID to final variable declared above instead of within the method
     private String parentUsername;
 
-    private List<Task> todoList;
     private List<Child> children;
 
-    public Parent(UUID parentId, String parentUsername, List<Child> children) {
+    public Parent(String parentId, String parentUsername, List<Child> children) {
         this.parentId = parentId;
         this.parentUsername = parentUsername;
         this.children = new ArrayList<>();
@@ -19,11 +18,11 @@ public class Parent {
     }
 
 
-    public void setParentId(UUID parentId) {
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 
-    public UUID getParentId(){
+    public String getParentId(){
         return parentId;
     }
     public String getUsername() {
@@ -35,13 +34,6 @@ public class Parent {
     }
 
 
-    public List<Task> getTodoList() {
-        return todoList;
-    }
-
-    public void setTodoList(List<Task> todoList) {
-        this.todoList = todoList;
-    }
 
     public List<Child> getChildren() {
         return children;
