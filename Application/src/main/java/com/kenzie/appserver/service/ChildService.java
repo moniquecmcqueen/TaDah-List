@@ -8,14 +8,17 @@ import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.TaDahTaskList;
 import com.kenzie.appserver.service.model.Task;
 import org.checkerframework.checker.units.qual.A;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+@Service
 public class ChildService {
     private TaskRepository taskRepository;
     private ChildRepository childRepository;
+    @Autowired
     public ChildService(ChildRepository childRepository, TaskRepository taskRepository) {
         this.childRepository = childRepository;
         this.taskRepository = taskRepository;

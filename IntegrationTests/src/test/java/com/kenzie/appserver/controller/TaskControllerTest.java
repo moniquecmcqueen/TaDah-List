@@ -59,7 +59,7 @@ class TaskControllerTest {
         String createTaskId = mockNeat.strings().valStr();
 
         TaskCreateRequest taskCreateRequest = new TaskCreateRequest();
-        taskCreateRequest.setTaskId(createTaskId);
+        taskCreateRequest.setTaskTitle(createTaskId);
 
         mapper.registerModule(new JavaTimeModule());
 

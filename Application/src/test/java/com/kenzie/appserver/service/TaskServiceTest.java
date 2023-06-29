@@ -33,7 +33,7 @@ public class TaskServiceTest {
 
         TaskRecord taskRecord = new TaskRecord();
         taskRecord.setTaskId(id);
-        taskRecord.setTaskDescription("take out the trash");
+        taskRecord.setTaskTitle("take out the trash");
 
 
         // WHEN
