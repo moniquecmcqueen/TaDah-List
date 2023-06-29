@@ -15,7 +15,7 @@ import java.util.Objects;
         private String childUsername;
         private String taskId;
 
-        @DynamoDBAttribute(attributeName = "childId")
+        @DynamoDBHashKey(attributeName = "childId")
         public String getChildId() {
             return childId;
         }
