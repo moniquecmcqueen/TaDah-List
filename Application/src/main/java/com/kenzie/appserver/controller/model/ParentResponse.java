@@ -12,12 +12,14 @@ public class ParentResponse {
     @NotEmpty
     @JsonProperty("parentId")
     private String parentId;
-    @JsonProperty("username")
-    private String username;
-    @JsonProperty("childTaskCompletedTask")
-    private Map<String, Boolean> childTaskCompletedTask;
-    @JsonProperty("todoList")
-    private List<Task> todoList;
+    @JsonProperty("parentUsername")
+    private String parentUsername;
+    @JsonProperty("childUsername")
+    private String childUsername;
+    @JsonProperty("childId")
+    private String childId;
+    //    @JsonProperty("todoList")
+//    private List<Task> todoList;
     @JsonProperty("children")
     private List<Child> children;
 
@@ -30,28 +32,20 @@ public class ParentResponse {
         this.parentId = parentId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getParentUsername() {
+        return parentUsername;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setParentUsername(String parentUsername) {
+        this.parentUsername = parentUsername;
     }
 
-    public Map<String, Boolean> getChildTaskCompletedTask() {
-        return childTaskCompletedTask;
+    public String getChildUsername() {
+        return childUsername;
     }
 
-    public void setChildTaskCompletedTask(Map<String, Boolean> childTaskCompletedTask) {
-        this.childTaskCompletedTask = childTaskCompletedTask;
-    }
-
-    public List<Task> getTodoList() {
-        return todoList;
-    }
-
-    public void setTodoList(List<Task> todoList) {
-        this.todoList = todoList;
+    public void setChildUsername(String childUsername) {
+        this.childUsername = childUsername;
     }
 
     public List<Child> getChildren() {
@@ -61,15 +55,13 @@ public class ParentResponse {
     public void setChildren(List<Child> children) {
         this.children = children;
     }
+    public String getChildId() { return childId; }
+    public void setChildId (String childId) { this.childId = childId; }
 
-    public void addChild(Child child) {
-        children.add(child);
     }
 
-    public void removeChild(Child child) {
-        children.remove(child);
-    }
-}
+
+
 
 
 

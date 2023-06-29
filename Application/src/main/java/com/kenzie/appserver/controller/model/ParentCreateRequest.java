@@ -10,65 +10,30 @@ import java.util.*;
 public class ParentCreateRequest {
 
     @NotEmpty
-    @JsonProperty("parentId")
-    private String parentId;
-    @JsonProperty("username")
-    private String username;
-    @JsonProperty("childTaskCompletedTask")
-    private Map<String, Boolean> childTaskCompletedTask;
-    @JsonProperty("todoList")
-    private List<Task> todoList;
-    @JsonProperty("children")
-    private List<Child> children;
 
+    @JsonProperty("parentUsername")
+    private String parentUsername;
 
-    public String getParentId() {
-        return parentId;
+    @JsonProperty("childUsername")
+    private String childUsername;
+
+    public String getParentUsername() {
+        return parentUsername;
     }
 
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
+    public void setParentUsername(String parentUsername) {
+        this.parentUsername = parentUsername;
     }
 
-    public String getUsername() {
-        return username;
+
+    public String getChildUsername() {
+        return childUsername;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setChildUsername(String childUsername) {
+        this.childUsername = childUsername;
     }
 
-    public Map<String, Boolean> getChildTaskCompletedTask() {
-        return childTaskCompletedTask;
-    }
-
-    public void setChildTaskCompletedTask(Map<String, Boolean> childTaskCompletedTask) {
-        this.childTaskCompletedTask = childTaskCompletedTask;
-    }
-
-    public List<Task> getTodoList() {
-        return todoList;
-    }
-
-    public void setTodoList(List<Task> todoList) {
-        this.todoList = todoList;
-    }
-
-    public List<Child> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Child> children) {
-        this.children = children;
-    }
-
-    public void addChild(Child child) {
-        children.add(child);
-    }
-
-    public void removeChild(Child child) {
-        children.remove(child);
-    }
 }
 
 

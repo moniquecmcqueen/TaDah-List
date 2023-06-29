@@ -10,19 +10,18 @@ import java.util.UUID;
 @DynamoDBTable(tableName = "TaDahTasks")
 public class TaskRecord {
 
-    private UUID taskId;
+    private String taskId;
     private String taskTitle;
-    private UUID childId;
     private Boolean isCompleted;
-    private UUID parentId;
+
 
     @DynamoDBHashKey(attributeName = "taskId")
-    public UUID getTaskId() {
+    public String getTaskId() {
         return taskId;
     }
 
     public void setTaskId(String taskId) {
-        this.taskId = UUID.fromString(taskId);
+        this.taskId = taskId;
     }
 
     @DynamoDBAttribute(attributeName = "taskTitle")
@@ -34,14 +33,7 @@ public class TaskRecord {
         this.taskTitle = taskTitle;
     }
 
-    @DynamoDBAttribute(attributeName = "childId")
-    public UUID getChildId() {
-        return childId;
-    }
 
-    public void setChildId(String childId) {
-        this.childId = UUID.fromString(childId);
-    }
 
     @DynamoDBAttribute(attributeName = "isCompleted")
     public Boolean getIsCompleted() {
@@ -52,14 +44,7 @@ public class TaskRecord {
         this.isCompleted = isCompleted;
     }
 
-    @DynamoDBAttribute(attributeName = "parentId")
-    public UUID getParentId() {
-        return parentId;
-    }
 
-    public void setParentId(String parentId) {
-        this.parentId = UUID.fromString(parentId);
-    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

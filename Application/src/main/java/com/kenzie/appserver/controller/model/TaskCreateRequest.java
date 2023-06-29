@@ -7,20 +7,8 @@ import javax.validation.constraints.NotEmpty;
 public class TaskCreateRequest {
 
     @NotEmpty
-    @JsonProperty("isCompleted")
-    private Boolean isCompleted;
     @JsonProperty("taskTitle")
     private String taskTitle;
-
-
-
-    public Boolean getCompleted() {
-        return isCompleted;
-    }
-
-    public void setCompleted(Boolean completed) {
-        isCompleted = completed;
-    }
 
     public String getTaskTitle() {
         return taskTitle;
@@ -30,6 +18,5 @@ public class TaskCreateRequest {
         this.taskTitle = taskTitle;
     }
 
-    public void setTaskId(String createTaskId) {
     }
-}
+

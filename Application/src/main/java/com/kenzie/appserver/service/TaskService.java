@@ -4,6 +4,7 @@ import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.service.model.TaDahTaskList;
 import com.kenzie.appserver.service.model.Task;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 public class TaskService {
     private TaskRepository taskRepository;
 
+    @Autowired
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
@@ -24,20 +26,40 @@ public class TaskService {
 
         return taskFromBackend;
     }
-    public TaDahTaskList findAllTasks() {
-        TaDahTaskList taDahTaskList= new TaDahTaskList();
+
+
+
+    public List<Task> getAllTasks() {
+        List<Task> taskList = new ArrayList<>();
         taskRepository
                 .findAll()
-                .forEach(task -> taDahTaskList.add(new Task(task.getTaskId(), task.getTaskTitle(), task.getIsCompleted())));
+                .forEach(task -> taskList.add(new Task(task.getTaskId(), task.getTaskTitle(), task.getIsCompleted())));
         return taskList;
     }
 
     public Task addNewTask(Task task) {
         TaskRecord taskRecord = new TaskRecord();
-        taskRecord.setTaskId(String.valueOf(task.getTaskId()));
+        taskRecord.setTaskId(task.getTaskId());
         taskRecord.setTaskTitle(task.getTaskTitle());
         taskRepository.save(taskRecord);
         return task;
+    }
+
+
+    public void deleteTask(String taskId) {
+        taskRepository.deleteById(taskId);
+
+    }
+
+
+    public void updateTask(Task task) {
+        if (taskRepository.existsById(task.getTaskId())) {
+            TaskRecord taskRecord = new TaskRecord();
+            taskRecord.setTaskId(task.getTaskId());
+            taskRecord.setTaskTitle(task.getTaskTitle());
+            taskRepository.save(taskRecord);
+
+        }
     }
 }
 
