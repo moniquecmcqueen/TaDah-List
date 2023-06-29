@@ -9,10 +9,11 @@ import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Parent;
 import com.kenzie.appserver.service.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class ParentService {
     private ParentRepository parentRepository;
     private ChildRepository childRepository;
