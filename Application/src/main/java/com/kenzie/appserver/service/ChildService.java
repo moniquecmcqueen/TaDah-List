@@ -48,7 +48,12 @@ public class ChildService {
         taskRepository.save(taskRecord);
         return task;
     }
-}
+
+    public boolean checkChildUsername(String username) {
+            ChildRecord childRecord = childRepository.findByChildUsername(username);
+            return childRecord != null;
+        }
+    }
 
 // TaskService interacts with the model classes
 

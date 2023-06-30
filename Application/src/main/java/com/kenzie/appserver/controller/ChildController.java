@@ -33,7 +33,9 @@ public class ChildController {
         }
         return ResponseEntity.notFound().build();
     }
-
+    public boolean checkChildUsername(@PathVariable String username) {
+        return childService.checkChildUsername(username);
+    }
 
 
 }

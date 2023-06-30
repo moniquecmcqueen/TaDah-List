@@ -4,6 +4,7 @@ import com.kenzie.appserver.repositories.ChildRepository;
 import com.kenzie.appserver.repositories.ParentRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.repositories.model.ChildRecord;
+import com.kenzie.appserver.repositories.model.ParentRecord;
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Parent;
@@ -68,6 +69,11 @@ public class ParentService {
 //        taskRepository.save(taskRecord);
 //        return task;
 //    }
+
+    public boolean checkParentUsername(String username) {
+        ParentRecord parentRecord = parentRepository.findByParentUsername(username);
+        return parentRecord != null;
+    }
 }
 
 
