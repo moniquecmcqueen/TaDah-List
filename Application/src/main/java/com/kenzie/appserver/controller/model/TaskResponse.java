@@ -13,7 +13,7 @@ public class TaskResponse {
     @JsonProperty("taskId")
     private String taskId;
     @JsonProperty("isCompleted")
-    private boolean isCompleted;
+    private Boolean isCompleted;
     @JsonProperty("taskTitle")
     private String taskTitle;
 
@@ -28,7 +28,7 @@ public class TaskResponse {
         this.taskId = taskId;
     }
 
-    public boolean getIsCompleted() {
+    public Boolean getIsCompleted() {
         return isCompleted;
     }
 
