@@ -297,20 +297,19 @@
           // Hide everything
           document.getElementById("main-container").style.display = "none";
           // Fetch and display tasklist.html
-          fetch('path/to/tasklist.html')
+          fetch('tasklist.html')
                   .then(response => response.text())
-                  .then(html => {
-                    document.body.innerHTML = html;
+                  .then(data => {
+                    var tasklistContainer = document.getElementById("tasklist-container");
+                    tasklistContainer.innerHTML = data;
                   })
                   .catch(error => {
-                    console.error('Failed to fetch tasklist.html:', error);
+                    console.log('Error fetching tasklist.html:', error);
                   });
         });
       }
     });
-
   </script>
-
 
 
 
