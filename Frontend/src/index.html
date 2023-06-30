@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tadah App</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    #main-container {
+      max-width: 400px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .input-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .input-container p {
+      margin-right: 10px;
+    }
+
+    input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .button-container {
+      margin-top: 20px;
+    }
+
+    .button-container p {
+      margin-bottom: 10px;
+    }
+
+    .button-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .button-container button:hover {
+      background-color: #45a049;
+    }
+
+    /* Hide the additional children section initially */
+    #additional-children-section {
+      display: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    #add-child-btn {
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 10px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    #remove-child-btn {
+      background-color: #f44336;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 10px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .line {
+      border-top: 1px solid #ccc;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+    /* New CSS styles for the Account Creation Confirmation section */
+    #account-confirmation-section {
+      display: none;
+    }
+
+    #account-confirmation-section p {
+      margin-bottom: 10px;
+    }
+
+    .child-button {
+      padding: 10px;
+      background-color: #2196F3;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<div id="main-container">
+  <h1>Tadah App</h1>
+
+  <!-- Initial view -->
+  <div id="initial-view">
+    <p>Already have an account? Login here</p>
+
+    <!-- Enter Username section -->
+    <div class="input-container">
+      <p>Enter Username:</p>
+      <input type="text" id="username-input" placeholder="Username">
+    </div>
+
+    <!-- Button container -->
+    <div class="button-container">
+      <button id="login-btn">Login</button>
+      <p>Need an account? Click on "Create New Account" below</p>
+      <button id="create-account-btn">Create New Account</button>
+    </div>
+  </div>
+
+  <!-- Create account view -->
+  <div id="create-account-view" style="display: none;">
+    <p>To add additional children, please press the <span class="plus-button">+</span> button</p>
+
+    <!-- Create Username section -->
+    <div class="input-container">
+      <p>Create Username:</p>
+      <input type="text" id="create-username-input" placeholder="Username">
+    </div>
+
+    <!-- Enter Child's Username section -->
+    <div class="input-container">
+      <p>Enter Child's Username:</p>
+      <input type="text" id="child-username-input" placeholder="Child's Username">
+    </div>
+
+    <!-- Plus button -->
+    <div id="additional-children-section"></div>
+
+    <!-- Button container -->
+    <div class="button-container">
+      <div>
+        <button id="add-child-btn">Add Additional Child</button>
+        <button id="remove-child-btn" class="minus-button">Remove Additional Child</button>
+      </div>
+      <button id="create-account-submit-btn">Create Account</button>
+      <hr class="line">
+      <button id="home-btn">Home</button>
+    </div>
+  </div>
+  <!-- Account Creation Confirmation section -->
+  <div id="account-confirmation-section" style="display: none;">
+    <p>Thanks <span id="confirmation-username"></span>, please choose which child you want to edit:</p>
+    <div id="child-buttons-container"></div>
+
+    <div id="tasklist-container"></div>
+  </div>
+
+  <script>
+    // Login button click event listener
+    document.getElementById("login-btn").addEventListener("click", function() {
+      // Handle the login logic here
+      console.log("Login button clicked");
+    });
+
+    // Create New Account button click event listener
+    document.getElementById("create-account-btn").addEventListener("click", function() {
+      // Hide the initial view
+      document.getElementById("initial-view").style.display = "none";
+      // Show the create account view
+      document.getElementById("create-account-view").style.display = "block";
+    });
+
+    // Plus button click event listener
+    document.getElementById("add-child-btn").addEventListener("click", function() {
+      // Show the additional children section
+      var additionalChildrenSection = document.getElementById("additional-children-section");
+      additionalChildrenSection.style.display = "block";
+
+      // Create a new input container
+      var inputContainer = document.createElement("div");
+      inputContainer.classList.add("input-container");
+
+      // Create the additional child input field
+      var additionalChildInput = document.createElement("input");
+      additionalChildInput.type = "text";
+      additionalChildInput.classList.add("additional-child-input");
+      additionalChildInput.placeholder = "Additional Child Username";
+      inputContainer.appendChild(additionalChildInput);
+
+      // Append the new input container to the additional children section
+      additionalChildrenSection.appendChild(inputContainer);
+    });
+
+    // Home button click event listener
+    document.getElementById("home-btn").addEventListener("click", function() {
+      // Hide the create account view
+      document.getElementById("create-account-view").style.display = "none";
+      // Show the initial view
+      document.getElementById("initial-view").style.display = "block";
+      // Clear any additional child inputs
+      var additionalChildrenSection = document.getElementById("additional-children-section");
+      additionalChildrenSection.innerHTML = '';
+    });
+
+    // Minus button click event listener
+    document.getElementById("remove-child-btn").addEventListener("click", function() {
+      // Get the additional children section
+      var additionalChildrenSection = document.getElementById("additional-children-section");
+
+      // Get the last additional child input container
+      var lastAdditionalChildContainer = additionalChildrenSection.lastElementChild;
+
+      // Remove the last additional child input container
+      if (lastAdditionalChildContainer) {
+        additionalChildrenSection.removeChild(lastAdditionalChildContainer);
+      }
+    });
+
+    // Create Account button click event listener
+    document.getElementById("create-account-submit-btn").addEventListener("click", function() {
+      // Get the entered username
+      var username = document.getElementById("create-username-input").value;
+      // Hide the create account view
+      document.getElementById("create-account-view").style.display = "none";
+      // Show the account confirmation view
+      var accountConfirmationSection = document.getElementById("account-confirmation-section");
+      accountConfirmationSection.style.display = "block";
+      // Set the confirmation message with the username
+      var confirmationUsername = document.getElementById("confirmation-username");
+      confirmationUsername.textContent = username;
+      // Get the child's username
+      var childUsername = document.getElementById("child-username-input").value;
+      // Create a container for the child's username input
+      var childUsernameContainer = document.createElement("div");
+      childUsernameContainer.classList.add("input-container");
+      // Create the child's username button
+      var childUsernameButton = document.createElement("button");
+      childUsernameButton.classList.add("child-button");
+      childUsernameButton.textContent = childUsername;
+      childUsernameContainer.appendChild(childUsernameButton);
+      // Append the child's username container to the account confirmation section
+      accountConfirmationSection.appendChild(childUsernameContainer);
+      // Get the additional children
+      var additionalChildrenSection = document.getElementById("additional-children-section");
+      var additionalChildInputs = additionalChildrenSection.getElementsByClassName("additional-child-input");
+      // Create child buttons for each additional child
+      var childButtonsContainer = document.getElementById("child-buttons-container");
+      childButtonsContainer.innerHTML = "";
+      for (var i = 0; i < additionalChildInputs.length; i++) {
+        var childName = additionalChildInputs[i].value;
+        var childButton = document.createElement("button");
+        childButton.classList.add("child-button");
+        childButton.textContent = childName;
+        childButtonsContainer.appendChild(childButton);
+      }
+
+      // Child button click event listener
+      var childButtons = document.getElementsByClassName("child-button");
+      for (var j = 0; j < childButtons.length; j++) {
+        childButtons[j].addEventListener("click", function() {
+          // Hide everything
+          document.getElementById("main-container").style.display = "none";
+          // Fetch and display tasklist.html
+          fetch('path/to/tasklist.html')
+                  .then(response => response.text())
+                  .then(html => {
+                    document.body.innerHTML = html;
+                  })
+                  .catch(error => {
+                    console.error('Failed to fetch tasklist.html:', error);
+                  });
+        });
+      }
+    });
+
+  </script>
+
+
+
+
+</div>
+</body>
+</html>

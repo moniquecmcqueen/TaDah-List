@@ -15,28 +15,10 @@ module.exports = {
     port: 8080,
     open: true,
   },
-  module: {
-    rules: [
-      {
-        test: /\.html$/,
-        use: 'html-loader',
-      },
-      {
-        test: /\.jsx?$/, // Match both .js and .jsx files
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-react'],
-          },
-        },
-      },
-    ],
-  },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/main.html',
-      filename: 'main.html',
+      template: path.resolve(__dirname, 'src', 'index.html'),
+      filename: 'index.html',
       inject: 'body',
     }),
     new CopyPlugin({
