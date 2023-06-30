@@ -26,8 +26,8 @@ build
 invoke/*.json
 
 /aws.xml
-/Solution/src/main/.aws-sam/
-/Application/src/main/.aws-sam/
+/Solution/src/main.js/.aws-sam/
+/Application/src/main.js/.aws-sam/
 /Solution/out.yml
 /Solution/bucket-name.txt
 /Application/out.yml

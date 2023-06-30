@@ -117,3 +117,50 @@ button:hover {
 .delete-button {
     cursor: pointer;
 }
+form {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="text"] {
+    padding: 5px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+button[type="submit"],
+button[name="createUsername"] {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+.create-username {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.create-username button {
+    font-size: 18px;
+    padding: 10px 20px;
+}
+

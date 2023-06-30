@@ -6,4 +6,5 @@ import com.kenzie.appserver.service.model.Child;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ChildRepository extends CrudRepository<ChildRecord, String> {
+    ChildRecord findByChildUsername(String username);
 }
