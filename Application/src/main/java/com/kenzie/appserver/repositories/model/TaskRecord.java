@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @DynamoDBTable(tableName = "TaDahTasks")
 public class TaskRecord {
-
+    @DynamoDBHashKey(attributeName = "task_id")
     private String taskId;
     private String taskTitle;
     private Boolean isCompleted;

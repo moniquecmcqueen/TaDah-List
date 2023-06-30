@@ -3,6 +3,7 @@ package com.kenzie.appserver.controller;
 import com.kenzie.appserver.controller.model.ParentCreateRequest;
 import com.kenzie.appserver.controller.model.ParentResponse;
 import com.kenzie.appserver.controller.model.TaskResponse;
+import com.kenzie.appserver.repositories.model.ParentRecord;
 import com.kenzie.appserver.service.ChildService;
 import com.kenzie.appserver.service.ParentService;
 import com.kenzie.appserver.service.model.Parent;
@@ -141,4 +142,15 @@ public class ParentController {
 
         return parentResponse;
 }
+
+    @GetMapping("/username/{username}")
+    public boolean checkUsernameExists(@PathVariable String username) {
+        return parentService.checkParentUsername(username);
+    }
+
+
+
+
+
+
 }

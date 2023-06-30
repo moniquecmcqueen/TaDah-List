@@ -5,7 +5,7 @@
 <suppressions>
     <suppress checks="." files="src/resources/.*\.[PpJj][NnPp][Gg]" />
     <suppress checks="AvoidStaticImport" files=".*Test.java" />
-    <suppress checks="(Javadoc|MethodName)" files="src/main/java" />             <!-- gradle tests -->
+    <suppress checks="(Javadoc|MethodName)" files="src/main.js/java" />             <!-- gradle tests -->
     <suppress checks="(Javadoc|MethodName)" files="src/test/java" />             <!-- gradle tests -->
     <suppress checks="(Javadoc|MethodName)" files="tst/com/amazon" />            <!-- HappyTrails tests -->
     <suppress checks="(Javadoc|MethodName)" files="src/com/amazon/.*/mastery/" /> <!-- MT TCT hydra proxies -->
