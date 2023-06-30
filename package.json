@@ -3,7 +3,8 @@
     "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
-    "html-loader": "^4.2.0"
+    "html-loader": "^4.2.0",
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "ignore-loader": "^0.1.2"

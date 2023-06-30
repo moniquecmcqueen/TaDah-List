@@ -1,23 +1,20 @@
+// src/api/UsernameCheck.js
 const checkUsername = () => {
-    const username = document.getElementById('usernameInput').value;
+    const username = document.getElementById('username-input').value;
 
-    // Make a GET request to the backend API to check the parent and child usernames
+    // Make a GET request to the backend API to check the username
     fetch(`/api/username/${username}`)
         .then(response => response.json())
         .then(data => {
             // Data contains the response from the backend API
-            if (data.parent === true) {
-                // Parent username exists
-                console.log(`Parent username "${username}" exists`);
-                // Add your logic here for when the parent username exists
-            } else if (data.child === true) {
-                // Child username exists
-                console.log(`Child username "${username}" exists`);
-                // Add your logic here for when the child username exists
+            if (data.exists) {
+                // Username exists
+                console.log(`Username "${username}" exists`);
+                // Add your logic here for when the username exists
             } else {
-                // Both parent and child usernames don't exist
-                console.log(`Both parent and child usernames "${username}" don't exist`);
-                // Add your logic here for when both parent and child usernames don't exist
+                // Username doesn't exist
+                console.log(`Username "${username}" doesn't exist`);
+                // Add your logic here for when the username doesn't exist
             }
         })
         .catch(error => {
@@ -26,5 +23,4 @@ const checkUsername = () => {
         });
 };
 
-// Add event listener to the button
-document.getElementById('checkUsernameButton').addEventListener('click', checkUsername);
+export default checkUsername;
