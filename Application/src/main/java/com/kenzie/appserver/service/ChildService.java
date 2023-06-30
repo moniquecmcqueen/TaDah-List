@@ -33,11 +33,11 @@ public class ChildService {
 
         return childFromBackend;
     }
-    public List<Task> findAll() {//need to update this method once you get all the data from the Task Service class when meeting with Elise
-       List<Task> taDahTaskList= new ArrayList<>();
-       taskRepository
+    public List<Child> findAllByChildId() {//need to update this method once you get all the data from the Task Service class when meeting with Elise
+       List<Child> taDahTaskList= new ArrayList<>();
+       childRepository
                 .findAll()
-                .forEach(task -> taDahTaskList.add(new Task(task.getTaskId(), task.getTaskTitle(), task.getIsCompleted())));
+                .forEach(child -> taDahTaskList.add(new Child(child.getChildUsername(), child.getChildId(), child.getTaskId())));
         return taDahTaskList;
     }
 

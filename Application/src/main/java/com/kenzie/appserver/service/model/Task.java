@@ -9,13 +9,14 @@ public class Task {
 
     private String taskId;
 
-    private boolean isCompleted ;
+    private Boolean isCompleted ;
 
     private String taskTitle;
+    private String parentId;
 
 
     // constructor
-    public Task(String taskId, String taskTitle, boolean isCompleted){
+    public Task(String taskId, String taskTitle, Boolean isCompleted){
         this.taskId = taskId;
         //this.taskDescription = taskDescription;
         this.taskTitle = taskTitle;
@@ -24,10 +25,19 @@ public class Task {
         // this.completed = false,right?? or no?
         this.isCompleted = false;
         //updated constructor to take in changed to boolean default - rebecca
+
     }
     public Task (String taskId, String taskTitle){
         this.taskId = taskId;
         this.taskTitle = taskTitle;
+
+    }
+    public Task(String taskId, String taskTitle, Boolean isCompleted, String parentId){
+        this.taskId = taskId;
+        this.taskTitle = taskTitle;
+        this.isCompleted = false;
+        this.parentId = parentId;
+
 
     }
 
@@ -41,7 +51,13 @@ public class Task {
     }
 
 
+    public String getParentId() {
+        return parentId;
+    }
 
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 
     public String getTaskTitle() {
         return taskTitle;
