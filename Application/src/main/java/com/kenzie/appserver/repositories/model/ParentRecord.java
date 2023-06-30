@@ -25,7 +25,7 @@ import java.util.Objects;
         public void setParentUsername(String parentUsername) {
             this.parentUsername = parentUsername;
         }
-        @DynamoDBAttribute(attributeName = "parentID")
+        @DynamoDBHashKey(attributeName = "parentId")
         public String getParentId() {
             return parentId;
         }

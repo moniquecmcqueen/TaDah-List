@@ -21,6 +21,10 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
     @PostMapping
     public ResponseEntity<Task> addNewTask(@RequestBody TaskCreateRequest taskCreateRequest) {
         Task task = new Task(randomUUID().toString(),taskCreateRequest.getTaskTitle());
