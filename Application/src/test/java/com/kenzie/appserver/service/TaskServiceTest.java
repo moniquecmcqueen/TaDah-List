@@ -152,4 +152,15 @@ public class TaskServiceTest {
         Assertions.assertEquals(taskRecord.getIsCompleted(), task.getIsCompleted(), "The task is completed matches");
         Assertions.assertEquals(taskRecord.getParentId(), task.getParentId(), "The parent Id matches.");
     }
+
+    @Test
+    void deleteTask(){
+        String deleteTaskId = randomUUID().toString();
+
+        Task task = new Task(deleteTaskId, "take out the garbage");
+
+
+       taskService.deleteTask(task.getTaskId());
+       verify(taskRepository).deleteById(deleteTaskId);
+    }
 }
