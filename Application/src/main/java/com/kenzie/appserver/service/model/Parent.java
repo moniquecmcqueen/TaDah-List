@@ -9,6 +9,7 @@ public class Parent {
     private String parentUsername;
 
     private List<Child> children;
+    private List<Task> taskList = new ArrayList<>();
 
     public Parent(String parentId, String parentUsername, List<Child> children) {
         this.parentId = parentId;
@@ -37,7 +38,13 @@ public class Parent {
         this.parentUsername = username;
     }
 
+    public List<Task> getTaskList() {
+        return taskList;
+    }
 
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
+    }
 
     public List<Child> getChildren() {
         return children;

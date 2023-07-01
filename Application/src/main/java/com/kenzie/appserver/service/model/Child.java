@@ -31,6 +31,12 @@ public class Child {
         this.childUsername = childUsername;
         this.childTaskList = childTaskList;
     }
+    public Child(String childUsername, String childId, String taskId) {
+        this.taskId = taskId;
+        this.childUsername = childUsername;
+        this.childId = childId;
+    }
+
 
 
 
