@@ -150,6 +150,6 @@ public class TaskServiceTest {
         Assertions.assertEquals(taskRecord.getTaskId(), task.getTaskId(), "The taskId matches");
         Assertions.assertEquals(taskRecord.getTaskTitle(), task.getTaskTitle(), "The task title matches");
         Assertions.assertEquals(taskRecord.getIsCompleted(), task.getIsCompleted(), "The task is completed matches");
-
+        Assertions.assertEquals(taskRecord.getParentId(), task.getParentId(), "The parent Id matches.");
     }
 }
