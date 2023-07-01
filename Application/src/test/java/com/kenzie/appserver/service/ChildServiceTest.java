@@ -3,6 +3,7 @@ package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.ChildRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
+import com.kenzie.appserver.repositories.model.ChildRecord;
 import com.kenzie.appserver.service.model.Child;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -2,6 +2,7 @@ package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.ChildRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
+import com.kenzie.appserver.repositories.model.ChildRecord;
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Task;

@@ -33,7 +33,8 @@ public class TaskService {
         List<Task> taskList = new ArrayList<>();
         taskRepository
                 .findAll()
-                .forEach(task -> taskList.add(new Task(task.getTaskId(), task.getTaskTitle(), task.getIsCompleted())));
+                .forEach(task -> taskList.add(new Task(task.getTaskId(), task.getTaskTitle(), task.getIsCompleted(),
+                task.getParentId())));
         return taskList;
     }
 
