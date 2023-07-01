@@ -28,27 +28,15 @@ public class ChildService {
     public Child findById(UUID childId) {
         String childIdString = childId.toString(); // Convert UUID to string
 
-        Child childFromBackend = childRepository
+        return childRepository
                 .findById(childIdString)
-                .map(child -> new Child(child.getChildUsername(), child.getChildId(), getChildTaskList(child.getChildId())))
+                .map(child -> {
+                    List<Task> childTaskList = getChildTaskList(childIdString);
+                    return new Child(child.getChildUsername(), child.getChildId(), childTaskList);
+                })
                 .orElse(null);
-
-        return childFromBackend;
     }
-<<<<<<< HEAD
-    public List<Child> findAllByChildId() {//need to update this method once you get all the data from the Task Service class when meeting with Elise
-       List<Child> taDahTaskList= new ArrayList<>();
-       childRepository
-=======
 
-    public List<Task> findAll() {//need to update this method once you get all the data from the Task Service class when meeting with Elise
-        List<Task> taDahTaskList = new ArrayList<>();
-        taskRepository
->>>>>>> d7970c4 (added, get for child controller on get username, seperated , added gsi for taskid and child, added childtasklist to child class, created child constructor with list of tasks, made userId a random UUID, need to implement check to make sure the random uuid doesnt already exist, created a get child task list method in child service, split up tasklist.html into css/js/html counterparts, adjusted api call on checkUsernameexists in parent and child controllers, added a sticker.png to src of frontend, added more css for styling, added childID to taskrecord, made checkusername.js call on the api, added htmlplugins and entry points to the webpack)
-                .findAll()
-                .forEach(child -> taDahTaskList.add(new Child(child.getChildUsername(), child.getChildId(), child.getTaskId())));
-        return taDahTaskList;
-    }
 
     public Task markTaskCompleted(Task task) { //need to update this record when it gets addded
         TaskRecord taskRecord = new TaskRecord();

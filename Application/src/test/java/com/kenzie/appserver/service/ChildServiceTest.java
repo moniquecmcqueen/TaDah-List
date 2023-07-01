@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
 import static org.mockito.Mockito.mock;
@@ -43,7 +44,7 @@ public class ChildServiceTest {
 
         // WHEN
         when(childRepository.findById(childId)).thenReturn(Optional.of(childRecord));
-        Child child = childService.findById(childId);
+        Child child = childService.findById(UUID.fromString(childId));
 
         // THEN
         Assertions.assertNotNull(child, "The object is returned");
@@ -59,7 +60,7 @@ public class ChildServiceTest {
         when(childRepository.findById(childId)).thenReturn(Optional.empty());
 
         // WHEN
-        Child child = childService.findById(childId);
+        Child child = childService.findById(UUID.fromString(childId));
 
         // THEN
         Assertions.assertNull(child, "The childId is null when not found");
