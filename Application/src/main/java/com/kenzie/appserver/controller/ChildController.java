@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
 
@@ -26,15 +27,17 @@ public class ChildController {
 
     @GetMapping("/{childId}")
     public ResponseEntity<Child> getChildById(@PathVariable("childId") String childId) {
-        Child child1 = childService.findById(childId);
+        Child child1 = childService.findById(UUID.fromString(childId));
         // If there are no tasks, then return a 204
         if (child1 == null) {
 
         }
         return ResponseEntity.notFound().build();
     }
-    public boolean checkChildUsername(@PathVariable String username) {
-        return childService.checkChildUsername(username);
+
+    @GetMapping("/{childUsername}")
+    public boolean checkChildUsername(@PathVariable String childUsername) {
+        return childService.checkChildUsername(childUsername);
     }
 
 

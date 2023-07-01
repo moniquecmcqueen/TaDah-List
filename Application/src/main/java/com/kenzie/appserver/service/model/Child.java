@@ -11,18 +11,28 @@ public class Child {
 
     private String taskId;
 
+    private List<Task> childTaskList;
+
 //    public Child(){
 //        //would this generate a unique childId
 //        this.childId = UUID.randomUUID().toString();
 //    } do we need this constructor - rebecca
 
-    public Child(String childUsername, String childId) {
+   /* public Child(String childUsername, String childId) {
         //could we do this for the unique Ids? - monique
         this.childId = childId;
         //might need to check to make sure this id does not exist in our child repository if were doing it this way
         this.childUsername = childUsername;
 
+    }*/
+
+    public Child(String childUsername,String childId, List<Task> childTaskList){
+        this.childId = UUID.randomUUID().toString();
+        this.childUsername = childUsername;
+        this.childTaskList = childTaskList;
     }
+
+
 
     public String getChildId() {
         return childId;

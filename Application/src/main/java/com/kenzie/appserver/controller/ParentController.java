@@ -143,9 +143,9 @@ public class ParentController {
         return parentResponse;
 }
 
-    @GetMapping("/username/{username}")
-    public boolean checkUsernameExists(@PathVariable String username) {
-        return parentService.checkParentUsername(username);
+    @GetMapping("/parentUsername/{username}")
+    public boolean checkUsernameExists(@PathVariable String parentUsernmae) {
+        return parentService.checkParentUsername(parentUsernmae);
     }
 
 
