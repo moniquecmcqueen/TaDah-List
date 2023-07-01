@@ -13,6 +13,7 @@ public class TaskRecord {
     private String taskId;
     private String taskTitle;
     private Boolean isCompleted;
+    private String parentId;
 
 
     @DynamoDBHashKey(attributeName = "taskId")
@@ -40,10 +41,18 @@ public class TaskRecord {
         return isCompleted;
     }
 
-    public void setIsCompleted(Boolean completed) {
+    public void setIsCompleted(Boolean isCompleted) {
         this.isCompleted = isCompleted;
     }
 
+    @DynamoDBAttribute(attributeName = "parentId")
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 
     @Override
     public boolean equals(Object o) {

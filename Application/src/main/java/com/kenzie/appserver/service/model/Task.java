@@ -9,21 +9,21 @@ public class Task {
 
     private String taskId;
 
-    private Boolean isCompleted ;
+    private boolean isCompleted ;
 
     private String taskTitle;
     private String parentId;
 
 
     // constructor
-    public Task(String taskId, String taskTitle, Boolean isCompleted){
+    public Task(String taskId, String taskTitle, boolean isCompleted){
         this.taskId = taskId;
         //this.taskDescription = taskDescription;
         this.taskTitle = taskTitle;
         // tasks are not completed by default because they are being made-monique
         // it should be set to false here, correct? instead of this.completed = completed
         // this.completed = false,right?? or no?
-        this.isCompleted = false;
+        this.isCompleted = isCompleted;
         //updated constructor to take in changed to boolean default - rebecca
 
     }
@@ -32,10 +32,10 @@ public class Task {
         this.taskTitle = taskTitle;
 
     }
-    public Task(String taskId, String taskTitle, Boolean isCompleted, String parentId){
+    public Task(String taskId, String taskTitle, boolean isCompleted, String parentId){
         this.taskId = taskId;
         this.taskTitle = taskTitle;
-        this.isCompleted = false;
+        this.isCompleted = isCompleted;
         this.parentId = parentId;
 
 
@@ -66,12 +66,12 @@ public class Task {
     public void setTaskTitle(String taskTitle) {
         this.taskTitle = taskTitle;
     }
-    public Boolean getIsCompleted() {
+    public boolean getIsCompleted() {
 
         return isCompleted;
     }
 
-    public void setIsCompleted(Boolean isCompleted) {
+    public void setIsCompleted(boolean isCompleted) {
         this.isCompleted = isCompleted;
     }
 

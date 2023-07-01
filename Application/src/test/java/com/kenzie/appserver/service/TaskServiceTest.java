@@ -73,22 +73,30 @@ public class TaskServiceTest {
         taskRecord.setTaskId(randomUUID().toString());
         taskRecord.setTaskTitle("take out the trash");
         taskRecord.setIsCompleted(true);
+        taskRecord.setParentId(randomUUID().toString());
 
 
         TaskRecord taskRecord1 = new TaskRecord();
         taskRecord1.setTaskId(randomUUID().toString());
         taskRecord1.setTaskTitle("clean your room");
         taskRecord1.setIsCompleted(true);
+        taskRecord1.setParentId(randomUUID().toString());
+
+
 
         TaskRecord taskRecord2 = new TaskRecord();
         taskRecord2.setTaskId(randomUUID().toString());
         taskRecord2.setTaskTitle("load the dishwasher");
         taskRecord2.setIsCompleted(true);
+        taskRecord2.setParentId(randomUUID().toString());
+
 
         List<TaskRecord> taskRecords = new ArrayList<>();
+        taskRecords.add(taskRecord);
         taskRecords.add(taskRecord1);
         taskRecords.add(taskRecord2);
-        taskRecords.add(taskRecord2);
+
+        when(taskRepository.findAll()).thenReturn(taskRecords);
 
         //WHEN
         List<Task> tasks = taskService.getAllTasks();
@@ -102,14 +110,17 @@ public class TaskServiceTest {
                 Assertions.assertEquals(taskRecord.getTaskId(), task.getTaskId());
                 Assertions.assertEquals(taskRecord.getTaskTitle(), task.getTaskTitle());
                 Assertions.assertEquals(taskRecord.getIsCompleted(), task.getIsCompleted());
+                Assertions.assertEquals(taskRecord.getParentId(), task.getParentId());
             } else if (task.getTaskId() == taskRecord1.getTaskId()) {
                 Assertions.assertEquals(taskRecord1.getTaskId(), task.getTaskId());
                 Assertions.assertEquals(taskRecord1.getTaskTitle(), task.getTaskTitle());
                 Assertions.assertEquals(taskRecord1.getIsCompleted(), task.getIsCompleted());
+                Assertions.assertEquals(taskRecord1.getParentId(), task.getParentId());
             } else if (task.getTaskId() == taskRecord2.getTaskId())    {
                 Assertions.assertEquals(taskRecord2.getTaskId(), task.getTaskId());
                 Assertions.assertEquals(taskRecord2.getTaskTitle(), task.getTaskTitle());
                 Assertions.assertEquals(taskRecord2.getIsCompleted(), task.getIsCompleted());
+                Assertions.assertEquals(taskRecord2.getParentId(), task.getParentId());
             } else {
                 Assertions.assertTrue(false, "Task returned that was not in the records!");
             }
@@ -139,6 +150,17 @@ public class TaskServiceTest {
         Assertions.assertEquals(taskRecord.getTaskId(), task.getTaskId(), "The taskId matches");
         Assertions.assertEquals(taskRecord.getTaskTitle(), task.getTaskTitle(), "The task title matches");
         Assertions.assertEquals(taskRecord.getIsCompleted(), task.getIsCompleted(), "The task is completed matches");
+        Assertions.assertEquals(taskRecord.getParentId(), task.getParentId(), "The parent Id matches.");
+    }
 
+    @Test
+    void deleteTask(){
+        String deleteTaskId = randomUUID().toString();
+
+        Task task = new Task(deleteTaskId, "take out the garbage");
+
+
+       taskService.deleteTask(task.getTaskId());
+       verify(taskRepository).deleteById(deleteTaskId);
     }
 }

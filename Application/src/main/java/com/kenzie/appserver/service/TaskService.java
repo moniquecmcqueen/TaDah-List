@@ -33,7 +33,8 @@ public class TaskService {
         List<Task> taskList = new ArrayList<>();
         taskRepository
                 .findAll()
-                .forEach(task -> taskList.add(new Task(task.getTaskId(), task.getTaskTitle(), task.getIsCompleted())));
+                .forEach(task -> taskList.add(new Task(task.getTaskId(), task.getTaskTitle(), task.getIsCompleted(),
+                task.getParentId())));
         return taskList;
     }
 
@@ -41,6 +42,8 @@ public class TaskService {
         TaskRecord taskRecord = new TaskRecord();
         taskRecord.setTaskId(task.getTaskId());
         taskRecord.setTaskTitle(task.getTaskTitle());
+        taskRecord.setIsCompleted(task.getIsCompleted());
+        taskRecord.setParentId(task.getParentId());
         taskRepository.save(taskRecord);
         return task;
     }
