@@ -35,7 +35,7 @@ public class ChildController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/{childUsername}")
+    @GetMapping("/childUsername/{childUsername}")
     public boolean checkChildUsername(@PathVariable String childUsername) {
         return childService.checkChildUsername(childUsername);
     }

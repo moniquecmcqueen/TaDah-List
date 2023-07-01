@@ -143,10 +143,11 @@ public class ParentController {
         return parentResponse;
 }
 
-    @GetMapping("/parentUsername/{username}")
-    public boolean checkUsernameExists(@PathVariable String parentUsernmae) {
-        return parentService.checkParentUsername(parentUsernmae);
+    @GetMapping("/parentUsername/{parentUsername}")
+    public boolean checkParentUsername(@PathVariable String parentUsername) {
+        return parentService.checkParentUsername(parentUsername);
     }
+
 
 
 
