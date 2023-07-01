@@ -3,16 +3,11 @@ package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.ChildRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
-import com.kenzie.appserver.repositories.model.ChildRecord;
-import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.model.Child;
-import com.kenzie.appserver.service.model.Task;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static java.util.UUID.randomUUID;

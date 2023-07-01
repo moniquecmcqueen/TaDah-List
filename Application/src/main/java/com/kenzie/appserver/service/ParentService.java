@@ -3,7 +3,6 @@ package com.kenzie.appserver.service;
 import com.kenzie.appserver.repositories.ChildRepository;
 import com.kenzie.appserver.repositories.ParentRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
-import com.kenzie.appserver.repositories.model.ChildRecord;
 import com.kenzie.appserver.repositories.model.ParentRecord;
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.model.Child;
@@ -12,8 +11,6 @@ import com.kenzie.appserver.service.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 @Service
 public class ParentService {
     private ParentRepository parentRepository;

@@ -2,18 +2,15 @@ package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.ChildRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
-import com.kenzie.appserver.repositories.model.ChildRecord;
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.model.Child;
-import com.kenzie.appserver.service.model.TaDahTaskList;
 import com.kenzie.appserver.service.model.Task;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 @Service
 public class ChildService {
     private TaskRepository taskRepository;
