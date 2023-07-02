@@ -44,7 +44,7 @@ public class ParentService {
     }
 
     public void deleteParent(String parentId) {
-        taskRepository.deleteById(parentId);
+        parentRepository.deleteById(parentId);
 
     }
 
@@ -58,6 +58,7 @@ public class ParentService {
     }
 
     public void removeChild(String childId) {
+
         childRepository.deleteById(childId);
     }
 //    public Task addNewTaskToChild(Task task) {

@@ -16,28 +16,33 @@ import java.util.List;
 
 @Service
 public class ChildService {
-    private TaskRepository taskRepository;
     private ChildRepository childRepository;
+    private TaskRepository taskRepository;
     @Autowired
     public ChildService(ChildRepository childRepository, TaskRepository taskRepository) {
         this.childRepository = childRepository;
         this.taskRepository = taskRepository;
+
     }
 
     public Child findById(String childId) {//does this not work because DynamoDB does not agree with UUIDs?
         Child childFromBackend = childRepository
                 .findById(childId)
-                .map(child-> new Child(child.getChildUsername(), child.getChildId()))
+                .map(child-> new Child(child.getChildUsername(), child.getChildId(), child.getTaskId()))
                         //once records added, need to add code for get username)
                 .orElse(null);
 
         return childFromBackend;
     }
-    public List<Child> findAllByChildId() {//need to update this method once you get all the data from the Task Service class when meeting with Elise
+    public List<Child> findAllTasks() {//need to update this method once you get all the data from the Task Service class when meeting with Elise
        List<Child> taDahTaskList= new ArrayList<>();
        childRepository
                 .findAll()
-                .forEach(child -> taDahTaskList.add(new Child(child.getChildUsername(), child.getChildId(), child.getTaskId())));
+                .forEach(child -> taDahTaskList.add(new Child(child.getChildUsername(),
+                                child.getChildId(),
+                                child.getTaskId())));
+
+
         return taDahTaskList;
     }
 

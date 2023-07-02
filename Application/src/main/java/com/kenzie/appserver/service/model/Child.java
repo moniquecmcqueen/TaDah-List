@@ -13,11 +13,6 @@ public class Child {
     private List<Task> childTaskList;
 
 
-    public Child(){}
-//    public Child(){
-//        //would this generate a unique childId
-//        this.childId = UUID.randomUUID().toString();
-//    } do we need this constructor - rebecca
 
     public Child(String childUsername, String childId) {
         //could we do this for the unique Ids? - monique
