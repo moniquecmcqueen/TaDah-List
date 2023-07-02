@@ -6,6 +6,7 @@
 
 body {
     background-color: #f5f5f5;
+    margin: 0;
 }
 
 .background {
@@ -21,6 +22,17 @@ body {
     background-color: var(--primary-color);
     color: var(--secondary-color);
     padding: 0 20px;
+    height: 100px;
+}
+
+.header_logo {
+    width: 60px; /* Adjust the width as desired */
+    height: auto;
+    background-image: url('TaDahLogo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 10px;
 }
 
 .header_home {
@@ -31,14 +43,12 @@ body {
     color: var(--secondary-color);
 }
 
-.header_nav_link {
-    margin-left: 20px;
-    vertical-align: top;
-    line-height: 40px;
-}
 
-.about {
-    margin-left: 20px;
+
+
+.site-title {
+    display: flex;
+    align-items: center;
 }
 
 .button,
@@ -102,37 +112,20 @@ button:hover {
     cursor: pointer;
 }
 
-.task-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--secondary-color);
+.task-section {
+    margin: 20px;
+}
+
+.task-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.task-table th,
+.task-table td {
     padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
-
-.task-title {
-    flex-grow: 1;
-    margin-right: 10px;
-}
-
-.task-buttons {
-    display: flex;
-    gap: 5px;
-}
-
-.task-button {
-    cursor: pointer;
-    font-size: 18px;
-}
-
-.task-button.complete {
-    color: green;
-}
-
-.task-button.delete {
-    color: red;
+    text-align: left;
+    border-bottom: 1px solid var(--primary-color);
 }
 
 .good-job-popup {

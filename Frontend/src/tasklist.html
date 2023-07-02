@@ -5,22 +5,34 @@
   <title>Tadah App</title>
   <link rel="stylesheet" type="text/css" href="css/tasklist.css">
 </head>
+
 <body class="background">
 <header class="header" id="header">
   <div class="site-title">
-    <a class="header_home" href="index.html">Tadah App</a>
+    <div class="header_logo">
+      <img src="TaDahLogo.png" alt="Logo">
+    </div>
+    <a class="header_home" href="index.html">Home</a>
   </div>
 </header>
 
-<div id="myDIV" class="header">
-  <h2>My To-Do List</h2>
-  <input type="text" id="myInput" placeholder="Title...">
-  <span onclick="newElement()" class="addBtn">Add</span>
-</div>
 
-<ul id="myUL" class="task-list">
-  <!-- Tasks will be added dynamically using JavaScript -->
-</ul>
+<div class="task-section">
+  <h2>My To-Do List</h2>
+  <div class="task-input">
+    <input type="text" id="myInput" placeholder="Title...">
+    <span onclick="addTaskElement()" class="addBtn">Add</span>
+  </div>
+
+  <table id="myTable" class="task-table">
+    <tr>
+      <th>Task ID</th>
+      <th>Task Title</th>
+      <th>Actions</th>
+    </tr>
+    <!-- Tasks will be added dynamically using JavaScript -->
+  </table>
+</div>
 
 <div class="good-job-popup" id="goodJobPopup">
   <h3>Good Job, Child's Name!</h3>
@@ -30,3 +42,4 @@
 <script src="tasklist.js"></script>
 </body>
 </html>
+

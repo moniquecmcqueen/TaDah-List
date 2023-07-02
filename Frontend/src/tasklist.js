@@ -1,75 +1,88 @@
-function newElement() {
-    var inputValue = document.getElementById("myInput").value;
+document.addEventListener("DOMContentLoaded", function() {
+    // Code to be executed when the DOM is fully loaded
 
-    if (inputValue === "") {
-        alert("Please enter a task!");
-        return;
+    document.getElementById("addBtn").addEventListener("click", addTaskElement);
+
+    function addTaskElement() {
+        var inputValue = document.getElementById("myInput").value.trim();
+        if (inputValue === '') {
+            return; // Exit the function if the input is empty
+        }
+
+        // Create task elements
+        var table = document.getElementById("myTable");
+        if (!table) {
+            table = document.createElement("table");
+            table.id = "myTable";
+            table.className = "task-table";
+            var headerRow = document.createElement("tr");
+            var idHeader = document.createElement("th");
+            idHeader.textContent = "Task ID";
+            headerRow.appendChild(idHeader);
+            var titleHeader = document.createElement("th");
+            titleHeader.textContent = "Task Title";
+            headerRow.appendChild(titleHeader);
+            var buttonsHeader = document.createElement("th");
+            buttonsHeader.textContent = "Actions";
+            headerRow.appendChild(buttonsHeader);
+            table.appendChild(headerRow);
+            document.getElementById("myDIV").appendChild(table);
+        }
+
+        var newRow = document.createElement("tr");
+        newRow.className = "task-row";
+
+        var taskIdCell = document.createElement("td");
+        taskIdCell.className = "task-id";
+        taskIdCell.textContent = "Task ID: "; // You can replace this with the actual task ID from the backend
+
+        var taskTitleCell = document.createElement("td");
+        taskTitleCell.className = "task-title";
+        taskTitleCell.textContent = inputValue;
+
+        var buttonsCell = document.createElement("td");
+        buttonsCell.className = "task-buttons";
+
+        var completeButton = document.createElement("span");
+        completeButton.textContent = "✓";
+        completeButton.className = "task-button complete";
+        completeButton.addEventListener("click", function () {
+            newRow.remove();
+            showGoodJobPopup();
+        });
+
+        var deleteButton = document.createElement("span");
+        deleteButton.textContent = "🗑";
+        deleteButton.className = "task-button delete";
+        deleteButton.addEventListener("click", function () {
+            newRow.remove();
+        });
+
+        buttonsCell.appendChild(completeButton);
+        buttonsCell.appendChild(deleteButton);
+
+        newRow.appendChild(taskIdCell);
+        newRow.appendChild(taskTitleCell);
+        newRow.appendChild(buttonsCell);
+
+        table.appendChild(newRow);
+
+        document.getElementById("myInput").value = "";
     }
 
-    var li = document.createElement("li");
-    li.className = "task-row";
+    function showGoodJobPopup() {
+        var popup = document.getElementById("goodJobPopup");
+        popup.style.display = "block";
 
-    var taskInfo = document.createElement("div");
-    taskInfo.className = "task-info";
+        // Play the Tada sound
+        var audio = new Audio("/audio/Tada-sound.mp3");
+        audio.play();
 
-    var taskId = document.createElement("span");
-    taskId.className = "task-id";
-    taskId.textContent = "Task ID: "; // You can replace this with the actual task ID from the backend
-    taskInfo.appendChild(taskId);
-
-    var taskTitle = document.createElement("span");
-    taskTitle.className = "task-title";
-    taskTitle.textContent = inputValue;
-    taskInfo.appendChild(taskTitle);
-
-    var buttonsDiv = document.createElement("div");
-    buttonsDiv.className = "task-buttons";
-
-    var completeButton = document.createElement("span");
-    completeButton.textContent = "✓";
-    completeButton.className = "task-button complete";
-    completeButton.addEventListener("click", function () {
-        li.remove();
-        showGoodJobPopup();
-    });
-
-    var deleteButton = document.createElement("span");
-    deleteButton.textContent = "🗑";
-    deleteButton.className = "task-button delete";
-    deleteButton.addEventListener("click", function () {
-        li.remove();
-    });
-
-    buttonsDiv.appendChild(completeButton);
-    buttonsDiv.appendChild(deleteButton);
-
-    li.appendChild(taskInfo);
-    li.appendChild(buttonsDiv);
-
-    document.getElementById("myUL").appendChild(li);
-
-    document.getElementById("myInput").value = "";
-}
-
-
-function showGoodJobPopup() {
-    var popup = document.getElementById("goodJobPopup");
-    popup.style.display = "block";
-    setTimeout(function () {
-        popup.style.display = "none";
-    }, 3000);
-
-    // Function to get a task by its ID
-    function getTaskById(taskId) {
-        return fetch(`/tasks/${taskId}`)
-            .then(response => response.json())
-            .catch(error => {
-                console.error('Error fetching task by ID:', error);
-                throw error;
-            });
+        setTimeout(function () {
+            popup.style.display = "none";
+        }, 3000);
     }
 
-// Function to get a list of tasks associated with a child ID
     function getTasksByChildId(childId) {
         return fetch(`/tasks/child/${childId}`)
             .then(response => response.json())
@@ -79,7 +92,7 @@ function showGoodJobPopup() {
             });
     }
 
-// Function to create a new task
+    // Function to create a new task
     function createTask(taskData) {
         return fetch('/tasks', {
             method: 'POST',
@@ -95,7 +108,7 @@ function showGoodJobPopup() {
             });
     }
 
-// Function to update an existing task
+    // Function to update an existing task
     function updateTask(taskId, taskData) {
         return fetch(`/tasks/${taskId}`, {
             method: 'PUT',
@@ -111,7 +124,7 @@ function showGoodJobPopup() {
             });
     }
 
-// Function to delete a task
+    // Function to delete a task
     function deleteTask(taskId) {
         return fetch(`/tasks/${taskId}`, {
             method: 'DELETE'
@@ -126,5 +139,4 @@ function showGoodJobPopup() {
                 throw error;
             });
     }
-
-}
+});
