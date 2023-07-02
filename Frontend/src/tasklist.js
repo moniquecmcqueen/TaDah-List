@@ -1,11 +1,15 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Code to be executed when the DOM is fully loaded
-    const urlParams = new URLSearchParams(window.location.search);
-    const childUsername = urlParams.get("child");
 
-    // Display the child's username in the task list
-    const childUsernameElement = document.getElementById("child-username");
+    // Get the child's username from the URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const childUsername = urlParams.get('child');
+
+    // Update the <span> element with the child's username
+    const childUsernameElement = document.getElementById('child-username');
     childUsernameElement.textContent = childUsername;
+
+    // Code to be executed when the DOM is fully loaded
+
     document.getElementById("addBtn").addEventListener("click", addTaskElement);
     document.getElementById("myInput").addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
@@ -45,6 +49,19 @@ document.addEventListener("DOMContentLoaded", function() {
         var newRow = document.createElement("tr");
         newRow.className = "task-row";
 
+        var completeButton = document.createElement("button");
+        completeButton.id = "markCompleteButton" + taskIdCounter;
+        completeButton.className = "task-button complete";
+        completeButton.addEventListener("click", function () {
+            newRow.remove();
+            showGoodJobPopup();
+        });
+
+        var completeIcon = document.createElement("span");
+        completeIcon.className = "material-icons";
+        completeIcon.textContent = "check";
+        completeButton.appendChild(completeIcon);
+
         var taskIdCell = document.createElement("td");
         taskIdCell.className = "task-id";
         taskIdCell.textContent = "Task ID: " + taskIdCounter; // Assign the task ID
@@ -56,21 +73,18 @@ document.addEventListener("DOMContentLoaded", function() {
         var buttonsCell = document.createElement("td");
         buttonsCell.className = "task-buttons";
 
-        var completeButton = document.createElement("span");
-        completeButton.textContent = "✓";
-        completeButton.className = "task-button complete";
-        completeButton.addEventListener("click", function () {
-            newRow.remove();
-            showGoodJobPopup();
-        });
-
-        var deleteButton = document.createElement("span");
-        deleteButton.textContent = "🗑";
+        var deleteButton = document.createElement("button");
+        deleteButton.id = "deleteButton" + taskIdCounter;
         deleteButton.className = "task-button delete";
         deleteButton.addEventListener("click", function () {
             newRow.remove();
             playThrowawaySound();
         });
+
+        var deleteIcon = document.createElement("span");
+        deleteIcon.className = "material-icons";
+        deleteIcon.textContent = "delete";
+        deleteButton.appendChild(deleteIcon);
 
         buttonsCell.appendChild(completeButton);
         buttonsCell.appendChild(deleteButton);
