@@ -1,95 +1,60 @@
-// Function to create a new parent
-const createParent = async (parentUsername) => {
-    const response = await fetch('/parents', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            parentUsername: parentUsername,
-        }),
-    });
+// CreateAccount.js
 
-    if (response.ok) {
-        const parent = await response.json();
-        return parent;
-    } else {
-        const error = await response.text();
-        throw new Error(error);
-    }
-};
-
-// Function to create a new child
-const createChild = async (parentId, childUsername) => {
-    const response = await fetch(`/parents/${parentId}/children`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            childUsername: childUsername,
-        }),
-    });
-
-    if (response.ok) {
-        const child = await response.json();
-        return child;
-    } else {
-        const error = await response.text();
-        throw new Error(error);
-    }
-};
-
-// Function to create a new task for a child
-const createTask = async (parentId, childId, taskTitle) => {
-    const response = await fetch(`/parents/${parentId}/children/${childId}/tasks`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            taskTitle: taskTitle,
-            isCompleted: false,
-        }),
-    });
-
-    if (response.ok) {
-        const task = await response.json();
-        return task;
-    } else {
-        const error = await response.text();
-        throw new Error(error);
-    }
-};
-
-// Usage example:
-const handleCreateAccountSubmit = async () => {
+document.getElementById('create-account-submit-btn').addEventListener('click', () => {
     const parentUsername = document.getElementById('create-username-input').value;
-    const childUsername = document.getElementById('child-username-input').value;
+    const childUsernames = document.getElementById('child-username-input').value.split(',');
 
-    try {
-        // Create the parent
-        const parent = await createParent(parentUsername);
+    // Create parent
+    const createParent = async () => {
+        try {
+            const parentResponse = await fetch('http://localhost:5001/parents', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ parentUsername }),
+            });
 
-        // Create the child
-        const child = await createChild(parent.parentId, childUsername);
+            if (!parentResponse.ok) {
+                throw new Error('Failed to create parent');
+            }
 
-        // Create a new task for the child
-        const taskTitle = 'Task 1'; // Get the task title from the input field
-        const task = await createTask(parent.parentId, child.childId, taskTitle);
+            const parentData = await parentResponse.json();
+            return parentData.parentId;
+        } catch (error) {
+            throw new Error(`Error creating parent: ${error.message}`);
+        }
+    };
 
-        // Handle the successful creation of parent, child, and task
-        console.log('Parent created:', parent);
-        console.log('Child created:', child);
-        console.log('Task created:', task);
+    // Create child
+    const createChild = async (parentId, childUsername) => {
+        try {
+            const childResponse = await fetch(`http://localhost:5001/parents/${parentId}/children`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ childUsername }),
+            });
 
-        // Perform any additional actions or UI updates
-    } catch (error) {
-        // Handle the error
-        console.error('Error creating account:', error);
-    }
-};
+            if (!childResponse.ok) {
+                throw new Error('Failed to create child');
+            }
+        } catch (error) {
+            throw new Error(`Error creating child: ${error.message}`);
+        }
+    };
 
-// Attach event listener to the create account submit button
-const createAccountSubmitBtn = document.getElementById('create-account-submit-btn');
-createAccountSubmitBtn.addEventListener('click', handleCreateAccountSubmit);
+    // Account creation
+    createParent()
+        .then(parentId => {
+            const childCreationPromises = childUsernames.map(childUsername => createChild(parentId, childUsername.trim()));
+            return Promise.all(childCreationPromises);
+        })
+        .then(() => {
+            console.log('Account created successfully!');
+        })
+        .catch(error => {
+            console.error('Error creating account:', error);
+        });
+});

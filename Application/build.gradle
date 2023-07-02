@@ -53,6 +53,8 @@ dependencies {
     testImplementation 'net.andreinc:mockneat:0.4.8'
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+    implementation 'software.amazon.awssdk:dynamodb:2.16.61'
 }
 
 processResources {

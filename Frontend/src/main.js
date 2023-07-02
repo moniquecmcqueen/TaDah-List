@@ -144,7 +144,8 @@ document.getElementById('create-account-submit-btn').addEventListener('click', (
         button.textContent = childUsername;
         button.addEventListener('click', () => {
             console.log('Child button clicked:', childUsername);
-            // Perform the necessary actions when a child button is clicked
+            // Redirect to tasklist.html with the selected child's username
+            window.location.href = `tasklist.html?child=${childUsername}`;
         });
         return button;
     };
@@ -154,10 +155,6 @@ document.getElementById('create-account-submit-btn').addEventListener('click', (
         const button = createChildButton(childUsername);
         childButtonsContainer.appendChild(button);
     });
-
-    // Create task list
-    const tasklistContainer = document.getElementById('tasklist-container');
-    tasklistContainer.innerHTML = '';
 
     const createTask = (taskName, completed) => {
         const taskItem = document.createElement('div');

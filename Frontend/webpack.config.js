@@ -41,6 +41,25 @@ module.exports = {
           from: path.resolve(__dirname, 'src/sticker.png'),
           to: '',
         },
+
+        {
+          from: path.resolve(__dirname, 'src/Tada-sound.mp3'),
+          to: 'audio',
+        },
+        {
+          from: path.resolve(__dirname, 'src/TaDahLogo.png'),
+          to: '',
+        },
+        {
+          from: path.resolve(__dirname, 'src/throwawaytask.mp3'),
+          to: 'audio',
+        },
+        {
+          from: path.resolve(__dirname, 'src/taskadded.mp3'),
+          to: 'audio',
+        },
+
+
       ],
     }),
     new CleanWebpackPlugin(),
