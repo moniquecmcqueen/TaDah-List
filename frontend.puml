@@ -1,0 +1,263 @@
+@startuml
+class com.kenzie.appserver.service.TaskServiceTest {
+- TaskRepository taskRepository
+- TaskService taskService
+~ void setup()
+~ void findById()
+~ void findById_invalid()
+}
+class com.kenzie.appserver.service.model.TaDahTaskList {
+- List<Task> tasks
+}
+interface com.kenzie.appserver.repositories.TaskRepository {
+}
+class com.kenzie.appserver.controller.model.TaskResponse {
+- String taskId
+- boolean isCompleted
+- String taskTitle
+- TaDahTaskList taDahTaskList
++ String getTaskId()
++ void setTaskId(String)
++ boolean getIsCompleted()
++ void setCompleted(Boolean)
++ String getTaskTitle()
++ void setTaskTitle(String)
+}
+interface com.kenzie.appserver.repositories.ChildRepository {
+~ ChildRecord findByChildUsername(String)
+}
+class com.kenzie.appserver.controller.TaskController {
+- TaskService taskService
++ ResponseEntity<Task> addNewTask(TaskCreateRequest)
++ ResponseEntity<List<TaskResponse>> getAllTasks()
++ ResponseEntity<TaskResponse> getTaskById(String)
++ ResponseEntity<TaskResponse> updateTask(TaskResponse)
++ ResponseEntity<Void> deleteTask(String)
+- TaskResponse createTaskResponse(Task)
+}
+class com.kenzie.appserver.config.DynamoDbConfig {
+~ String dynamoOverrideEndpoint
++ AmazonDynamoDB amazonDynamoDB(String)
++ AmazonDynamoDB defaultAmazonDynamoDb()
+}
+class com.kenzie.appserver.ApplicationStartUpListener {
++ void onApplicationEvent(ContextRefreshedEvent)
+}
+class com.kenzie.appserver.service.ParentService {
+- ParentRepository parentRepository
+- ChildRepository childRepository
+- TaskRepository taskRepository
++ Parent findById(String)
++ Task addNewTask(Task)
++ void deleteParent(String)
++ Child addChild(Child)
++ void removeChild(String)
++ boolean checkParentUsername(String)
+}
+class com.kenzie.appserver.controller.model.ParentResponse {
+- String parentId
+- String parentUsername
+- String childUsername
+- String childId
+- List<Child> children
++ String getParentId()
++ void setParentId(String)
++ String getParentUsername()
++ void setParentUsername(String)
++ String getChildUsername()
++ void setChildUsername(String)
++ List<Child> getChildren()
++ void setChildren(List<Child>)
++ String getChildId()
++ void setChildId(String)
+}
+class com.kenzie.appserver.repositories.model.TaskRecord {
+- String taskId
+- String taskTitle
+- Boolean isCompleted
+- String childId
++ String getTaskId()
++ void setTaskId(String)
++ String getTaskTitle()
++ void setTaskTitle(String)
++ Boolean getIsCompleted()
++ void setIsCompleted(Boolean)
++ String getChildId()
++ void setChildId(String)
++ boolean equals(Object)
++ int hashCode()
+}
+class com.kenzie.appserver.service.model.Task {
+- String taskId
+- boolean isCompleted
+- String taskTitle
++ String getTaskId()
++ void setTaskId(String)
++ String getTaskTitle()
++ void setTaskTitle(String)
++ Boolean getIsCompleted()
++ void setIsCompleted(Boolean)
++ String toString()
+}
+class com.kenzie.appserver.controller.model.TaskCreateRequest {
+- String taskTitle
++ String getTaskTitle()
++ void setTaskTitle(String)
+}
+class com.kenzie.appserver.config.CacheConfig {
+}
+interface com.kenzie.appserver.repositories.ParentRepository {
+~ ParentRecord findByParentUsername(String)
+}
+class com.kenzie.appserver.service.TaskService {
+- TaskRepository taskRepository
++ Task findById(String)
++ List<Task> getTasksByChildId(String)
++ Task addNewTask(Task)
++ void deleteTask(String)
++ void updateTask(Task)
+}
+class com.kenzie.appserver.Application {
++ {static} void main(String[])
+}
+class com.kenzie.appserver.repositories.model.ChildRecord {
+- String childId
+- String childUsername
+- String taskId
+- ChildRepository childRepository
++ String getChildId()
++ void setChildId(String)
++ String getChildUsername()
++ void setChildUsername(String)
++ String getTaskId()
++ void setTaskId(String)
++ boolean equals(Object)
++ int hashCode()
+}
+class com.kenzie.appserver.service.model.Parent {
+- String parentId
+- String parentUsername
+- List<Child> children
++ void setParentId(String)
++ String getParentId()
++ String getUsername()
++ void setUsername(String)
++ List<Child> getChildren()
++ void setChildren(List<Child>)
++ void addChild(Child)
++ void removeChild(Child)
+}
+class com.kenzie.appserver.service.ParentServiceTest {
+- ChildRepository childRepository
+- ParentService parentService
+- TaskRepository taskRepository
+- ParentRepository parentRepository
+~ void setup()
+}
+class com.kenzie.appserver.controller.model.ChildCreateRequest {
+- TaDahTaskList getTasks
+- Map<String,Boolean> taskCompletedTask
++ TaDahTaskList getTasks()
++ Map<String,Boolean> getTaskCompletedTask()
++ void setTaskCompletedTask(Map<String,Boolean>)
+}
+class com.kenzie.appserver.controller.ParentController {
+- List<Parent> parents
+- ParentService parentService
+- ChildService childService
++ ResponseEntity<Parent> createParent(ParentCreateRequest)
++ ResponseEntity<ParentResponse> getParentById(String)
++ ResponseEntity<Void> deleteParent(String)
++ ResponseEntity<Void> removeChild(String,String)
+- ParentResponse createParentResponse(Parent)
++ boolean checkUsernameExists(String)
+}
+class com.kenzie.appserver.controller.model.ParentCreateRequest {
+- String parentUsername
+- String childUsername
++ String getParentUsername()
++ void setParentUsername(String)
++ String getChildUsername()
++ void setChildUsername(String)
+}
+class com.kenzie.appserver.controller.model.ChildResponse {
+- String childId
+- String childUsername
+- TaDahTaskList getTasks
+- Map<String,Boolean> taskCompletedTask
++ TaDahTaskList getTasks()
++ String getChildId()
++ void setChildId(String)
++ String getChildUsername()
++ void setUsername(String)
++ Map<String,Boolean> getTaskCompletedTask()
++ void setTaskCompletedTask(Map<String,Boolean>)
+}
+class com.kenzie.appserver.service.ChildServiceTest {
+- ChildRepository childRepository
+- ChildService childService
+- TaskRepository taskRepository
+~ void setup()
+}
+class com.kenzie.appserver.controller.TaskController {
+- TaskService taskService
++ ResponseEntity<Task> addNewTask(TaskCreateRequest)
++ ResponseEntity<TaskResponse> getTaskById(String)
++ ResponseEntity<TaskResponse> updateTask(TaskResponse)
++ ResponseEntity<Void> deleteTask(String)
+- TaskResponse createTaskResponse(Task)
+}
+class com.kenzie.appserver.config.ExecutorServiceConfig {
++ TaskExecutor executorService()
+}
+class com.kenzie.appserver.controller.ChildController {
+- List<Child> children
+- ChildService childService
+- TaskService taskService
++ ResponseEntity<Child> getChildById(String)
++ boolean checkChildUsername(String)
++ List<Task> getChildTasks(String)
+}
+class com.kenzie.appserver.service.model.Child {
+- String childId
+- String childUsername
+- String taskId
+- List<Task> childTaskList
++ String getChildId()
++ void setChildId(String)
++ String getChildUsername()
++ void setChildUsername(String)
++ String getTaskId()
++ void setTaskId(String)
+}
+class com.kenzie.appserver.Scheduler {
+}
+class com.kenzie.appserver.service.ChildService {
+- TaskRepository taskRepository
+- ChildRepository childRepository
++ Child findById(UUID)
++ List<Task> findAll()
++ Task markTaskCompleted(Task)
++ boolean checkChildUsername(String)
++ Child getChildByUsername(String)
+- List<Task> getChildTaskList(String)
+}
+class com.kenzie.appserver.repositories.model.ParentRecord {
+- String parentUsername
+- String parentId
+- List<Child> children
++ String getParentUsername()
++ void setParentUsername(String)
++ String getParentId()
++ void setParentId(String)
++ List<Child> getChildren()
++ void setChildren(List<Child>)
++ boolean equals(Object)
++ int hashCode()
+}
+
+
+org.springframework.data.repository.CrudRepository <|-- com.kenzie.appserver.repositories.TaskRepository
+org.springframework.data.repository.CrudRepository <|-- com.kenzie.appserver.repositories.ChildRepository
+org.springframework.data.repository.CrudRepository <|-- com.kenzie.appserver.repositories.ParentRepository
+@enduml
