@@ -8,8 +8,8 @@ module.exports = {
     usedExports: true,
   },
   entry: {
-    main: './src/pages/main.js',
-    usernamecheck: './src/api/UsernameCheck.js',
+    main: './src/main.js',
+    usernamecheck: './src/UsernameCheck.js',
     tasklist: './src/tasklist.js',
     // Add more entry points for other JavaScript files
   },
