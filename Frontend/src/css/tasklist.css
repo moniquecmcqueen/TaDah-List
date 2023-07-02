@@ -26,29 +26,33 @@ body {
 }
 
 .header_logo {
-    width: 60px; /* Adjust the width as desired */
-    height: auto;
-    background-image: url('TaDahLogo.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.header_logo img {
+    height: 60px; /* Adjust the height as needed */
+    width: auto;
+    margin-right: 10px; /* Add some spacing between the logo and text */
 }
 
 .header_home {
     font-size: 36px;
     line-height: 40px;
-    height: 100px;
     text-decoration: none;
     color: var(--secondary-color);
+    margin-left: 20px;
 }
 
+.header_nav_link {
+    margin-left: 20px;
+    vertical-align: top;
+    line-height: 40px;
+}
 
-
-
-.site-title {
-    display: flex;
-    align-items: center;
+.about {
+    margin-left: 20px;
 }
 
 .button,
