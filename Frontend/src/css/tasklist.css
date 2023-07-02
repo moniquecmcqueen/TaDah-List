@@ -134,6 +134,36 @@ button:hover {
     border-bottom: 1px solid var(--primary-color);
 }
 
+.task-table th:first-child,
+.task-table td:first-child {
+    text-align: center;
+}
+
+.task-table .task-checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.task-table .task-checkbox input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.task-table .task-title {
+    display: flex;
+    align-items: center;
+}
+
+.task-table .task-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.task-table .task-button.delete {
+    color: red;
+    margin-left: 10px;
+}
+
 .good-job-popup {
     position: fixed;
     top: 50%;
