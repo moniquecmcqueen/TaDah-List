@@ -10,7 +10,10 @@ public class Child {
     //I dont think this is necessary- brandon
 
     private String taskId;
+    private List<Task> childTaskList;
 
+
+    public Child(){}
 //    public Child(){
 //        //would this generate a unique childId
 //        this.childId = UUID.randomUUID().toString();
@@ -27,6 +30,12 @@ public class Child {
         this.taskId = taskId;
         this.childUsername = childUsername;
         this.childId = childId;
+    }
+
+    public Child(String childUsername, String childId, List<Task> childTaskList){
+        this.childId = childId;
+        this.childUsername = childUsername;
+        this.childTaskList = childTaskList;
     }
 
 
@@ -52,4 +61,15 @@ public class Child {
         this.taskId = taskId;
     }
 
+    public List<Task> getChildTaskList() {
+        return childTaskList;
+    }
+
+    public void setChildTaskList(List<Task> childTaskList) {
+        this.childTaskList = childTaskList;
+    }
 }
+
+
+
+

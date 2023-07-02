@@ -3,8 +3,10 @@ package com.kenzie.appserver.service;
 import com.kenzie.appserver.repositories.ChildRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.repositories.model.ChildRecord;
+import com.kenzie.appserver.repositories.model.ParentRecord;
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.model.Child;
+import com.kenzie.appserver.service.model.Parent;
 import com.kenzie.appserver.service.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,11 +49,12 @@ public class ChildService {
         return task;
     }
 
-    public boolean checkChildUsername(String username) {
-            ChildRecord childRecord = childRepository.findByChildUsername(username);
-            return childRecord != null;
-        }
+    public Child findByUsername(String childUsername) {
+        ChildRecord childRecord = childRepository.findByChildUsername(childUsername);
+
+        return new Child(childRecord.getChildUsername(),childRecord.getChildId(),childRecord.getListOfChildTasks());
     }
+}
 
 // TaskService interacts with the model classes
 

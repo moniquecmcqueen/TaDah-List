@@ -68,9 +68,10 @@ public class ParentService {
 //        return task;
 //    }
 
-    public boolean checkParentUsername(String parentUsername) {
+    public Parent findByUsername(String parentUsername) {
         ParentRecord parentRecord = parentRepository.findByParentUsername(parentUsername);
-        return parentRecord != null;
+
+        return new Parent(parentRecord.getParentId(),parentRecord.getParentUsername(),parentRecord.getChildren());
     }
 }
 
