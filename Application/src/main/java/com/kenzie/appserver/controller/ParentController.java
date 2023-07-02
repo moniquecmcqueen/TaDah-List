@@ -9,6 +9,7 @@ import com.kenzie.appserver.service.ParentService;
 import com.kenzie.appserver.service.model.Parent;
 import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Task;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
 
@@ -23,7 +25,9 @@ import static java.util.UUID.randomUUID;
 @RequestMapping("/parents")
 public class ParentController {
     private List<Parent> parents = new ArrayList<>();
+    @Autowired
     private ParentService parentService;
+    @Autowired
     private ChildService childService;
 
 
@@ -57,16 +61,45 @@ public class ParentController {
         }
 
 
-//    @PostMapping("/{parentId}/children")
-//    public ResponseEntity<Parent> addChild(@PathVariable String parentId, @RequestBody Child child) {
-//        Child addAChild = new Child(randomUUID().toString(),parentCreateRequest.getChildUsername());
-//        parentService.addChild(addAChild);
-//        ParentResponse parentResponse = createParentResponse();
-//
-//        //return ResponseEntity.created(URI.create("/tasks" + parentResponse.())).body(task);
-//        }
-//        return ResponseEntity.notFound().build();
-//    }
+    @PostMapping("/{parentId}/children")
+    public ResponseEntity<ParentResponse> addChild(
+            @PathVariable String parentId,
+            @RequestBody Child child
+    ) {
+        Parent parent = parentService.findById(parentId);
+        if (parent != null) {
+            // Generate a random child ID
+            String childId = UUID.randomUUID().toString();
+
+            // Set the generated child ID and the child's username
+            child.setChildId(childId);
+            child.setChildUsername(child.getChildUsername());
+
+            // Create an empty list of tasks for the child
+            List<Task> tasks = new ArrayList<>();
+            child.setChildTaskList(tasks);
+
+            // Add the child using the ChildService
+            Child addedChild = parentService.addChild(child);
+
+            // Add the child to the parent's list of children
+            parent.addChild(addedChild);
+
+            // Create a parent response
+            ParentResponse parentResponse = createParentResponse(parent);
+
+            // Return the parent response with a 201 status code and the created URI
+            return ResponseEntity
+                    .created(URI.create("/parents/" + parentId))
+                    .body(parentResponse);
+        } else {
+            // If the parent does not exist, return a 404 response
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
 
     @DeleteMapping("/{parentId}/children/{childId}")
     public ResponseEntity<Void> removeChild(@PathVariable String parentId, @PathVariable String childId) {

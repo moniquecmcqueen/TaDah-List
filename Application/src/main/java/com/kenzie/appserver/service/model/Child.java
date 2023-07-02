@@ -58,4 +58,15 @@ public class Child {
         this.taskId = taskId;
     }
 
+    public List<Task> getChildTaskList() {
+        return childTaskList;
+    }
+
+    public void setChildTaskList(List<Task> childTaskList) {
+        this.childTaskList = childTaskList;
+    }
 }
+
+
+
+
