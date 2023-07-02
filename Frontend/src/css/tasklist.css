@@ -7,12 +7,14 @@
 body {
     background-color: #f5f5f5;
     margin: 0;
+    padding: 0 50px; /* Add padding on the left and right sides */
 }
 
 .background {
     background-color: #eaeded;
     margin: 0;
     counter-reset: section;
+    padding: 0 20px; /* Add padding on the left and right sides */
 }
 
 .header {

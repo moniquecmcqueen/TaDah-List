@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
         deleteButton.className = "task-button delete";
         deleteButton.addEventListener("click", function () {
             newRow.remove();
+            playThrowawaySound();
         });
 
         buttonsCell.appendChild(completeButton);
@@ -68,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
         table.appendChild(newRow);
 
         document.getElementById("myInput").value = "";
+        playTaskAddedSound();
     }
 
     function showGoodJobPopup() {
@@ -82,6 +84,17 @@ document.addEventListener("DOMContentLoaded", function() {
             popup.style.display = "none";
         }, 3000);
     }
+
+    function playThrowawaySound() {
+        var audio = new Audio("/audio/throwawaytask.mp3");
+        audio.play();
+    }
+
+    function playTaskAddedSound(){
+
+    var audio = new Audio("/audio/taskadded.mp3");
+    audio.play;
+}
 
     function getTasksByChildId(childId) {
         return fetch(`/tasks/child/${childId}`)
