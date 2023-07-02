@@ -11,6 +11,9 @@ public class Child {
 
     private String taskId;
     private List<Task> childTaskList;
+
+
+    public Child(){}
 //    public Child(){
 //        //would this generate a unique childId
 //        this.childId = UUID.randomUUID().toString();

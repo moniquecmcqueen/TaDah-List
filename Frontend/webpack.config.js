@@ -11,6 +11,7 @@ module.exports = {
     main: './src/main.js',
     usernamecheck: './src/UsernameCheck.js',
     tasklist: './src/tasklist.js',
+    createaccount: './src/CreateAccount.js',
     // Add more entry points for other JavaScript files
   },
   devServer: {

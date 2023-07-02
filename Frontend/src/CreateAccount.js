@@ -1,5 +1,3 @@
-// CreateAccount.js
-
 // Function to create a new parent
 const createParent = async (parentUsername) => {
     const response = await fetch('/parents', {
@@ -65,9 +63,9 @@ const createTask = async (parentId, childId, taskTitle) => {
 };
 
 // Usage example:
-const handleCreateAccount = async () => {
-    const parentUsername = 'parentUsername'; // Get the parent username from the input field
-    const childUsername = 'childUsername'; // Get the child username from the input field
+const handleCreateAccountSubmit = async () => {
+    const parentUsername = document.getElementById('create-username-input').value;
+    const childUsername = document.getElementById('child-username-input').value;
 
     try {
         // Create the parent
@@ -95,17 +93,3 @@ const handleCreateAccount = async () => {
 // Attach event listener to the create account submit button
 const createAccountSubmitBtn = document.getElementById('create-account-submit-btn');
 createAccountSubmitBtn.addEventListener('click', handleCreateAccountSubmit);
-
-// Function to handle the create account submit button click event
-function handleCreateAccountSubmit() {
-    // Get the entered username and child username(s)
-    const parentUsername = document.getElementById('create-username-input').value;
-    const childUsername = document.getElementById('child-username-input').value;
-
-    // Perform the necessary actions to create the account
-    // (e.g., make a backend API request)
-
-    // Display a success message or perform any other desired actions
-    console.log('Account created successfully!');
-}
-
