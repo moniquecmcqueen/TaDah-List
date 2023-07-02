@@ -2,6 +2,11 @@ document.addEventListener("DOMContentLoaded", function() {
     // Code to be executed when the DOM is fully loaded
 
     document.getElementById("addBtn").addEventListener("click", addTaskElement);
+    document.getElementById("myInput").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            addTaskElement();
+        }
+    });
 
     function addTaskElement() {
         var inputValue = document.getElementById("myInput").value.trim();
