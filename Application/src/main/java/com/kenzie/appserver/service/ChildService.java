@@ -49,15 +49,10 @@ public class ChildService {
         return task;
     }
 
-    public boolean checkChildUsername(String username) {
-            ChildRecord childRecord = childRepository.findByChildUsername(username);
-            return childRecord != null;
-        }
-
     public Child findByUsername(String childUsername) {
         ChildRecord childRecord = childRepository.findByChildUsername(childUsername);
 
-        return new Child(childRecord.getChildUsername(),childRecord.getChildId(),childRecord.getListOfChildTasks())
+        return new Child(childRecord.getChildUsername(),childRecord.getChildId(),childRecord.getListOfChildTasks());
     }
 }
 
