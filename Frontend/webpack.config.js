@@ -58,6 +58,10 @@ module.exports = {
           from: path.resolve(__dirname, 'src/taskadded.mp3'),
           to: 'audio',
         },
+        {
+          from: path.resolve(__dirname, 'src/homeButton.png'),
+          to: '',
+        },
 
 
       ],

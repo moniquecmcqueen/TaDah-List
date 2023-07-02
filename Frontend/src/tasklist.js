@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Create task elements
         var table = document.getElementById("myTable");
         if (!table) {
+            // Create the table structure if it doesn't exist
             table = document.createElement("table");
             table.id = "myTable";
             table.className = "task-table";
@@ -46,61 +47,69 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("myDIV").appendChild(table);
         }
 
+        // Create task row
         var newRow = document.createElement("tr");
         newRow.className = "task-row";
 
+        // Create task ID cell
+        var taskIdCell = document.createElement("td");
+        taskIdCell.className = "task-id";
+        taskIdCell.textContent = "Task ID: " + taskIdCounter; // Assign the task ID
+
+        // Create task title cell
+        var taskTitleCell = document.createElement("td");
+        taskTitleCell.className = "task-title";
+        taskTitleCell.textContent = inputValue;
+
+        // Create buttons cell
+        var buttonsCell = document.createElement("td");
+        buttonsCell.className = "task-buttons";
+
+        // Create complete button
         var completeButton = document.createElement("button");
         completeButton.id = "markCompleteButton" + taskIdCounter;
         completeButton.className = "task-button complete";
-        completeButton.addEventListener("click", function () {
+        completeButton.addEventListener("click", function() {
             newRow.remove();
             showGoodJobPopup();
         });
-
         var completeIcon = document.createElement("span");
         completeIcon.className = "material-icons";
         completeIcon.textContent = "check";
         completeButton.appendChild(completeIcon);
 
-        var taskIdCell = document.createElement("td");
-        taskIdCell.className = "task-id";
-        taskIdCell.textContent = "Task ID: " + taskIdCounter; // Assign the task ID
-
-        var taskTitleCell = document.createElement("td");
-        taskTitleCell.className = "task-title";
-        taskTitleCell.textContent = inputValue;
-
-        var buttonsCell = document.createElement("td");
-        buttonsCell.className = "task-buttons";
-
+        // Create delete button
         var deleteButton = document.createElement("button");
         deleteButton.id = "deleteButton" + taskIdCounter;
         deleteButton.className = "task-button delete";
-        deleteButton.addEventListener("click", function () {
+        deleteButton.addEventListener("click", function() {
             newRow.remove();
             playThrowawaySound();
         });
-
         var deleteIcon = document.createElement("span");
         deleteIcon.className = "material-icons";
         deleteIcon.textContent = "delete";
         deleteButton.appendChild(deleteIcon);
 
-        buttonsCell.appendChild(completeButton);
-        buttonsCell.appendChild(deleteButton);
-
+        // Append elements to their respective parents
         newRow.appendChild(taskIdCell);
         newRow.appendChild(taskTitleCell);
+        buttonsCell.appendChild(completeButton);
+        buttonsCell.appendChild(deleteButton);
         newRow.appendChild(buttonsCell);
-
         table.appendChild(newRow);
 
+        // Clear input value
         document.getElementById("myInput").value = "";
+
         // Increment the task ID counter for the next task
         taskIdCounter++;
-        //Play task added sound
+
+        // Play task added sound
         playTaskAddedSound();
     }
+
+
 
 
     function showGoodJobPopup() {
