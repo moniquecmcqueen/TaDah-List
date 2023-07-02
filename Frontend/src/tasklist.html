@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tadah App</title>
+  <link rel="stylesheet" type="text/css" href="css/tasklist.css">
+</head>
+<body class="background">
+<header class="header" id="header">
+  <div class="site-title">
+    <a class="header_home" href="index.html">Tadah App</a>
+  </div>
+</header>
+
+<div id="myDIV" class="header">
+  <h2>My To-Do List</h2>
+  <input type="text" id="myInput" placeholder="Title...">
+  <span onclick="newElement()" class="addBtn">Add</span>
+</div>
+
+<ul id="myUL" class="task-list">
+  <!-- Tasks will be added dynamically using JavaScript -->
+</ul>
+
+<div class="good-job-popup" id="goodJobPopup">
+  <h3>Good Job, Child's Name!</h3>
+  <img src="sticker.png" alt="Sticker">
+</div>
+
+<script src="tasklist.js"></script>
+</body>
+</html>
