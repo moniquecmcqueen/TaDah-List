@@ -8,6 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 
 @EnableScan
 public interface ParentRepository extends CrudRepository<ParentRecord, String> {
-    ParentRecord findByParentUsername(String username);
+    ParentRecord findByParentUsername(String parentUsername);
 
 }

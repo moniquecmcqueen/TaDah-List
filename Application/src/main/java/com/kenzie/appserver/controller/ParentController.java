@@ -143,14 +143,9 @@ public class ParentController {
         return parentResponse;
 }
 
-    @GetMapping("/username/{username}")
-    public boolean checkUsernameExists(@PathVariable String username) {
-        return parentService.checkParentUsername(username);
+    @GetMapping("/parentUsername/{parentUsername}")
+    public ResponseEntity<Boolean> checkUsernameExists(@PathVariable String parentUsername) {
+        boolean usernameExists = parentService.checkParentUsername(parentUsername);
+        return ResponseEntity.ok(usernameExists);
     }
-
-
-
-
-
-
 }
