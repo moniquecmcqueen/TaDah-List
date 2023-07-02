@@ -33,8 +33,23 @@
   </table>
 </div>
 
+<div class="completed-tasks-section">
+  <button id="completedTasksDropdown" class="completed-tasks-dropdown">
+    Completed Tasks
+    <span class="material-icons">arrow_drop_down</span>
+  </button>
+  <table id="completedTasksTable" class="completed-tasks-table">
+    <caption>Completed Tasks</caption>
+    <tr>
+      <th>Task ID</th>
+      <th>Task Title</th>
+      <th>Completed Date and Time</th>
+    </tr>
+  </table>
+</div>
+
 <div class="good-job-popup" id="goodJobPopup">
-  <h3>Good Job, Child's Name!</h3>
+  <h3>Good Job, <span id="child-username-popup"></span> </h3>
   <img src="sticker.png" alt="Sticker">
 </div>
 

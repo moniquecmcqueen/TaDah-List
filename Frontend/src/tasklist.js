@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const childUsernameElement = document.getElementById('child-username');
     childUsernameElement.textContent = childUsername;
 
+    const childPopupElement = document.getElementById('child-username');
+    childPopupElement.textContent = childUsername;
+
     // Code to be executed when the DOM is fully loaded
 
     document.getElementById("addBtn").addEventListener("click", addTaskElement);
@@ -19,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Define a counter variable to keep track of the task ID
     var taskIdCounter = 1;
+    var completedTasksCounter = 1;
 
     function addTaskElement() {
         var inputValue = document.getElementById("myInput").value.trim();
@@ -71,7 +75,9 @@ document.addEventListener("DOMContentLoaded", function() {
         completeButton.className = "task-button complete";
         completeButton.addEventListener("click", function() {
             newRow.remove();
-            showGoodJobPopup();
+            var completedDateTime = new Date().toLocaleString();
+            showGoodJobPopup(inputValue, completedDateTime);
+            showCompletedTask(inputValue, completedDateTime);
         });
         var completeIcon = document.createElement("span");
         completeIcon.className = "material-icons";
@@ -109,10 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
         playTaskAddedSound();
     }
 
-
-
-
-    function showGoodJobPopup() {
+    function showGoodJobPopup(taskTitle, completedDateTime) {
         var popup = document.getElementById("goodJobPopup");
         popup.style.display = "block";
 
@@ -143,17 +146,62 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    function showCompletedTask(taskTitle, completedDateTime) {
+        var completedTasksTable = document.getElementById("completedTasksTable");
+        if (!completedTasksTable) {
+            // Create the completed tasks table if it doesn't exist
+            completedTasksTable = document.createElement("table");
+            completedTasksTable.id = "completedTasksTable";
+            completedTasksTable.className = "completed-tasks-table";
+            var caption = document.createElement("caption");
+            caption.textContent = "Completed Tasks";
+            completedTasksTable.appendChild(caption);
+            var headerRow = document.createElement("tr");
+            var idHeader = document.createElement("th");
+            idHeader.textContent = "Task ID";
+            headerRow.appendChild(idHeader);
+            var titleHeader = document.createElement("th");
+            titleHeader.textContent = "Task Title";
+            headerRow.appendChild(titleHeader);
+            var completedDateTimeHeader = document.createElement("th");
+            completedDateTimeHeader.textContent = "Completed Date and Time";
+            headerRow.appendChild(completedDateTimeHeader);
+            completedTasksTable.appendChild(headerRow);
+            document.getElementById("myDIV").appendChild(completedTasksTable);
+        }
 
-    function getTasksByChildId(childId) {
-        return fetch(`/tasks/child/${childId}`)
-            .then(response => response.json())
-            .catch(error => {
-                console.error('Error fetching tasks by child ID:', error);
-                throw error;
-            });
+        // Create task row
+        var newRow = document.createElement("tr");
+        var taskIdCell = document.createElement("td");
+        taskIdCell.textContent = "Task ID: " + completedTasksCounter;
+        var taskTitleCell = document.createElement("td");
+        taskTitleCell.textContent = taskTitle;
+        var completedDateTimeCell = document.createElement("td");
+        completedDateTimeCell.textContent = completedDateTime;
+        newRow.appendChild(taskIdCell);
+        newRow.appendChild(taskTitleCell);
+        newRow.appendChild(completedDateTimeCell);
+        completedTasksTable.appendChild(newRow);
+        completedTasksCounter++;
     }
 
-    // Function to create a new task
+    function addCompletedTaskRow(table, taskId, taskTitle, completedDate) {
+        var newRow = table.insertRow();
+        var taskIdCell = newRow.insertCell();
+        taskIdCell.textContent = taskId;
+        var taskTitleCell = newRow.insertCell();
+        taskTitleCell.textContent = taskTitle;
+        var completedDateCell = newRow.insertCell();
+        completedDateCell.textContent = completedDate;
+    }
+
+    // Toggle the visibility of the completed tasks dropdown
+    document.getElementById("completedTasksDropdown").addEventListener("click", function() {
+        var completedTasksTable = document.getElementById("completedTasksTable");
+        completedTasksTable.style.display = completedTasksTable.style.display === "none" ? "block" : "none";
+    });
+
+// Function to create a new task
     function createTask(taskData) {
         return fetch('/tasks', {
             method: 'POST',
