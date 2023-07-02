@@ -4,6 +4,7 @@ import com.kenzie.appserver.controller.model.TaskCreateRequest;
 import com.kenzie.appserver.controller.model.TaskResponse;
 import com.kenzie.appserver.service.ChildService;
 import com.kenzie.appserver.service.model.Child;
+import com.kenzie.appserver.service.model.Parent;
 import com.kenzie.appserver.service.model.Task;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,11 +34,16 @@ public class ChildController {
         }
         return ResponseEntity.notFound().build();
     }
-    @GetMapping("/username/{childUsername}")
-    public boolean checkChildUsername(@PathVariable String childUsername) {
-        return childService.checkChildUsername(childUsername);
+    @GetMapping("/childUsername/{childUsername}")
+    public ResponseEntity<?> checkChildUsername(@PathVariable String childUsername) {
+        // Check if child username exists
+        Child child = childService.findByUsername(childUsername);
+        if (child != null) {
+            return ResponseEntity.ok(child); // Return parent object
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-
 
 }
 

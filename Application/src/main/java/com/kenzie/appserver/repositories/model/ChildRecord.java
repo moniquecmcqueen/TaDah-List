@@ -3,7 +3,9 @@ package com.kenzie.appserver.repositories.model;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.kenzie.appserver.service.model.Task;
 
+import java.util.List;
 import java.util.Objects;
 
 
@@ -15,6 +17,8 @@ import java.util.Objects;
 
     private String childUsername;
     private String taskId;
+
+    private List<Task> childTaskList;
 
     @DynamoDBHashKey(attributeName = "childId")
     public String getChildId() {
@@ -42,6 +46,12 @@ import java.util.Objects;
     public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
+
+    public List<Task> getListOfChildTasks() {
+        return childTaskList;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
