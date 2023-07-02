@@ -1,12 +1,20 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Code to be executed when the DOM is fully loaded
+    const urlParams = new URLSearchParams(window.location.search);
+    const childUsername = urlParams.get("child");
 
+    // Display the child's username in the task list
+    const childUsernameElement = document.getElementById("child-username");
+    childUsernameElement.textContent = childUsername;
     document.getElementById("addBtn").addEventListener("click", addTaskElement);
     document.getElementById("myInput").addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
             addTaskElement();
         }
     });
+
+    // Define a counter variable to keep track of the task ID
+    var taskIdCounter = 1;
 
     function addTaskElement() {
         var inputValue = document.getElementById("myInput").value.trim();
@@ -39,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         var taskIdCell = document.createElement("td");
         taskIdCell.className = "task-id";
-        taskIdCell.textContent = "Task ID: "; // You can replace this with the actual task ID from the backend
+        taskIdCell.textContent = "Task ID: " + taskIdCounter; // Assign the task ID
 
         var taskTitleCell = document.createElement("td");
         taskTitleCell.className = "task-title";
@@ -74,8 +82,12 @@ document.addEventListener("DOMContentLoaded", function() {
         table.appendChild(newRow);
 
         document.getElementById("myInput").value = "";
+        // Increment the task ID counter for the next task
+        taskIdCounter++;
+        //Play task added sound
         playTaskAddedSound();
     }
+
 
     function showGoodJobPopup() {
         var popup = document.getElementById("goodJobPopup");
@@ -95,11 +107,19 @@ document.addEventListener("DOMContentLoaded", function() {
         audio.play();
     }
 
-    function playTaskAddedSound(){
+    function playTaskAddedSound() {
+        return new Promise(function(resolve, reject) {
+            var audio = new Audio("/audio/taskadded.mp3");
+            audio.addEventListener("ended", function() {
+                resolve();
+            });
+            audio.addEventListener("error", function() {
+                reject(new Error("Failed to play taskadded sound"));
+            });
+            audio.play();
+        });
+    }
 
-    var audio = new Audio("/audio/taskadded.mp3");
-    audio.play;
-}
 
     function getTasksByChildId(childId) {
         return fetch(`/tasks/child/${childId}`)
