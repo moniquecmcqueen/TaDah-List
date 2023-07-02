@@ -2,7 +2,9 @@ package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.controller.model.TaskCreateRequest;
 import com.kenzie.appserver.controller.model.TaskResponse;
+import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.service.ChildService;
+import com.kenzie.appserver.service.TaskService;
 import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Parent;
 import com.kenzie.appserver.service.model.Task;
@@ -23,6 +25,8 @@ public class ChildController {
 
     private ChildService childService;
 
+    private TaskService taskService;
+
 
 
     @GetMapping("/{childId}")
@@ -39,11 +43,14 @@ public class ChildController {
         // Check if child username exists
         Child child = childService.findByUsername(childUsername);
         if (child != null) {
-            return ResponseEntity.ok(child); // Return parent object
+            return ResponseEntity.ok(child); // Return child object
         } else {
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>("BACKEND: Child username does not exist", HttpStatus.NOT_FOUND);
         }
     }
+
+
+
 
 }
 

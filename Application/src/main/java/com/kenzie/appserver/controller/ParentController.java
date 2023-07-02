@@ -150,7 +150,7 @@ public class ParentController {
         if (parent != null) {
             return ResponseEntity.ok(parent); // Return parent object
         } else {
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>("BACKEND: Parent username does not exist", HttpStatus.NOT_FOUND);
         }
     }
 }
