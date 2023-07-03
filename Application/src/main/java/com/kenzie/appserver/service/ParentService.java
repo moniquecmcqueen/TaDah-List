@@ -71,8 +71,11 @@ public class ParentService {
     public Parent findByUsername(String parentUsername) {
         ParentRecord parentRecord = parentRepository.findByParentUsername(parentUsername);
 
-        return new Parent(parentRecord.getParentId(),parentRecord.getParentUsername(),parentRecord.getChildren());
+        return new Parent(parentRecord.getParentId(), parentRecord.getParentUsername(), parentRecord.getChildren());
     }
+
+
+
 }
 
 

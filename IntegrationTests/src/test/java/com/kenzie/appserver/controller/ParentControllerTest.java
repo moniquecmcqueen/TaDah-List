@@ -5,14 +5,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.appserver.IntegrationTest;
 import com.kenzie.appserver.controller.model.ChildCreateRequest;
 import com.kenzie.appserver.controller.model.ParentCreateRequest;
+import com.kenzie.appserver.controller.model.ParentResponse;
 import com.kenzie.appserver.controller.model.TaskCreateRequest;
 import com.kenzie.appserver.service.ParentService;
 import com.kenzie.appserver.service.TaskService;
+import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Parent;
 import com.kenzie.appserver.service.model.Task;
 import net.andreinc.mockneat.MockNeat;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -40,6 +45,8 @@ class ParentControllerTest {
 
         @Mock
         private ParentService parentServices;
+        @InjectMocks
+        private ParentController parentController;
 
 
         private final MockNeat mockNeat = MockNeat.threadLocal();
@@ -77,5 +84,39 @@ class ParentControllerTest {
                 mvc.perform(MockMvcRequestBuilders.get("/parents/{parentId", parentIdNull))
                         .andExpect(status().isNotFound());
         }
+        @Test
+        public void deleteParentByIdTest() {
+                //Given
+                String parentId = "12345";
 
+                ResponseEntity<Void> response = parentController.deleteParent(parentId);
+
+                // verify
+                Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+                Assertions.assertNull(response.getBody());
+                verify(parentServices, Mockito.times(1)).deleteParent(parentId);
+        }
+        @Test
+        public void getParentByIdTest(){
+                String parentId = "10";
+
+                Parent parent = new Parent(parentId, "MeMa");
+
+                when(parentServices.findById(parentId)).thenReturn(parent);
+
+                ResponseEntity<ParentResponse> response = parentController.getParentById(parentId);
+
+                Assertions.assertEquals(HttpStatus.OK,response.getStatusCode());
+                verify(parentServices,times(1)).findById(parentId);
+        }
+       // @Test
+        public void addChildTest() {
+                String childId = "22";
+                String parentId = "77";
+
+                Parent parent = new Parent(parentId, "Monique");
+                Child child = new Child(childId,"Ava");
+
+                when(parentServices.findById(parentId)).thenReturn(parent);
+        }
 }
