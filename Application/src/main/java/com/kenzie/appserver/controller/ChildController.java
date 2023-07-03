@@ -39,13 +39,14 @@ public class ChildController {
         return ResponseEntity.notFound().build();
     }
     @GetMapping("/childUsername/{childUsername}")
-    public ResponseEntity<?> checkChildUsername(@PathVariable String childUsername) {
+    // changed "?" to Child -mo
+    public ResponseEntity<Child> checkChildUsername(@PathVariable String childUsername) {
         // Check if child username exists
         Child child = childService.findByUsername(childUsername);
         if (child != null) {
             return ResponseEntity.ok(child); // Return child object
         } else {
-            return new ResponseEntity<>("BACKEND: Child username does not exist", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
