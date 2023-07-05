@@ -1,13 +1,16 @@
 package com.kenzie.appserver.controller;
 
-import com.kenzie.appserver.controller.model.ParentCreateRequest;
-import com.kenzie.appserver.controller.model.ParentResponse;
+import com.kenzie.appserver.controller.model.ParentCreateLoginRequest;
+import com.kenzie.appserver.controller.model.ParentCreateLoginResponse;
+import com.kenzie.appserver.controller.model.ParentUserLoginResponse;
 import com.kenzie.appserver.service.ChildService;
 import com.kenzie.appserver.service.ParentService;
 import com.kenzie.appserver.service.model.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
 
@@ -24,34 +27,44 @@ public class ParentController {
 
 
     @PostMapping
-    public ResponseEntity<ParentResponse> createParent(@RequestBody ParentCreateRequest parentCreateRequest) {
+    public ResponseEntity<ParentCreateLoginResponse> createParent(@RequestBody ParentCreateLoginRequest parentCreateLoginRequest) {
 
-        Parent parent = new Parent(randomUUID().toString(), parentCreateRequest.getParentUsername());
-        parentService.addNewParent(parent);
+        if(parentCreateLoginRequest == null|| parentCreateLoginRequest.getParentUsername().length()==0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"invalid user");
+        }
+        if (parentService.findByParentUsername(parentCreateLoginRequest.getParentUsername()) == null ) {
 
-        ParentResponse parentResponse = createParentResponse(parent);
+            parentService.addNewParent(parentCreateLoginRequest);
+            return ResponseEntity.ok().build();
 
-        return ResponseEntity.created(URI.create("/parent/" + parentResponse.getParentId())).body(parentResponse);
+        }else{
+          //  (can add log features)
+            return ResponseEntity.ok().build();
+
+        }
+
+
+        //return (ResponseEntity<ParentCreateLoginResponse>) ResponseEntity.ok();
     }
 
-    @GetMapping("/{parentId}")
+    @GetMapping("/{parentUsername}")
 
-        public ResponseEntity<ParentResponse> getParentById(@PathVariable("parentId") String parentId) {
-            Parent parent = parentService.findByParentId(parentId);
+        public ResponseEntity<ParentUserLoginResponse> getParentById(@PathVariable("parentUsername") String parentUsername) {
+            Parent parent = parentService.findByParentUsername(parentUsername);
             // If there are no tasks, then return a 204
             if (parent == null) {
                 return ResponseEntity.notFound().build();
             }
-            // Otherwise, convert it into a TaskResponses and return it
-            ParentResponse parentResponse = createParentResponse(parent);
-          return null;
+            // Otherwise, convert it into a prentResponses and return it
+        ParentUserLoginResponse parentUserLoginResponse = loginParentResponse(parent);
+          return ResponseEntity.ok(parentUserLoginResponse);
     }
 
 
 
-    @DeleteMapping("/{parentId}")
-    public ResponseEntity<Void> deleteParent(@PathVariable String parentId) {
-        parentService.deleteParent(parentId);
+    @DeleteMapping("/{parentUsername}")
+    public ResponseEntity<Void> deleteParent(@PathVariable String parentUsername) {
+        parentService.deleteParent(parentUsername);
             return ResponseEntity.noContent().build();
         }
 
@@ -73,11 +86,19 @@ public class ParentController {
 //    }
 
 
-    private ParentResponse createParentResponse(Parent parent) {
-        ParentResponse parentResponse = new ParentResponse();
-        parentResponse.setParentId(parent.getParentId());
-        parentResponse.setParentUsername(parent.getParentUsername());
+    private ParentCreateLoginResponse createParentResponse(Parent parent) {
+        ParentCreateLoginResponse parentCreateLoginResponse = new ParentCreateLoginResponse();
+        parentCreateLoginResponse.setChildren(parent.getChildren());
+        parentCreateLoginResponse.setParentUsername(parent.getParentUsername());
 
-        return parentResponse;
+        return parentCreateLoginResponse;
+    }
+
+    private ParentUserLoginResponse loginParentResponse(Parent parent) {
+        ParentUserLoginResponse parentUserLoginResponse = new ParentUserLoginResponse();
+        parentUserLoginResponse.setChildren(parent.getChildren());
+        parentUserLoginResponse.setParentUsername(parent.getParentUsername());
+
+        return parentUserLoginResponse;
     }
 }

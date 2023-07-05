@@ -28,7 +28,7 @@ public class TaskService {
 
         return taskRepository
                 .findById(id)
-                .map(task -> new Task(task.getParentId(), task.getChildId(), task.getTaskId(), task.getTaskTitle(), task.getIsCompleted()))
+                .map(task -> new Task(task.getParentUsername(), task.getChildUsername(), task.getTaskId(), task.getTaskTitle(), task.getIsCompleted()))
                 .orElse(null);
     }
 
@@ -40,7 +40,7 @@ public class TaskService {
         Iterable<TaskRecord> taskIterator = taskRepository.findAll();
 
         for(TaskRecord record : taskIterator) {
-            tasks.add(new Task(record.getParentId(),record.getChildId(), record.getTaskId(),
+            tasks.add(new Task(record.getParentUsername(),record.getChildUsername(), record.getTaskId(),
                     record.getTaskTitle(),
                     record.getIsCompleted()));
 
@@ -51,9 +51,9 @@ public class TaskService {
     public Task addNewTask(Task task) {
         //do i need to retrieve a parent to add a task ? do i need to retrieve a child to add a task
        // Child child = new Child();
-        Parent parent = parentService.findByParentId(task.getParentId()); //why did i have to add task to get my parentId in there
+        Parent parent = parentService.findByParentUsername(task.getParentUsername()); //why did i have to add task to get my parentId in there
         TaskRecord taskRecord = new TaskRecord();
-        taskRecord.setParentId(parent.getParentId());
+        taskRecord.setParentUsername(parent.getParentUsername());
         taskRecord.setTaskId(task.getTaskId());
         //assign child id and username does child need to be added to task records if already assocaited with parent
         taskRecord.setIsCompleted(null);
@@ -77,7 +77,7 @@ public class TaskService {
 
         TaskRecord taskRecord = new TaskRecord();
         taskRecord.setTaskId(task.getTaskId());
-        taskRecord.setParentId(task.getParentId());
+        taskRecord.setParentUsername(task.getParentUsername());
         taskRecord.setTaskTitle(task.getTaskTitle());
         taskRecord.setIsCompleted(task.getIsCompleted());
         taskRepository.save(taskRecord);
@@ -86,7 +86,7 @@ public class TaskService {
 //    public Task markTaskCompleted(String childId) {
 //        //Retrieve the child with the given id from the childservice
 //        //or parent idk
-//        Child child = childService.findByChildId(childId);
+//        Child child = childService.findByChildUsername(childId);
 //        //how do i find my child and access his/her specific tasks
 //
 //        //Create a taskRecord, set the fields,

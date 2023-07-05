@@ -38,8 +38,8 @@ public class TaskController {
 
         TaskResponse taskResponse = new TaskResponse();
         taskResponse.setTaskId(task.getTaskId());
-        taskResponse.setParentId(task.getParentId());
-        taskResponse.setChildId(task.getChildId());
+        taskResponse.setParentUsername(task.getParentUsername());
+        taskResponse.setChildUsername(task.getChildUsername());
         taskResponse.setTaskTitle(task.getTaskTitle());
         taskResponse.setCompleted(task.getIsCompleted());
 

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 
-public class ChildCreateRequest {
+public class ChildRetrieveTaskRequest {
     //retrieve task
 //    @JsonProperty("getTasks")
 //    private TaDahTaskList getTasks;

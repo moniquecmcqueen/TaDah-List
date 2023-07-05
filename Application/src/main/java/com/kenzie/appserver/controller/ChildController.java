@@ -26,7 +26,7 @@
 //
 //    @GetMapping("/{childId}")
 //    public ResponseEntity<Child> getChildById(@PathVariable("childId") String childId,String parentId) throws Exception {
-//        Optional<ChildRecord> child1 = childService.findByChildId(childId,parentId);
+//        Optional<ChildRecord> child1 = childService.findByChildUsername(childId,parentId);
 //        // If there are no tasks, then return a 204
 //        if (child1 == null) {
 //

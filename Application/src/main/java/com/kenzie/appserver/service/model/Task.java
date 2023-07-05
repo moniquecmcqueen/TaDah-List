@@ -1,9 +1,12 @@
 package com.kenzie.appserver.service.model;
 
+import org.springframework.data.annotation.Id;
+
 public class Task {
 
-    private final String parentId;
-    private final String childId;
+    private final String parentUsername;
+    private final String childUsername;
+    @Id
     private final String taskId;
 
     private final boolean isCompleted ;
@@ -13,9 +16,9 @@ public class Task {
 
 
     // constructor
-    public Task(String parentId, String childId, String taskId, String taskTitle, boolean isCompleted){
-        this.parentId = parentId;
-        this.childId = childId;
+    public Task(String parentUsername, String childUsername, String taskId, String taskTitle, boolean isCompleted){
+        this.parentUsername = parentUsername;
+        this.childUsername = childUsername;
         this.taskId = taskId;
         //this.taskDescription = taskDescription;
         this.taskTitle = taskTitle;
@@ -41,11 +44,12 @@ public class Task {
         return isCompleted;
     }
 
-    public String getParentId() {
-        return parentId;
+    public String getChildUsername() {
+
+        return childUsername;
     }
 
-    public String getChildId() {
-        return childId;
+    public String getParentUsername() {
+        return parentUsername;
     }
 }

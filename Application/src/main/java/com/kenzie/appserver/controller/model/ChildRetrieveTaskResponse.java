@@ -3,12 +3,9 @@ package com.kenzie.appserver.controller.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class ChildResponse {
+public class ChildRetrieveTaskResponse {
 
-    @JsonProperty("childId")
-    private String childId;
-    @JsonProperty("parentId")
-    private String parentId;
+
     @JsonProperty("taskId")
     private String taskId;
     @JsonProperty("childUsername")
@@ -22,13 +19,7 @@ public class ChildResponse {
     private String taskTitle;
 
 
-    public String getChildId() {
-        return childId;
-    }
 
-    public void setChildId(String childId) {
-        this.childId = childId;
-    }
 
     public String getChildUsername() {
         return childUsername;
@@ -47,13 +38,6 @@ public class ChildResponse {
         isCompleted = completed;
     }
 
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
 
     public String getParentUsername() {
         return parentUsername;

@@ -9,7 +9,10 @@
 //import com.kenzie.appserver.Application.*;
 //import java.util.Arrays;
 //import java.util.List;
-//
+
+//notes annotations in the record will autogenerate in the docker container
+//this is useful to create an actually table on dynamdb ,for testing no cost we are creating it locally
+
 //public class CreateTableRequest extends com.amazonaws.services.dynamodbv2.model.CreateTableRequest {
 //
 //    public static void main(String[] args) {

@@ -17,15 +17,10 @@ public class TaskResponse {
     private Boolean isCompleted;
     @JsonProperty("taskTitle")
     private String taskTitle;
-    @NotEmpty
-    @JsonProperty("parentId")
-    private String parentId;
     @JsonProperty("parentUsername")
     private String parentUsername;
     @JsonProperty("childUsername")
     private String childUsername;
-    @JsonProperty("childId")
-    private String childId;
     @JsonProperty("children")
     private List<Child> children;
 
@@ -48,13 +43,7 @@ public class TaskResponse {
     public void setTaskTitle(String taskTitle){
         this.taskTitle = taskTitle;}
 
-    public String getChildId() {
-        return childId;
-    }
 
-    public void setChildId(String childId) {
-        this.childId = childId;
-    }
 
     public List<Child> getChildren() {
         return children;
@@ -84,13 +73,6 @@ public class TaskResponse {
         return parentUsername;
     }
 
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
 
 
 

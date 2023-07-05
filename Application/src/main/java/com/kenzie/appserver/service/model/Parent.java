@@ -1,42 +1,34 @@
 package com.kenzie.appserver.service.model;
 
 import com.kenzie.appserver.repositories.model.ChildRecord;
+import org.springframework.data.annotation.Id;
 
 import java.util.*;
 
 public class Parent {
-    private final String parentId;
-    //updated to final to always store variable with same value
-    //moved UUID to final variable declared above instead of within the method
+
+@Id
     private String parentUsername;
-    private String childId;
+
 
     private List<Child> children;
 
 
-    public Parent (String parentId, String parentUsername, List<Child> children){
-        this.parentId = parentId;
+    public Parent ( String parentUsername, List<Child> children){
+
         this.parentUsername = parentUsername;
         this.children = children;
     }
 
-    public Parent (String parentId, String childId){
-        this.parentId = parentId;
-        this.childId = childId;
-    }
 
-    public String getParentId(){
-        return parentId;
+    public void setParentUsername(String parentUsername) {
+        this.parentUsername = parentUsername;
     }
 
     public String getParentUsername() {
         return parentUsername;
     }
 
-
-    public String getChildId() {
-        return childId;
-    }
 
     public List<Child> getChildren() {
         return children;

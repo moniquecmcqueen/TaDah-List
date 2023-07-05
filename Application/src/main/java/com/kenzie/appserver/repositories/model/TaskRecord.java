@@ -3,6 +3,7 @@ package com.kenzie.appserver.repositories.model;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -10,11 +11,12 @@ import java.util.UUID;
 @DynamoDBTable(tableName = "TaDahTasks")
 public class TaskRecord {
 
+    @Id
     private String taskId;
     private String taskTitle;
     private Boolean isCompleted;
-    private String parentId;
-    private  String childId;
+    private String parentUsername;
+    private  String childUsername;
 
 
 
@@ -45,24 +47,24 @@ public class TaskRecord {
         this.isCompleted = isCompleted;
     }
 
-    @DynamoDBAttribute(attributeName = "parentId")
+    @DynamoDBAttribute(attributeName = "parentUsername")
 
-    public String getParentId() {
-        return parentId;
+    public String getParentUsername() {
+        return parentUsername;
     }
 
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
+    public void setParentUsername(String parentUsername) {
+        this.parentUsername = parentUsername;
     }
 
 
-    @DynamoDBAttribute(attributeName = "childId")
-    public String getChildId() {
-        return childId;
+    @DynamoDBAttribute(attributeName = "childUsername")
+    public String getChildUsername() {
+        return childUsername;
     }
 
-    public void setChildId(String childId) {
-        this.childId = childId;
+    public void setChildUsername(String childUsername) {
+        this.childUsername = childUsername;
     }
 
 
@@ -73,12 +75,12 @@ public class TaskRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskRecord that = (TaskRecord) o;
-        return Objects.equals(taskId, that.taskId) && Objects.equals(taskTitle, that.taskTitle) && Objects.equals(parentId, that.parentId)&& Objects.equals(isCompleted, that.isCompleted);
+        return Objects.equals(taskId, that.taskId) && Objects.equals(childUsername, that.childUsername)&& Objects.equals(taskTitle, that.taskTitle) && Objects.equals(parentUsername, that.parentUsername)&& Objects.equals(isCompleted, that.isCompleted);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(taskId,parentId, taskTitle, isCompleted);
+        return Objects.hash(taskId,childUsername,parentUsername, taskTitle, isCompleted);
     }
 
 }

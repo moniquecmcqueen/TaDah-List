@@ -29,14 +29,6 @@ public class ChildService {
         this.parentService = parentService;
     }
 
-    public Optional<ChildRecord> findByChildId(String childId) throws Exception {//does this not work because DynamoDB does not agree with UUIDs?
-        if (childId != null) {
-            return childRepository.findById(childId);
-        } else {
-            throw new Exception();
-        }
-
-    }
 
 
     public boolean findByChildUsername(String childUsername) throws Exception {
@@ -51,11 +43,10 @@ public class ChildService {
 
     public ChildRecord addChild(Child child) throws Exception {
         //retrieve a parent
-        Parent parent = parentService.findByParentId(child.getParentId());
+        Parent parent = parentService.findByParentUsername(child.getParentUsername());
         //add new child
         ChildRecord newChild = new ChildRecord();
-        newChild.setChildId(UUID.randomUUID().toString());
-        newChild.setParentId(parent.getParentId());
+        newChild.setParentUsername(parent.getParentUsername());
         newChild.setChildUsername(child.getChildUsername());
         //save
         childRepository.save(newChild);
@@ -66,9 +57,9 @@ public class ChildService {
     }
 
 
-    public void removeChild(String childId) {
+    public void removeChild(String childUsername) {
     //delete stored child from repo by id
-        childRepository.deleteById(childId);
+        childRepository.deleteById(childUsername);
     }
 
 

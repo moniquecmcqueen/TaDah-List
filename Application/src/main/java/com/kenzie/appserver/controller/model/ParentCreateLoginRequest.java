@@ -1,13 +1,12 @@
 package com.kenzie.appserver.controller.model;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kenzie.appserver.service.model.Child;
-import com.kenzie.appserver.service.model.Task;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.*;
+import java.util.List;
 
-public class ParentCreateRequest {
+
+public class ParentCreateLoginRequest {
     //create user
     //what do i want the user to tell me here?
     // I need the user info that im requesting for login to create a new user
@@ -17,6 +16,9 @@ public class ParentCreateRequest {
 
     @JsonProperty("childUsername")
     private String childUsername;
+
+    @JsonProperty("children")
+    private List<String> children;
 
 
 
@@ -37,6 +39,13 @@ public class ParentCreateRequest {
         this.childUsername = childUsername;
     }
 
+    public List<String> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<String> children) {
+        this.children = children;
+    }
 }
 
 
