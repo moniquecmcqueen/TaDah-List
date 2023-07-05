@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ParentResponse {
+    //whats being created on the backend based on the request
     @NotEmpty
     @JsonProperty("parentId")
     private String parentId;
@@ -18,8 +19,6 @@ public class ParentResponse {
     private String childUsername;
     @JsonProperty("childId")
     private String childId;
-    //    @JsonProperty("todoList")
-//    private List<Task> todoList;
     @JsonProperty("children")
     private List<Child> children;
 

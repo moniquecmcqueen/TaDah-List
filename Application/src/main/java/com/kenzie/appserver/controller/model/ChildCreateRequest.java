@@ -1,29 +1,30 @@
 package com.kenzie.appserver.controller.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kenzie.appserver.service.model.TaDahTaskList;
 
-import javax.validation.constraints.NotEmpty;
-import java.util.Map;
+
+
 
 public class ChildCreateRequest {
-    @NotEmpty
-    @JsonProperty("getTasks")
-    private TaDahTaskList getTasks;
+    //retrieve task
+//    @JsonProperty("getTasks")
+//    private TaDahTaskList getTasks;
+//    old code requesting empty list not tied to any task Ids
 
-    private Map<String, Boolean> taskCompletedTask;
+    @JsonProperty("taskId")
+    private String taskId;
 
-    public TaDahTaskList getTasks() {
-        return getTasks;
+//    private Map<String, Boolean> taskCompletedTask;
+//old code replaced and moved to new request class ,no need for map
+// when we have ids and just need a true or false
+
+
+    public String getTaskId() {
+        return taskId;
     }
 
-
-    public Map<String, Boolean> getTaskCompletedTask() {
-        return taskCompletedTask;
-    }
-
-    public void setTaskCompletedTask(Map<String, Boolean> taskCompletedTask) {
-        this.taskCompletedTask = taskCompletedTask;
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
 }

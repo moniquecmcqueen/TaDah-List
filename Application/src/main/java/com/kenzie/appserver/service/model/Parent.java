@@ -1,65 +1,44 @@
 package com.kenzie.appserver.service.model;
 
+import com.kenzie.appserver.repositories.model.ChildRecord;
+
 import java.util.*;
 
 public class Parent {
-    private String parentId;
+    private final String parentId;
     //updated to final to always store variable with same value
     //moved UUID to final variable declared above instead of within the method
     private String parentUsername;
+    private String childId;
 
     private List<Child> children;
-    private List<Task> taskList = new ArrayList<>();
 
-    public Parent(String parentId, String parentUsername, List<Child> children) {
+
+    public Parent (String parentId, String parentUsername, List<Child> children){
         this.parentId = parentId;
         this.parentUsername = parentUsername;
-        this.children = new ArrayList<>();
-
-    }
-    public Parent (String parentId, String parentUsername){
-        this.parentId = parentId;
-        this.parentUsername = parentUsername;
+        this.children = children;
     }
 
-
-    public void setParentId(String parentId) {
+    public Parent (String parentId, String childId){
         this.parentId = parentId;
+        this.childId = childId;
     }
 
     public String getParentId(){
         return parentId;
     }
-    public String getUsername() {
+
+    public String getParentUsername() {
         return parentUsername;
     }
 
-    public void setUsername(String username) {
-        this.parentUsername = username;
-    }
 
-    public List<Task> getTaskList() {
-        return taskList;
-    }
-
-    public void setTaskList(List<Task> taskList) {
-        this.taskList = taskList;
+    public String getChildId() {
+        return childId;
     }
 
     public List<Child> getChildren() {
         return children;
-    }
-
-    public void setChildren(List<Child> children) {
-        this.children = children;
-    }
-
-    public void addChild(Child child) {
-        children.add(child);
-    }
-
-
-    public void removeChild(Child child) {
-        children.remove(child);
     }
 }

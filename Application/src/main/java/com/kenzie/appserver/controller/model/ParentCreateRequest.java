@@ -8,14 +8,17 @@ import javax.validation.constraints.NotEmpty;
 import java.util.*;
 
 public class ParentCreateRequest {
-
+    //create user
+    //what do i want the user to tell me here?
+    // I need the user info that im requesting for login to create a new user
     @NotEmpty
-
     @JsonProperty("parentUsername")
     private String parentUsername;
 
     @JsonProperty("childUsername")
     private String childUsername;
+
+
 
     public String getParentUsername() {
         return parentUsername;

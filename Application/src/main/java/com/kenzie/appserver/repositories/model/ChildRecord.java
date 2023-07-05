@@ -13,12 +13,11 @@ import java.util.Objects;
 
     public class ChildRecord {
 
-    private String childId;
+    private  String parentId;
+    private  String childId;
+    private  String childUsername;
 
-    private String childUsername;
-    private String taskId;
 
-    private List<Task> childTaskList;
 
     @DynamoDBHashKey(attributeName = "childId")
     public String getChildId() {
@@ -38,20 +37,13 @@ import java.util.Objects;
         this.childUsername = childUsername;
     }
 
-    @DynamoDBAttribute(attributeName = "taskId")
-    public String getTaskId() {
-        return taskId;
+    public String getParentId() {
+        return parentId;
     }
 
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
-
-    public List<Task> getListOfChildTasks() {
-        return childTaskList;
-    }
-
-
 
     @Override
     public boolean equals(Object o) {

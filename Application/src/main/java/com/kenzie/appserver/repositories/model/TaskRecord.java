@@ -9,11 +9,13 @@ import java.util.UUID;
 
 @DynamoDBTable(tableName = "TaDahTasks")
 public class TaskRecord {
-    @DynamoDBHashKey(attributeName = "task_id")
+
     private String taskId;
     private String taskTitle;
     private Boolean isCompleted;
     private String parentId;
+    private  String childId;
+
 
 
     @DynamoDBHashKey(attributeName = "taskId")
@@ -34,8 +36,6 @@ public class TaskRecord {
         this.taskTitle = taskTitle;
     }
 
-
-
     @DynamoDBAttribute(attributeName = "isCompleted")
     public Boolean getIsCompleted() {
         return isCompleted;
@@ -46,6 +46,7 @@ public class TaskRecord {
     }
 
     @DynamoDBAttribute(attributeName = "parentId")
+
     public String getParentId() {
         return parentId;
     }
@@ -54,16 +55,30 @@ public class TaskRecord {
         this.parentId = parentId;
     }
 
+
+    @DynamoDBAttribute(attributeName = "childId")
+    public String getChildId() {
+        return childId;
+    }
+
+    public void setChildId(String childId) {
+        this.childId = childId;
+    }
+
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskRecord that = (TaskRecord) o;
-        return Objects.equals(taskId, that.taskId) && Objects.equals(taskTitle, that.taskTitle) && Objects.equals(isCompleted, that.isCompleted);
+        return Objects.equals(taskId, that.taskId) && Objects.equals(taskTitle, that.taskTitle) && Objects.equals(parentId, that.parentId)&& Objects.equals(isCompleted, that.isCompleted);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(taskId, taskTitle, isCompleted);
+        return Objects.hash(taskId,parentId, taskTitle, isCompleted);
     }
+
 }

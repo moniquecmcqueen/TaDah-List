@@ -1,25 +1,26 @@
 package com.kenzie.appserver.controller.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kenzie.appserver.service.model.TaDahTaskList;
 
-import javax.validation.constraints.NotEmpty;
-import java.util.Map;
 
 public class ChildResponse {
-    @NotEmpty
+
     @JsonProperty("childId")
     private String childId;
-    @JsonProperty("childUserName")
+    @JsonProperty("parentId")
+    private String parentId;
+    @JsonProperty("taskId")
+    private String taskId;
+    @JsonProperty("childUsername")
     private String childUsername;
-    @JsonProperty("getTasks")
-    private TaDahTaskList getTasks;
-    @JsonProperty("isCompleted")
-    private Map<String, Boolean> taskCompletedTask;
 
-    public TaDahTaskList getTasks() {
-        return getTasks;
-    }
+    @JsonProperty("parentUsername")
+    private String parentUsername;
+    @JsonProperty("isCompleted")
+    private Boolean isCompleted;
+    @JsonProperty("taskTitle")
+    private String taskTitle;
+
 
     public String getChildId() {
         return childId;
@@ -33,15 +34,48 @@ public class ChildResponse {
         return childUsername;
     }
 
-    public void setUsername(String childUsername) {
+    public void setChildUsername(String childUsername) {
         this.childUsername = childUsername;
     }
 
-    public Map<String, Boolean> getTaskCompletedTask() {
-        return taskCompletedTask;
+
+    public Boolean getIsCompleted() {
+        return isCompleted;
     }
 
-    public void setTaskCompletedTask(Map<String, Boolean> taskCompletedTask) {
-        this.taskCompletedTask = taskCompletedTask;
+    public void setIsCompleted(Boolean completed) {
+        isCompleted = completed;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getParentUsername() {
+        return parentUsername;
+    }
+
+    public void setParentUsername(String parentUsername) {
+        this.parentUsername = parentUsername;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getTaskTitle() {
+        return taskTitle;
+    }
+
+    public void setTaskTitle(String taskTitle) {
+        this.taskTitle = taskTitle;
     }
 }

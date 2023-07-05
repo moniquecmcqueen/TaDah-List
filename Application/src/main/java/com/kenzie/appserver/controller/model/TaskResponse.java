@@ -2,10 +2,11 @@ package com.kenzie.appserver.controller.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kenzie.appserver.service.model.TaDahTaskList;
-import com.kenzie.appserver.service.model.Task;
+import com.kenzie.appserver.service.model.Child;
 
-import java.util.ArrayList;
+
+import javax.validation.constraints.NotEmpty;
+
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -16,9 +17,18 @@ public class TaskResponse {
     private Boolean isCompleted;
     @JsonProperty("taskTitle")
     private String taskTitle;
+    @NotEmpty
+    @JsonProperty("parentId")
+    private String parentId;
+    @JsonProperty("parentUsername")
+    private String parentUsername;
+    @JsonProperty("childUsername")
+    private String childUsername;
+    @JsonProperty("childId")
+    private String childId;
+    @JsonProperty("children")
+    private List<Child> children;
 
-    private TaDahTaskList taDahTaskList;
-    //List<Task> taskList = new ArrayList<>();
 
     public String getTaskId() {
         return taskId;
@@ -27,11 +37,6 @@ public class TaskResponse {
     public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
-
-    public Boolean getIsCompleted() {
-        return isCompleted;
-    }
-
 
     public void setCompleted(Boolean isCompleted) {
         this.isCompleted = isCompleted;
@@ -42,4 +47,51 @@ public class TaskResponse {
     }
     public void setTaskTitle(String taskTitle){
         this.taskTitle = taskTitle;}
+
+    public String getChildId() {
+        return childId;
+    }
+
+    public void setChildId(String childId) {
+        this.childId = childId;
+    }
+
+    public List<Child> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Child> children) {
+        this.children = children;
+    }
+
+    public String getChildUsername() {
+        return childUsername;
+    }
+
+    public void setChildUsername(String childUsername) {
+        this.childUsername = childUsername;
+    }
+
+    public Boolean getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setParentUsername(String parentUsername) {
+        this.parentUsername = parentUsername;
+    }
+
+    public String getParentUsername() {
+        return parentUsername;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+
+
 }
