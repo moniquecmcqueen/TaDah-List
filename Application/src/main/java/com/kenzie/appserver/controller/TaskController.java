@@ -85,6 +85,14 @@ public class TaskController {
 
         return ResponseEntity.ok(taskResponse1);
     }
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<Void> deleteByTaskId(@PathVariable ("taskId") String taskId) {
+        taskService.deleteTask(taskId);
+        return ResponseEntity.noContent().build();
+
+
+    }
+
 
 
 
@@ -97,7 +105,7 @@ public class TaskController {
         return taskResponse;
 }
 
-    @DeleteMapping("/{taskId}")
+  //  @DeleteMapping ("/{taskId}")
     public ResponseEntity<Void> deleteTaskById(@PathVariable("taskId") String taskId) {
         //Creating this endpoint will require the method from task service
         // and use the taskID that is passed in through @PathVariable("concertId").
@@ -105,10 +113,12 @@ public class TaskController {
         //How do we make a ResponseEntity return type?
         // we want to return no content (204).
         // for the no content (204) status, have the method return ResponseEntity.noContent().build();.
-
-        taskService.deleteTask(taskId);
-
-        return ResponseEntity.noContent().build();
+        try {
+            taskService.deleteTask(taskId);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
         //return ResponseEntity.status(284).build();
     }
 
