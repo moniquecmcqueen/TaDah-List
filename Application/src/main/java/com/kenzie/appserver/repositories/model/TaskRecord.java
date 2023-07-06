@@ -20,7 +20,7 @@ public class TaskRecord {
 
 
 
-    @DynamoDBHashKey(attributeName = "taskId")
+   @DynamoDBHashKey(attributeName = "taskId")
     public String getTaskId() {
         return taskId;
     }

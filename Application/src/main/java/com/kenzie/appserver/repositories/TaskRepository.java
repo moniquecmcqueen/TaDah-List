@@ -3,6 +3,7 @@ package com.kenzie.appserver.repositories;
 
 
 import com.kenzie.appserver.repositories.model.TaskRecord;
+import org.socialsignin.spring.data.dynamodb.repository.DynamoDBCrudRepository;
 import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
 import org.springframework.data.repository.CrudRepository;
 

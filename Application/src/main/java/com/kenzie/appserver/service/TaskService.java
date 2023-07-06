@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -24,10 +25,10 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public Task findById(String id) {
+    public Task findById(String taskId) {
 
         return taskRepository
-                .findById(id)
+                .findById(taskId)
                 .map(task -> new Task(task.getParentUsername(), task.getChildUsername(), task.getTaskId(), task.getTaskTitle(), task.getIsCompleted()))
                 .orElse(null);
     }
@@ -67,11 +68,16 @@ public class TaskService {
 
 
     public void deleteTask(String taskId) {
-
-        taskRepository.deleteById(taskId);
-
+       //retrieve the taskId
+        Optional<TaskRecord> task = taskRepository.findById(taskId);
+         // if task is found proceed to delete
+        if(task.isPresent()) {
+            taskRepository.deleteById(taskId);
+            // } else {
+            //   throw new RuntimeException("Task not found");
+            // }
+        }
     }
-
 
     public void updateTask(Task task) {
 
