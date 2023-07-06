@@ -11,10 +11,10 @@ public class Parent {
     private String parentUsername;
 
 
-    private List<Child> children;
+    private List<String> children;
 
 
-    public Parent ( String parentUsername, List<Child> children){
+    public Parent ( String parentUsername, List<String> children){
 
         this.parentUsername = parentUsername;
         this.children = children;
@@ -30,7 +30,7 @@ public class Parent {
     }
 
 
-    public List<Child> getChildren() {
+    public List<String> getChildren() {
         return children;
     }
 }

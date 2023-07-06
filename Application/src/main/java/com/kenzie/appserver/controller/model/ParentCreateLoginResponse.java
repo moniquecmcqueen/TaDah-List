@@ -16,7 +16,7 @@ public class ParentCreateLoginResponse {
     @JsonProperty("childUsername")
     private String childUsername;
     @JsonProperty("children")
-    private List<Child> children;
+    private List<String> children;
 
 
 
@@ -37,11 +37,11 @@ public class ParentCreateLoginResponse {
         this.childUsername = childUsername;
     }
 
-    public List<Child> getChildren() {
+    public List<String> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Child> children) {
+    public void setChildren(List<String> children) {
         this.children = children;
     }
 

@@ -3,6 +3,7 @@ package com.kenzie.appserver.controller;
 import com.kenzie.appserver.controller.model.TaskCreateRequest;
 import com.kenzie.appserver.controller.model.TaskResponse;
 import com.kenzie.appserver.controller.model.TaskUpdateRequest;
+import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.TaskService;
 import com.kenzie.appserver.service.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,9 @@ import static java.util.UUID.randomUUID;
 @RequestMapping("/tasks")
 public class TaskController {
 
-    @Autowired
-    private final TaskService taskService;
 
+    private final TaskService taskService;
+    @Autowired
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
@@ -30,31 +31,33 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<TaskResponse> addNewTask(@RequestBody TaskCreateRequest taskCreateRequest) {
 //add UUID
-        Task task = new Task(randomUUID().toString(),taskCreateRequest.getParentUsername(), taskCreateRequest.getChildUsername()
-                ,taskCreateRequest.getTaskTitle(),false);
+        Task task = new Task(randomUUID().toString(), taskCreateRequest.getParentUsername(), taskCreateRequest.getChildUsername()
+                , taskCreateRequest.getTaskTitle(), false);
 
-        taskService.addNewTask(task);
+        if(taskService.addNewTask(task) != null) {
 
+            TaskResponse taskResponse = new TaskResponse();
+            taskResponse.setTaskId(task.getTaskId());
+            taskResponse.setParentUsername(task.getParentUsername());
+            taskResponse.setChildUsername(task.getChildUsername());
+            taskResponse.setTaskTitle(task.getTaskTitle());
+            taskResponse.setCompleted(task.getIsCompleted());
 
-        TaskResponse taskResponse = new TaskResponse();
-        taskResponse.setTaskId(task.getTaskId());
-        taskResponse.setParentUsername(task.getParentUsername());
-        taskResponse.setChildUsername(task.getChildUsername());
-        taskResponse.setTaskTitle(task.getTaskTitle());
-        taskResponse.setCompleted(task.getIsCompleted());
-
-        return ResponseEntity.ok(taskResponse);
+            return ResponseEntity.ok(taskResponse);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 
     @GetMapping
     public ResponseEntity<List<TaskResponse>> getAllTasks() {
         List<Task> tasks = taskService.getAllTasks();
-        if(tasks ==null) {
+        if (tasks == null) {
             return ResponseEntity.noContent().build();
         }
         List<TaskResponse> taskResponseList = new ArrayList<>();
-            for(Task task : tasks)
+        for (Task task : tasks)
             taskResponseList.add(this.createTaskResponse(task));
 
         return ResponseEntity.ok().build();
@@ -68,6 +71,7 @@ public class TaskController {
         Task task = taskService.findById(taskId);
         // If there are no tasks, then return a 204
         if (task == null) {
+
             return ResponseEntity.notFound().build();
         }
         // Otherwise, convert it into a TaskResponses and return it
@@ -75,18 +79,20 @@ public class TaskController {
         return ResponseEntity.ok(taskResponse);
     }
 
+
     @PutMapping
-    public ResponseEntity<TaskResponse> updateTask( @RequestBody TaskUpdateRequest taskUpdateRequest) {
-        Task task = new Task(UUID.randomUUID().toString(),taskUpdateRequest.getParentUsername(), taskUpdateRequest.getChildUsername(),
+    public ResponseEntity<TaskResponse> updateTask(@RequestBody TaskUpdateRequest taskUpdateRequest) {
+        Task task = new Task(UUID.randomUUID().toString(), taskUpdateRequest.getParentUsername(), taskUpdateRequest.getChildUsername(),
                 taskUpdateRequest.getTaskTitle(), false);
-       taskService.updateTask(task);
+        taskService.updateTask(task);
 
         TaskResponse taskResponse1 = createTaskResponse(task);
 
         return ResponseEntity.ok(taskResponse1);
     }
+
     @DeleteMapping("/{taskId}")
-    public ResponseEntity<Void> deleteByTaskId(@PathVariable ("taskId") String taskId) {
+    public ResponseEntity<Void> deleteByTaskId(@PathVariable("taskId") String taskId) {
         taskService.deleteTask(taskId);
         return ResponseEntity.noContent().build();
 
@@ -94,19 +100,20 @@ public class TaskController {
     }
 
 
-
-
     private TaskResponse createTaskResponse(Task task) {
         TaskResponse taskResponse = new TaskResponse();
         taskResponse.setTaskId(task.getTaskId());
         taskResponse.setTaskTitle(task.getTaskTitle());
         taskResponse.setCompleted(task.getIsCompleted());
+        taskResponse.setParentUsername(task.getParentUsername());
+        taskResponse.setChildUsername(task.getChildUsername());
 
         return taskResponse;
+    }
 }
 
-  //  @DeleteMapping ("/{taskId}")
-    public ResponseEntity<Void> deleteTaskById(@PathVariable("taskId") String taskId) {
+        //  @DeleteMapping ("/{taskId}")
+  /*  public ResponseEntity<Void> deleteTaskById(@PathVariable("taskId") String taskId) {
         //Creating this endpoint will require the method from task service
         // and use the taskID that is passed in through @PathVariable("concertId").
         //
@@ -122,4 +129,5 @@ public class TaskController {
         //return ResponseEntity.status(284).build();
     }
 
-}
+   */
+

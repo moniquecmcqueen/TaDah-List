@@ -2,13 +2,10 @@ package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.repositories.TaskRepository;
-import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Parent;
 import com.kenzie.appserver.service.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +18,8 @@ public class TaskService {
     private ParentService parentService;
 
     @Autowired
-    public TaskService(TaskRepository taskRepository) {
+    public TaskService(TaskRepository taskRepository, ParentService parentService) {
+        this.parentService = parentService;
         this.taskRepository = taskRepository;
     }
 
@@ -53,17 +51,20 @@ public class TaskService {
         //do i need to retrieve a parent to add a task ? do i need to retrieve a child to add a task
         // Child child = new Child();
         Parent parent = parentService.findByParentUsername(task.getParentUsername()); //why did i have to add task to get my parentId in there
-        TaskRecord taskRecord = new TaskRecord();
-        taskRecord.setParentUsername(parent.getParentUsername());
-        taskRecord.setTaskId(task.getTaskId());
-        //assign child id and username does child need to be added to task records if already assocaited with parent
-        taskRecord.setIsCompleted(null);
-        taskRecord.setTaskTitle(task.toString()); //unsure how to set task title here
+        // verify parent exists and verify parent has child that exists to add a task
+        if(parent != null && parent.getChildren().contains(task.getChildUsername())) {
+            TaskRecord taskRecord = new TaskRecord();
+            taskRecord.setParentUsername(task.getParentUsername());
+            taskRecord.setTaskId(task.getTaskId());
+            taskRecord.setChildUsername(task.getChildUsername());
+            //assign child id and username does child need to be added to task records if already assocaited with parent
+            taskRecord.setIsCompleted(task.getIsCompleted());
+            taskRecord.setTaskTitle(task.getTaskTitle());
 
-        taskRepository.save(taskRecord);
-
-
-        return task;
+            taskRepository.save(taskRecord);
+            return task;
+        }
+       return null;
     }
 
 

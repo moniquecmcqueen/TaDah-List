@@ -15,5 +15,5 @@ import java.util.Optional;
 public interface ParentRepository extends CrudRepository<ParentRecord, String> {
 
 //    List<ParentRecord> findAll(String parentUsername);
-Parent findByParentUsername(String parentUsername);
+//ParentRecord findByParentUsername(String parentUsername);
 }
