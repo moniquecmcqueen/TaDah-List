@@ -47,7 +47,7 @@ class com.kenzie.appserver.service.ParentService {
 - ParentRepository parentRepository
 - ChildRepository childRepository
 - TaskRepository taskRepository
-+ Parent findById(String)
++ Parent findByParentUsername(String)
 + Task addNewTask(Task)
 + void deleteParent(String)
 + Child addChild(Child)
@@ -55,35 +55,30 @@ class com.kenzie.appserver.service.ParentService {
 + boolean checkParentUsername(String)
 }
 class com.kenzie.appserver.controller.model.ParentResponse {
-- String parentId
 - String parentUsername
 - String childUsername
-- String childId
 - List<Child> children
-+ String getParentId()
-+ void setParentId(String)
 + String getParentUsername()
 + void setParentUsername(String)
 + String getChildUsername()
 + void setChildUsername(String)
 + List<Child> getChildren()
 + void setChildren(List<Child>)
-+ String getChildId()
-+ void setChildId(String)
+
 }
 class com.kenzie.appserver.repositories.model.TaskRecord {
 - String taskId
 - String taskTitle
 - Boolean isCompleted
-- String childId
+- String childUsername
 + String getTaskId()
 + void setTaskId(String)
 + String getTaskTitle()
 + void setTaskTitle(String)
 + Boolean getIsCompleted()
 + void setIsCompleted(Boolean)
-+ String getChildId()
-+ void setChildId(String)
++ String getChildUsername()
++ void setChildUsername(String)
 + boolean equals(Object)
 + int hashCode()
 }
@@ -121,12 +116,9 @@ class com.kenzie.appserver.Application {
 + {static} void main(String[])
 }
 class com.kenzie.appserver.repositories.model.ChildRecord {
-- String childId
 - String childUsername
 - String taskId
 - ChildRepository childRepository
-+ String getChildId()
-+ void setChildId(String)
 + String getChildUsername()
 + void setChildUsername(String)
 + String getTaskId()
@@ -135,11 +127,8 @@ class com.kenzie.appserver.repositories.model.ChildRecord {
 + int hashCode()
 }
 class com.kenzie.appserver.service.model.Parent {
-- String parentId
 - String parentUsername
 - List<Child> children
-+ void setParentId(String)
-+ String getParentId()
 + String getUsername()
 + void setUsername(String)
 + List<Child> getChildren()
@@ -166,7 +155,7 @@ class com.kenzie.appserver.controller.ParentController {
 - ParentService parentService
 - ChildService childService
 + ResponseEntity<Parent> createParent(ParentCreateRequest)
-+ ResponseEntity<ParentResponse> getParentById(String)
++ ResponseEntity<ParentResponse> getParentUsername(String)
 + ResponseEntity<Void> deleteParent(String)
 + ResponseEntity<Void> removeChild(String,String)
 - ParentResponse createParentResponse(Parent)
@@ -181,13 +170,10 @@ class com.kenzie.appserver.controller.model.ParentCreateRequest {
 + void setChildUsername(String)
 }
 class com.kenzie.appserver.controller.model.ChildResponse {
-- String childId
 - String childUsername
 - TaDahTaskList getTasks
 - Map<String,Boolean> taskCompletedTask
 + TaDahTaskList getTasks()
-+ String getChildId()
-+ void setChildId(String)
 + String getChildUsername()
 + void setUsername(String)
 + Map<String,Boolean> getTaskCompletedTask()
@@ -214,17 +200,14 @@ class com.kenzie.appserver.controller.ChildController {
 - List<Child> children
 - ChildService childService
 - TaskService taskService
-+ ResponseEntity<Child> getChildById(String)
++ ResponseEntity<Child> getChildByUsername(String)
 + boolean checkChildUsername(String)
 + List<Task> getChildTasks(String)
 }
 class com.kenzie.appserver.service.model.Child {
-- String childId
 - String childUsername
 - String taskId
 - List<Task> childTaskList
-+ String getChildId()
-+ void setChildId(String)
 + String getChildUsername()
 + void setChildUsername(String)
 + String getTaskId()
@@ -235,7 +218,7 @@ class com.kenzie.appserver.Scheduler {
 class com.kenzie.appserver.service.ChildService {
 - TaskRepository taskRepository
 - ChildRepository childRepository
-+ Child findById(UUID)
++ Child findByChildUsername(childUsername)
 + List<Task> findAll()
 + Task markTaskCompleted(Task)
 + boolean checkChildUsername(String)
@@ -244,12 +227,10 @@ class com.kenzie.appserver.service.ChildService {
 }
 class com.kenzie.appserver.repositories.model.ParentRecord {
 - String parentUsername
-- String parentId
 - List<Child> children
 + String getParentUsername()
 + void setParentUsername(String)
-+ String getParentId()
-+ void setParentId(String)
+
 + List<Child> getChildren()
 + void setChildren(List<Child>)
 + boolean equals(Object)

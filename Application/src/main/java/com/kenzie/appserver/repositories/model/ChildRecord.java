@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.kenzie.appserver.service.model.Task;
+import org.springframework.data.annotation.Id;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,23 +14,13 @@ import java.util.Objects;
 
     public class ChildRecord {
 
-    private String childId;
+    private  String parentUsername;
+@Id
+    private  String childUsername;
 
-    private String childUsername;
-    private String taskId;
 
-    private List<Task> childTaskList;
 
-    @DynamoDBHashKey(attributeName = "childId")
-    public String getChildId() {
-        return childId;
-    }
-
-    public void setChildId(String childId) {
-        this.childId = childId;
-    }
-
-    @DynamoDBAttribute(attributeName = "childUsername")
+    @DynamoDBHashKey(attributeName = "childUsername")
     public String getChildUsername() {
         return childUsername;
     }
@@ -38,31 +29,26 @@ import java.util.Objects;
         this.childUsername = childUsername;
     }
 
-    @DynamoDBAttribute(attributeName = "taskId")
-    public String getTaskId() {
-        return taskId;
+    @DynamoDBAttribute(attributeName = "parentUsername")
+
+    public String getParentUsername() {
+        return parentUsername;
     }
 
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
+    public void setParentUsername(String parentUsername) {
+        this.parentUsername = parentUsername;
     }
-
-    public List<Task> getListOfChildTasks() {
-        return childTaskList;
-    }
-
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ChildRecord)) return false;
         ChildRecord that = (ChildRecord) o;
-        return Objects.equals(childId, that.childId) && Objects.equals(childUsername, that.childUsername);
+        return Objects.equals(parentUsername, that.parentUsername) && Objects.equals(childUsername, that.childUsername);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(childId, childUsername);
+        return Objects.hash(parentUsername, childUsername);
     }
 }

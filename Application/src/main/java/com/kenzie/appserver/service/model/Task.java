@@ -2,21 +2,23 @@ package com.kenzie.appserver.service.model;
 
 import org.springframework.data.annotation.Id;
 
-import java.util.UUID;
-
 public class Task {
 
+    private final String parentUsername;
+    private final String childUsername;
+    @Id
+    private final String taskId;
 
-    private String taskId;
+    private final boolean isCompleted ;
 
-    private boolean isCompleted ;
+    private final String taskTitle;
 
-    private String taskTitle;
-    private String parentId;
 
 
     // constructor
-    public Task(String taskId, String taskTitle, boolean isCompleted){
+    public Task(String parentUsername, String childUsername, String taskId, String taskTitle, boolean isCompleted){
+        this.parentUsername = parentUsername;
+        this.childUsername = childUsername;
         this.taskId = taskId;
         //this.taskDescription = taskDescription;
         this.taskTitle = taskTitle;
@@ -27,63 +29,27 @@ public class Task {
         //updated constructor to take in changed to boolean default - rebecca
 
     }
-    public Task (String taskId, String taskTitle){
-        this.taskId = taskId;
-        this.taskTitle = taskTitle;
-
-    }
-    public Task(String taskId, String taskTitle, boolean isCompleted, String parentId){
-        this.taskId = taskId;
-        this.taskTitle = taskTitle;
-        this.isCompleted = isCompleted;
-        this.parentId = parentId;
 
 
+
+    public String getTaskTitle() {
+        return taskTitle;
     }
 
     public String getTaskId() {
         return taskId;
     }
 
-
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
-
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getTaskTitle() {
-        return taskTitle;
-    }
-
-    public void setTaskTitle(String taskTitle) {
-        this.taskTitle = taskTitle;
-    }
     public boolean getIsCompleted() {
-
         return isCompleted;
     }
 
-    public void setIsCompleted(boolean isCompleted) {
-        this.isCompleted = isCompleted;
+    public String getChildUsername() {
+
+        return childUsername;
     }
 
-
-    @Override
-    public String toString() {
-        return "TaDahTask{" +
-                "taskId='" + taskId + '\'' +
-                ", taskTitle='" + taskTitle + '\'' +
-                ", isCompleted=" + isCompleted +
-                '}';
-
-        //", taskDescription='" + taskDescription + '\'' ",
+    public String getParentUsername() {
+        return parentUsername;
     }
 }

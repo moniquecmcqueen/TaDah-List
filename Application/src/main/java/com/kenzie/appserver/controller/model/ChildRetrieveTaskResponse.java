@@ -2,32 +2,24 @@ package com.kenzie.appserver.controller.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.validation.constraints.NotEmpty;
 
-public class TaskCreateRequest {
+public class ChildRetrieveTaskResponse {
 
-    @NotEmpty
-    @JsonProperty("taskTitle")
-    private String taskTitle;
 
-    @NotEmpty
+    @JsonProperty("taskId")
+    private String taskId;
     @JsonProperty("childUsername")
     private String childUsername;
 
-    @NotEmpty
     @JsonProperty("parentUsername")
     private String parentUsername;
-
     @JsonProperty("isCompleted")
     private Boolean isCompleted;
+    @JsonProperty("taskTitle")
+    private String taskTitle;
 
-    public String getTaskTitle() {
-        return taskTitle;
-    }
 
-    public void setTaskTitle(String taskTitle) {
-        this.taskTitle = taskTitle;
-    }
+
 
     public String getChildUsername() {
         return childUsername;
@@ -37,13 +29,6 @@ public class TaskCreateRequest {
         this.childUsername = childUsername;
     }
 
-    public String getParentUsername() {
-        return parentUsername;
-    }
-
-    public void setParentUsername(String parentUsername) {
-        this.parentUsername = parentUsername;
-    }
 
     public Boolean getIsCompleted() {
         return isCompleted;
@@ -52,5 +37,29 @@ public class TaskCreateRequest {
     public void setIsCompleted(Boolean completed) {
         isCompleted = completed;
     }
-}
 
+
+    public String getParentUsername() {
+        return parentUsername;
+    }
+
+    public void setParentUsername(String parentUsername) {
+        this.parentUsername = parentUsername;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getTaskTitle() {
+        return taskTitle;
+    }
+
+    public void setTaskTitle(String taskTitle) {
+        this.taskTitle = taskTitle;
+    }
+}

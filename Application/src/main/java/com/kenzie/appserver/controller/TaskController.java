@@ -2,15 +2,17 @@ package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.controller.model.TaskCreateRequest;
 import com.kenzie.appserver.controller.model.TaskResponse;
+import com.kenzie.appserver.controller.model.TaskUpdateRequest;
 import com.kenzie.appserver.service.TaskService;
 import com.kenzie.appserver.service.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
 
@@ -19,19 +21,31 @@ import static java.util.UUID.randomUUID;
 public class TaskController {
 
     @Autowired
-    private TaskService taskService;
+    private final TaskService taskService;
 
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
 
     @PostMapping
-    public ResponseEntity<Task> addNewTask(@RequestBody TaskCreateRequest taskCreateRequest) {
-        Task task = new Task(randomUUID().toString(),taskCreateRequest.getTaskTitle());
+    public ResponseEntity<TaskResponse> addNewTask(@RequestBody TaskCreateRequest taskCreateRequest) {
+//add UUID
+        Task task = new Task(randomUUID().toString(),taskCreateRequest.getParentUsername(), taskCreateRequest.getChildUsername()
+                ,taskCreateRequest.getTaskTitle(),false);
+
         taskService.addNewTask(task);
-        TaskResponse taskResponse = createTaskResponse(task);
-        return ResponseEntity.created(URI.create("/tasks" + taskResponse.getTaskId())).body(task);
+
+
+        TaskResponse taskResponse = new TaskResponse();
+        taskResponse.setTaskId(task.getTaskId());
+        taskResponse.setParentUsername(task.getParentUsername());
+        taskResponse.setChildUsername(task.getChildUsername());
+        taskResponse.setTaskTitle(task.getTaskTitle());
+        taskResponse.setCompleted(task.getIsCompleted());
+
+        return ResponseEntity.ok(taskResponse);
     }
+
 
     @GetMapping
     public ResponseEntity<List<TaskResponse>> getAllTasks() {
@@ -61,11 +75,10 @@ public class TaskController {
         return ResponseEntity.ok(taskResponse);
     }
 
-    @PutMapping("/{taskId}")
-    public ResponseEntity<TaskResponse> updateTask( @RequestBody TaskResponse taskResponse) {
-        Task task = new Task(taskResponse.getTaskId(),
-                taskResponse.getTaskTitle(),
-                taskResponse.getIsCompleted());
+    @PutMapping
+    public ResponseEntity<TaskResponse> updateTask( @RequestBody TaskUpdateRequest taskUpdateRequest) {
+        Task task = new Task(UUID.randomUUID().toString(),taskUpdateRequest.getParentUsername(), taskUpdateRequest.getChildUsername(),
+                taskUpdateRequest.getTaskTitle(), false);
        taskService.updateTask(task);
 
         TaskResponse taskResponse1 = createTaskResponse(task);
@@ -73,13 +86,7 @@ public class TaskController {
         return ResponseEntity.ok(taskResponse1);
     }
 
-    @DeleteMapping("/{taskId}")
-    public ResponseEntity<Void> deleteTask(@PathVariable String taskId) {
 
-            taskService.deleteTask(taskId);
-
-        return ResponseEntity.notFound().build();
-    }
 
     private TaskResponse createTaskResponse(Task task) {
         TaskResponse taskResponse = new TaskResponse();
@@ -89,4 +96,20 @@ public class TaskController {
 
         return taskResponse;
 }
+
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<Void> deleteTaskById(@PathVariable("taskId") String taskId) {
+        //Creating this endpoint will require the method from task service
+        // and use the taskID that is passed in through @PathVariable("concertId").
+        //
+        //How do we make a ResponseEntity return type?
+        // we want to return no content (204).
+        // for the no content (204) status, have the method return ResponseEntity.noContent().build();.
+
+        taskService.deleteTask(taskId);
+
+        return ResponseEntity.noContent().build();
+        //return ResponseEntity.status(284).build();
+    }
+
 }

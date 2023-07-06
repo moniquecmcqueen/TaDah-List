@@ -1,82 +1,70 @@
 package com.kenzie.appserver.service;
 
-import com.kenzie.appserver.repositories.ChildRepository;
+
+import com.kenzie.appserver.controller.model.ParentCreateLoginRequest;
 import com.kenzie.appserver.repositories.ParentRepository;
-import com.kenzie.appserver.repositories.TaskRepository;
-import com.kenzie.appserver.repositories.model.ChildRecord;
 import com.kenzie.appserver.repositories.model.ParentRecord;
-import com.kenzie.appserver.repositories.model.TaskRecord;
-import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Parent;
-import com.kenzie.appserver.service.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class ParentService {
     private ParentRepository parentRepository;
-    private ChildRepository childRepository;
-    private TaskRepository taskRepository;
+
+
 
     @Autowired
-    public ParentService(TaskRepository taskRepository, ChildRepository childRepository, ParentRepository parentRepository) {
-        this.taskRepository = taskRepository;
-        this.childRepository = childRepository;
+    public ParentService(ParentRepository parentRepository) {
+
         this.parentRepository = parentRepository;
-    }
-
-    public Parent findById(String parentId) {
-        Parent parentFromBackend = parentRepository
-                .findById(parentId)
-                .map(parent -> new Parent(parent.getParentId(), parent.getParentUsername(), parent.getChildren()))
-                .orElse(null);
-
-        return parentFromBackend;
-    }
-
-
-    public Task addNewTask(Task task) {
-        TaskRecord taskRecord = new TaskRecord();
-        taskRecord.setTaskId((task.getTaskId()));
-        taskRecord.setTaskTitle(task.getTaskTitle());
-        taskRepository.save(taskRecord);
-        return task;
-    }
-
-    public void deleteParent(String parentId) {
-        parentRepository.deleteById(parentId);
 
     }
 
-    public Child addChild(Child child) {
-        ChildRecord childRecord = new ChildRecord();
-        childRecord.setChildId(child.getChildId());
-        childRecord.setChildUsername(child.getChildUsername());
-        childRepository.save(childRecord);
-        return child;
+    public Parent findByParentUsername(String parentUsername) {
+        if (parentUsername != null) {
+            return parentRepository.findByParentUsername(parentUsername);
+        } else {
+            parentRepository.save(null);
+        }
+        return null;
+    }
+
+    public void addNewParent(ParentCreateLoginRequest parent) {
+        //taking in a request object will not have to repeat when using method in controller
+        ParentRecord parentRecord = new ParentRecord();
+        parentRecord.setParentUsername(parent.getParentUsername());
+        parentRecord.setChildren(parent.getChildren());
+
+        parentRepository.save(parentRecord);
+    }
+
+
+    public void deleteParent(String parentUsername) {
+        parentRepository.deleteById(parentUsername);
 
     }
 
-    public void removeChild(String childId) {
 
-        childRepository.deleteById(childId);
-    }
-//    public Task addNewTaskToChild(Task task) {
-//        TaskRecord taskRecord = new TaskRecord();
-//        taskRecord.setTaskId(String.valueOf(task.getTaskId()));
-//        taskRecord.setTaskTitle(task.getTaskTitle());
-//        taskRepository.save(taskRecord);
-//        return task;
+    //    public Parent findByParentUsername(String parentUsername)  {
+//        //verify that parent user exists with given username
+//        //is parentusername is not null return matching username from repo else throw exception
+//        Parent parent = parentRepository.findByParentUsername(parentUsername);
+//        if (parent != null) {
+//
+//        }
+//        return parent;
 //    }
-
-    public Parent findByUsername(String parentUsername) {
-        ParentRecord parentRecord = parentRepository.findByParentUsername(parentUsername);
-
-        return new Parent(parentRecord.getParentId(), parentRecord.getParentUsername(), parentRecord.getChildren());
-    }
-
-
-
+//    public Parent parentLogin( String parentUsername) {
+//        Parent parent = parentRepository.findByParentUsername(String.valueOf(cache.get(parentUsername)));
+//        if (parent != null) {
+//            return findByParentUsername(parentUsername);
+//
+//        }
+//        return null;
+//    }
 }
 
 
