@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,16 +59,12 @@ public class TaskServiceTest {
     void findById_invalid() {
         // GIVEN
         String id = randomUUID().toString();
-
         when(taskRepository.findById(id)).thenReturn(Optional.empty());
-
         // WHEN
         Task task = taskService.findById(id);
-
         // THEN
         Assertions.assertNull(task, "The task is null when not found");
     }
-
     @Test
     void getAllTasks() {
         TaskRecord taskRecord = new TaskRecord();
@@ -91,10 +88,8 @@ public class TaskServiceTest {
         taskRecords.add(taskRecord2);
 
         when(taskRepository.findAll()).thenReturn(taskRecords);
-
         //WHEN
         List<Task> tasks = taskService.getAllTasks();
-
         //THEN
         Assertions.assertNotNull(tasks, "The task list is returned");
         Assertions.assertEquals(3, tasks.size(), "There are three tasks in the list.");
@@ -118,32 +113,30 @@ public class TaskServiceTest {
         }
 
     }
-//    @Test
-//    void addNewTask(){
-//        String taskId = randomUUID().toString();
-//        String parentId = randomUUID().toString();
-//
-//        Task task = new Task(taskId, "clean the bathroom", false, parentId);
-//
-//        ArgumentCaptor<TaskRecord> taskRecordArgumentCaptor = ArgumentCaptor.forClass(TaskRecord.class);
-//
-//        //WHEN
-//        Task returnedTask = taskService.addNewTask(task);
-//
-//        //THEN
-//        Assertions.assertNotNull(returnedTask);
-//
-//        verify(taskRepository).save(taskRecordArgumentCaptor.capture());
-//
-//        TaskRecord taskRecord = taskRecordArgumentCaptor.getValue();
-//
-//        Assertions.assertNotNull(taskRecord, "The task is returned");
-//        Assertions.assertEquals(taskRecord.getTaskId(), task.getTaskId(), "The taskId matches");
-//        Assertions.assertEquals(taskRecord.getTaskTitle(), task.getTaskTitle(), "The task title matches");
-//        Assertions.assertEquals(taskRecord.getIsCompleted(), task.getIsCompleted(), "The task is completed matches");
-//        Assertions.assertEquals(taskRecord.getParentId(), task.getParentId(), "The parent Id matches.");
-//    }
-//
+    @Test
+    void addNewTask(){
+        String taskId = randomUUID().toString();
+        String parentname = "MO";
+        String childname = "Ava";
+        String taskTitle = "wahs your hands";
+
+        Task task = new Task(parentname,childname,taskId,taskTitle,false);
+
+        ArgumentCaptor<TaskRecord> taskRecordArgumentCaptor = ArgumentCaptor.forClass(TaskRecord.class);
+        //WHEN
+        TaskRecord returnedTask = taskService.addNewTask(task);
+        //THEN
+        Assertions.assertNotNull(returnedTask);
+        verify(taskRepository).save(taskRecordArgumentCaptor.capture());
+
+        TaskRecord taskRecord = taskRecordArgumentCaptor.getValue();
+
+        Assertions.assertNotNull(taskRecord, "The task is returned");
+        Assertions.assertEquals(taskRecord.getTaskId(), task.getTaskId(), "The taskId matches");
+        Assertions.assertEquals(taskRecord.getTaskTitle(), task.getTaskTitle(), "The task title matches");
+        Assertions.assertEquals(taskRecord.getIsCompleted(), task.getIsCompleted(), "The task is completed matches");
+
+    }
     @Test
    void deleteTask(){
         String deleteTaskId = randomUUID().toString();
@@ -152,9 +145,22 @@ public class TaskServiceTest {
         task.setTaskId(deleteTaskId);
 
         when(taskRepository.findById(deleteTaskId)).thenReturn(Optional.of(task));
-
        taskService.deleteTask(deleteTaskId);
 
        verify(taskRepository).deleteById(deleteTaskId);
+    }
+    @Test
+    void updateTaskTest(){
+        TaskRepository taskRepository1 = mock(TaskRepository.class);
+
+        TaskService taskService1 = new TaskService(taskRepository1,parentService);
+
+        Task task = new Task("Mo","Ava","123",
+                "wash hands",true);
+        ArgumentCaptor<TaskRecord> taskRecordArgumentCaptor = ArgumentCaptor.forClass(TaskRecord.class);
+
+        taskService1.updateTask(task);
+        verify(taskRepository1).save(taskRecordArgumentCaptor.capture());
+
     }
 }
