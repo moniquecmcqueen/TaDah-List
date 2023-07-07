@@ -34,7 +34,7 @@ public class TaskController {
         Task task = new Task(randomUUID().toString(), taskCreateRequest.getParentUsername(), taskCreateRequest.getChildUsername()
                 , taskCreateRequest.getTaskTitle(), false);
 
-        if(taskService.addNewTask(task) != null) {
+            taskService.addNewTask(task) ;
 
             TaskResponse taskResponse = new TaskResponse();
             taskResponse.setTaskId(task.getTaskId());
@@ -44,9 +44,8 @@ public class TaskController {
             taskResponse.setCompleted(task.getIsCompleted());
 
             return ResponseEntity.ok(taskResponse);
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
+
+
     }
 
 
