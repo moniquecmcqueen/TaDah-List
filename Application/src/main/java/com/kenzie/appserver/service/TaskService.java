@@ -47,24 +47,19 @@ public class TaskService {
         return tasks;
     }
 
-    public Task addNewTask(Task task) {
-        //do i need to retrieve a parent to add a task ? do i need to retrieve a child to add a task
-        // Child child = new Child();
-        Parent parent = parentService.findByParentUsername(task.getParentUsername()); //why did i have to add task to get my parentId in there
-        // verify parent exists and verify parent has child that exists to add a task
-        if(parent != null && parent.getChildren().contains(task.getChildUsername())) {
+    public TaskRecord addNewTask(Task task) {
+
+
             TaskRecord taskRecord = new TaskRecord();
+
             taskRecord.setParentUsername(task.getParentUsername());
             taskRecord.setTaskId(task.getTaskId());
             taskRecord.setChildUsername(task.getChildUsername());
-            //assign child id and username does child need to be added to task records if already assocaited with parent
             taskRecord.setIsCompleted(task.getIsCompleted());
             taskRecord.setTaskTitle(task.getTaskTitle());
 
             taskRepository.save(taskRecord);
-            return task;
-        }
-       return null;
+            return taskRecord;
     }
 
 

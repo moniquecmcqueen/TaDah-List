@@ -21,9 +21,12 @@ public class TaskCreateRequest {
     @JsonProperty("isCompleted")
     private Boolean isCompleted;
 
+
+
     public String getTaskTitle() {
         return taskTitle;
     }
+
 
     public void setTaskTitle(String taskTitle) {
         this.taskTitle = taskTitle;
@@ -52,5 +55,7 @@ public class TaskCreateRequest {
     public void setIsCompleted(Boolean completed) {
         isCompleted = completed;
     }
+
+
 }
 

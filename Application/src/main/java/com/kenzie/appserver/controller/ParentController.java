@@ -49,15 +49,15 @@ public class ParentController {
 
     @GetMapping("/{parentUsername}")
 
-        public ResponseEntity<ParentUserLoginResponse> getParentById(@PathVariable("parentUsername") String parentUsername) {
+        public ResponseEntity<ParentCreateLoginResponse> getParentByUsername(@PathVariable("parentUsername") String parentUsername) {
             Parent parent = parentService.findByParentUsername(parentUsername);
             // If there are no tasks, then return a 204
             if (parent == null) {
                 return ResponseEntity.notFound().build();
             }
             // Otherwise, convert it into a prentResponses and return it
-        ParentUserLoginResponse parentUserLoginResponse = loginParentResponse(parent);
-          return ResponseEntity.ok(parentUserLoginResponse);
+        ParentCreateLoginResponse parentCreateLoginResponse = createParentResponse(parent);
+          return ResponseEntity.ok(parentCreateLoginResponse);
     }
 
 

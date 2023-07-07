@@ -4,6 +4,7 @@ import com.kenzie.appserver.repositories.ChildRepository;
 import com.kenzie.appserver.repositories.ParentRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.repositories.model.ChildRecord;
+import com.kenzie.appserver.repositories.model.ParentRecord;
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Parent;
@@ -21,23 +22,26 @@ public class ChildService {
     private final ChildRepository childRepository;
     private final TaskRepository taskRepository;
 
+    private final ParentRepository parentRepository;
     private final ParentService parentService;
+
     @Autowired
-    public ChildService(ChildRepository childRepository, TaskRepository taskRepository, ParentService parentService) {
+    public ChildService(ChildRepository childRepository, TaskRepository taskRepository,ParentRepository parentRepository, ParentService parentService) {
         this.childRepository = childRepository;
         this.taskRepository = taskRepository;
         this.parentService = parentService;
+        this.parentRepository = parentRepository;
     }
 
 
 
-    public boolean findByChildUsername(String childUsername) throws Exception {
-        //is childusername is not null return matching username from repo else throw exception
-        if (childUsername != null) {
-            return childRepository.existsById(childUsername);
-        } else {
-            throw new Exception();
+    public Child findByChildUsername(String childUsername)  {
+        if (childUsername != null && parentRepository.existsById(childUsername)) {
+            ParentRecord record =  parentRepository.findById(childUsername).get();
+            return new Child(record.getChildren().toString(),record.getParentUsername());
+
         }
+        return null;
 
     }
 
