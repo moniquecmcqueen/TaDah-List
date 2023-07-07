@@ -41,12 +41,13 @@ import java.util.Objects;
             if (this == o) return true;
             if (!(o instanceof ParentRecord)) return false;
             ParentRecord that = (ParentRecord) o;
-            return Objects.equals(parentUsername, that.parentUsername)  && Objects.equals(children, that.children);
+            return Objects.equals(parentUsername, that.parentUsername);
+                    //&& Objects.equals(children, that.children);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(parentUsername,  children);
+            return Objects.hash(parentUsername);
         }
     }
 

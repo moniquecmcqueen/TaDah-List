@@ -24,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -36,6 +37,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.client.ExpectedCount.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -132,20 +134,42 @@ class TaskControllerTest {
 //        }
 //    }
 //
-//    @Test
-//    public void getTaskByIdTest_NoId() {
-//        // Given
-//
-//        String noTaskId = "2";
-//
-//        when(taskServices.findById(noTaskId)).thenReturn(null);
-//
-//        ResponseEntity<TaskResponse> nullResponse = taskController.getTaskById(noTaskId);
-//
-//        Assertions.assertEquals(HttpStatus.NOT_FOUND, nullResponse.getStatusCode());
-//        Assertions.assertNull(nullResponse.getBody());
-//        verify(taskServices, Mockito.times(1)).findById(noTaskId);
-//    }
+   // @Test
+    public void getTaskByIdTest_NoId() {
+        // Given
+
+        String noTaskId = "2";
+
+        when(taskServices.findById(noTaskId)).thenReturn(null);
+
+        ResponseEntity<TaskResponse> nullResponse = taskController.getTaskById(noTaskId);
+
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, nullResponse.getStatusCode());
+        Assertions.assertNull(nullResponse.getBody());
+        verify(taskServices, Mockito.times(1)).findById(noTaskId);
+    }
+    @Test
+    public void getTaskByIdTest() throws Exception{
+        String parentname = "Monique";
+        String childname = "Ava";
+        String taskTitle = "Clean your room";
+        String taskId = "98789";
+        boolean completed = true;
+        Task task = new Task(parentname,childname,taskId,taskTitle,completed);
+
+        when(taskServices.findById(taskId)).thenReturn(task);
+
+       MvcResult result=
+               (MvcResult) mvc.perform(get("/tasks/{taskId}",taskId))
+                .andExpect(status().isOk())
+                .andReturn();
+       String responseBody = result.getResponse().getContentAsString();
+       Task task1 = mapper.readValue(responseBody,Task.class);
+
+       assertEquals(taskId,task1.getTaskId());
+       assertEquals(taskTitle, task1.getTaskTitle());
+
+    }
 //
 //    @Test
 //    public void getAllTasksTest_Null() {

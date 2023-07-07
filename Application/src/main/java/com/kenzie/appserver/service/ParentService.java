@@ -14,8 +14,6 @@ import java.util.Optional;
 public class ParentService {
     private ParentRepository parentRepository;
 
-
-
     @Autowired
     public ParentService(ParentRepository parentRepository) {
 
@@ -24,10 +22,11 @@ public class ParentService {
     }
 
     public Parent findByParentUsername(String parentUsername) {
-        if (parentUsername != null) {
-            return parentRepository.findByParentUsername(parentUsername);
-        } else {
-            parentRepository.save(null);
+        if (parentUsername != null && parentRepository.existsById(parentUsername)) {
+            ParentRecord record =  parentRepository.findById(parentUsername).get();
+            return new Parent(record.getParentUsername(),record.getChildren());
+      //  } else {
+        //    parentRepository.save(null);
         }
         return null;
     }
