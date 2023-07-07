@@ -25,8 +25,7 @@ public class ParentService {
         if (parentUsername != null && parentRepository.existsById(parentUsername)) {
             ParentRecord record =  parentRepository.findById(parentUsername).get();
             return new Parent(record.getParentUsername(),record.getChildren());
-      //  } else {
-        //    parentRepository.save(null);
+
         }
         return null;
     }
