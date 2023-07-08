@@ -51,7 +51,7 @@ module.exports = {
 
       inject: true // Set inject to true for script injection
 
-      inject: false
+
     }),
     new CopyPlugin({
       patterns: [
@@ -67,12 +67,17 @@ module.exports = {
       filename: 'tasklist.html',
       inject: true // Set inject to true for script injection
 
-          from: path.resolve('src/css'),
-          to: path.resolve("dist/css")
-        }
-      ]
+
 
     }),
-    new CleanWebpackPlugin()
+      new CleanWebpackPlugin(),
+    new CopyPlugin( {
+      patterns: [
+        {
+        from: path.resolve('src/css'),
+        to: path.resolve("dist/css")
+      }
+  ]
+      })
   ]
 }
