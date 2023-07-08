@@ -16,7 +16,7 @@
 </head>
 <body>
 <h2>Task List</h2>
-<h2>Add Task</h2>
+<h2 id="tasklist-heading"></h2>
 <input type="text" id="task-input" placeholder="Task Title">
 <button id="add-task-button">Add Task</button>
 
@@ -35,6 +35,12 @@
 </table>
 
 <script>
+
+  // Get the childUsername parameter from the URL
+
+// Update the heading with the child's username
+
+
   // Get the current URL
   const url = new URL(window.location.href);
 
@@ -42,7 +48,9 @@
   const searchParams = new URLSearchParams(url.search);
   const childUsername = searchParams.get('childUsername');
   const parentUsername = searchParams.get('parentUsername');
-
+  // Update the heading with the child's username
+  const tasklistHeading = document.getElementById('tasklist-heading');
+  tasklistHeading.textContent = `${childUsername}'s TaDah List`;
   // Use the childUsername and parentUsername variables for further processing
   console.log(childUsername);
   console.log(parentUsername);
