@@ -7,6 +7,9 @@ import javax.validation.constraints.NotEmpty;
 public class TaskCreateRequest {
 
     @NotEmpty
+    @JsonProperty("taskId")
+    private String taskId;
+    @NotEmpty
     @JsonProperty("taskTitle")
     private String taskTitle;
 
@@ -56,6 +59,12 @@ public class TaskCreateRequest {
         isCompleted = completed;
     }
 
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
 
+    public String getTaskId() {
+        return taskId;
+    }
 }
 

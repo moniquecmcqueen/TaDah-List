@@ -24,7 +24,7 @@ public class ParentService {
     public Parent findByParentUsername(String parentUsername) {
         ParentRecord record = parentRepository.findByParentUsername(parentUsername);
         if (record != null) {
-            return new Parent(record.getParentUsername(), record.getChildren());
+            return new Parent(record.getParentUsername(), record.getChildUsername());
         }
         return null;
     }
@@ -33,7 +33,7 @@ public class ParentService {
         //taking in a request object will not have to repeat when using method in controller
         ParentRecord parentRecord = new ParentRecord();
         parentRecord.setParentUsername(parent.getParentUsername());
-        parentRecord.setChildren(parent.getChildren());
+        parentRecord.setChildUsername(parent.getChildUsername());
 
         parentRepository.save(parentRecord);
     }

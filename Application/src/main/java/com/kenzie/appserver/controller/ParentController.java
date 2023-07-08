@@ -88,7 +88,7 @@ public class ParentController {
 
     private ParentCreateLoginResponse createParentResponse(Parent parent) {
         ParentCreateLoginResponse parentCreateLoginResponse = new ParentCreateLoginResponse();
-        parentCreateLoginResponse.setChildren(parent.getChildren());
+        parentCreateLoginResponse.setChildUsername(parent.getChildUsername());
         parentCreateLoginResponse.setParentUsername(parent.getParentUsername());
 
         return parentCreateLoginResponse;
@@ -96,7 +96,7 @@ public class ParentController {
 
     private ParentUserLoginResponse loginParentResponse(Parent parent) {
         ParentUserLoginResponse parentUserLoginResponse = new ParentUserLoginResponse();
-        parentUserLoginResponse.setChildren(parent.getChildren());
+        parentUserLoginResponse.setChildUsername(parent.getChildUsername());
         parentUserLoginResponse.setParentUsername(parent.getParentUsername());
 
         return parentUserLoginResponse;

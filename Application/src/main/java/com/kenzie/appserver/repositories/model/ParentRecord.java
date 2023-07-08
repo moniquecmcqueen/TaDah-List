@@ -16,7 +16,7 @@ import java.util.Objects;
     public class ParentRecord {
         @Id
         private String parentUsername;
-        private List<String> children;
+        private String childUsername;
 
 
         @DynamoDBHashKey(attributeName = "parentUsername")
@@ -27,13 +27,13 @@ import java.util.Objects;
         public void setParentUsername(String parentUsername) {
             this.parentUsername = parentUsername;
         }
-        @DynamoDBAttribute(attributeName = "listOfChildren")
-        public List<String> getChildren() {
-            return children;
+        @DynamoDBAttribute(attributeName = "childUsername")
+        public String getChildUsername() {
+            return childUsername;
         }
 
-        public void setChildren(List<String> children) {
-            this.children = children;
+        public void setChildUsername(String childUsername) {
+            this.childUsername = childUsername;
         }
 
         @Override

@@ -8,6 +8,7 @@ import com.kenzie.appserver.service.model.Child;
 import javax.validation.constraints.NotEmpty;
 
 import java.util.List;
+import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaskResponse {
@@ -25,14 +26,6 @@ public class TaskResponse {
 
 
 
-    @JsonProperty("children")
-    private List<Child> children;
-
-
-    public String getTaskId() {
-        return taskId;
-    }
-
     public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
@@ -41,21 +34,8 @@ public class TaskResponse {
         this.isCompleted = isCompleted;
 
     }
-    public String getTaskTitle() {
-        return taskTitle;
-    }
     public void setTaskTitle(String taskTitle){
         this.taskTitle = taskTitle;}
-
-
-
-    public List<Child> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Child> children) {
-        this.children = children;
-    }
 
     public String getChildUsername() {
         return childUsername;
@@ -64,11 +44,6 @@ public class TaskResponse {
     public void setChildUsername(String childUsername) {
         this.childUsername = childUsername;
     }
-
-    public Boolean getIsCompleted() {
-        return isCompleted;
-    }
-
     public void setParentUsername(String parentUsername) {
         this.parentUsername = parentUsername;
     }
@@ -76,8 +51,4 @@ public class TaskResponse {
     public String getParentUsername() {
         return parentUsername;
     }
-
-
-
-
 }

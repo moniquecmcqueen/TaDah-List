@@ -1,5 +1,6 @@
 package com.kenzie.appserver.service;
 
+import com.kenzie.appserver.controller.model.TaskResponse;
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.service.model.Parent;
@@ -16,6 +17,7 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private ChildService childService;
     private ParentService parentService;
+
 
     @Autowired
     public TaskService(TaskRepository taskRepository, ParentService parentService) {
@@ -80,10 +82,28 @@ public class TaskService {
         TaskRecord taskRecord = new TaskRecord();
         taskRecord.setTaskId(task.getTaskId());
         taskRecord.setParentUsername(task.getParentUsername());
+        taskRecord.setChildUsername(task.getChildUsername());
         taskRecord.setTaskTitle(task.getTaskTitle());
         taskRecord.setIsCompleted(task.getIsCompleted());
         taskRepository.save(taskRecord);
     }
+
+    public List<Task> getTasksByChildUsername(String childUsername) {
+        List<TaskRecord> taskResponses = taskRepository.getTasksByChildUsername(childUsername);
+
+        List<Task> tasksByUsername = new ArrayList<>();
+
+        // Iterate over the existing task responses and filter by the provided username
+        for (TaskRecord taskResponse : taskResponses) {
+            Task task = new Task(taskResponse.getParentUsername(),taskResponse.getChildUsername(),taskResponse.getTaskId(),taskResponse.getTaskTitle(),taskResponse.getIsCompleted());
+            if (task.getParentUsername().equals(childUsername) || task.getChildUsername().equals(childUsername)) {
+                tasksByUsername.add(task);
+            }
+        }
+
+        return tasksByUsername;
+    }
+
 }
 //    public Task markTaskCompleted(String childId) {
 //        //Retrieve the child with the given id from the childservice
