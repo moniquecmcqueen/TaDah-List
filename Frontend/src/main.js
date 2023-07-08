@@ -77,22 +77,6 @@ document.getElementById('create-account-btn').addEventListener('click', () => {
     document.getElementById('create-account-view').style.display = 'block';
 });
 
-// Plus button click event listener
-document.getElementById('add-child-btn').addEventListener('click', () => {
-    const additionalChildrenSection = document.getElementById('additional-children-section');
-    additionalChildrenSection.style.display = 'block';
-
-    const inputContainer = document.createElement('div');
-    inputContainer.classList.add('input-container');
-
-    const additionalChildInput = document.createElement('input');
-    additionalChildInput.type = 'text';
-    additionalChildInput.classList.add('additional-child-input');
-    additionalChildInput.placeholder = "Additional Child Username";
-    inputContainer.appendChild(additionalChildInput);
-
-    additionalChildrenSection.appendChild(inputContainer);
-});
 
 // Home button click event listener
 document.getElementById('home-btn').addEventListener('click', () => {
@@ -102,6 +86,36 @@ document.getElementById('home-btn').addEventListener('click', () => {
     const additionalChildrenSection = document.getElementById('additional-children-section');
     additionalChildrenSection.innerHTML = '';
 });
+// Add additional child event listener
+        // Define the childCount variable before the event listener
+        var childCount = 1;
+
+        document.getElementById('add-child-btn').addEventListener('click', function () {
+            // Create a new child input field
+            var newChildInputField = document.createElement('input');
+            newChildInputField.type = 'text';
+            newChildInputField.placeholder = "Child's Username";
+            newChildInputField.name = 'child-username-' + childCount; // Unique name attribute
+            newChildInputField.id = 'child-username-' + childCount; // Unique id attribute
+            newChildInputField.classList.add('additional-child-input');
+
+            // Get the container where you want to append the new child input field
+            var container = document.getElementById('additional-children-section');
+
+            // Append the new child input field to the container
+            container.appendChild(newChildInputField);
+
+            childCount++; // Increment the child count for the next input field
+
+            // Update the event listener for the new child input field
+            newChildInputField.addEventListener('change', function () {
+                // Handle the change event for the new child input field
+                var childUsername = newChildInputField.value;
+                console.log('Child Username:', childUsername);
+            });
+        });
+
+
 
 // Minus button click event listener
 document.getElementById('remove-child-btn').addEventListener('click', () => {

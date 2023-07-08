@@ -14,9 +14,6 @@ public class ParentCreateLoginRequest {
     @JsonProperty("parentUsername")
     private String parentUsername;
 
-    @JsonProperty("childUsername")
-    private String childUsername;
-
     @JsonProperty("children")
     private List<String> children;
 
@@ -28,15 +25,6 @@ public class ParentCreateLoginRequest {
 
     public void setParentUsername(String parentUsername) {
         this.parentUsername = parentUsername;
-    }
-
-
-    public String getChildUsername() {
-        return childUsername;
-    }
-
-    public void setChildUsername(String childUsername) {
-        this.childUsername = childUsername;
     }
 
     public List<String> getChildren() {
