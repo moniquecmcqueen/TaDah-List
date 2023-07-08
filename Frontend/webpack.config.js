@@ -10,9 +10,6 @@ module.exports = {
   entry: {
 
     checkusername: './src/checkusername.js', // Update the entry point
-
-    examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
-
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -51,7 +48,6 @@ module.exports = {
 
       inject: true // Set inject to true for script injection
 
-      inject: false
     }),
     new CopyPlugin({
       patterns: [
@@ -66,13 +62,13 @@ module.exports = {
       template: './src/tasklist.html',
       filename: 'tasklist.html',
       inject: true // Set inject to true for script injection
-
-          from: path.resolve('src/css'),
-          to: path.resolve("dist/css")
-        }
-      ]
-
     }),
+    //       // from: path.resolve('src/css'),
+    //       // to: path.resolve("dist/css")
+    //     }
+    //   ]
+    //
+    // }),
     new CleanWebpackPlugin()
   ]
 }
