@@ -67,8 +67,5 @@ public class ChildController {
 
         return childUserLoginResponse;
     }
-
-
-
 }
 
