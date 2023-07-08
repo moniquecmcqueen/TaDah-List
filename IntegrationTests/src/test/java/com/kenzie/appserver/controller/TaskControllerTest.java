@@ -108,7 +108,7 @@ class TaskControllerTest {
 
         when(taskServices.findById(noTaskId)).thenReturn(null);
 
-        ResponseEntity<TaskResponse> nullResponse = taskController.getTaskById(noTaskId);
+        ResponseEntity<List<TaskResponse>> nullResponse = taskController.getTasksByChildUsername(noTaskId);
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, nullResponse.getStatusCode());
         Assertions.assertNull(nullResponse.getBody());

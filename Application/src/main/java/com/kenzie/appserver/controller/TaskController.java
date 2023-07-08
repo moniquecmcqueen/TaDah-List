@@ -31,8 +31,7 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<TaskResponse> addNewTask(@RequestBody TaskCreateRequest taskCreateRequest) {
 //add UUID
-        Task task = new Task(randomUUID().toString(), taskCreateRequest.getParentUsername(), taskCreateRequest.getChildUsername()
-                , taskCreateRequest.getTaskTitle(), false);
+        Task task = new Task(taskCreateRequest.getParentUsername(),taskCreateRequest.getChildUsername(),UUID.randomUUID().toString(),taskCreateRequest.getTaskTitle(),taskCreateRequest.getIsCompleted());
 
             taskService.addNewTask(task) ;
 
@@ -59,30 +58,47 @@ public class TaskController {
         for (Task task : tasks)
             taskResponseList.add(this.createTaskResponse(task));
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(taskResponseList);
     }
 
     //get all task shows us completed and incomplete
 
 
-    @GetMapping("/{taskId}")
-    public ResponseEntity<TaskResponse> getTaskById(@PathVariable("taskId") String taskId) {
-        Task task = taskService.findById(taskId);
-        // If there are no tasks, then return a 204
-        if (task == null) {
+//    @GetMapping("/{taskId}")
+//    public ResponseEntity<TaskResponse> getTaskById(@PathVariable("taskId") String taskId) {
+//        Task task = taskService.findById(taskId);
+//        // If there are no tasks, then return a 204
+//        if (task == null) {
+//
+//            return ResponseEntity.notFound().build();
+//        }
+//        // Otherwise, convert it into a TaskResponses and return it
+//        TaskResponse taskResponse = createTaskResponse(task);
+//        return ResponseEntity.ok(taskResponse);
+//    }
 
-            return ResponseEntity.notFound().build();
+    @GetMapping("/{childUsername}")
+    public ResponseEntity<List<TaskResponse>> getTasksByChildUsername(@PathVariable("childUsername") String childUsername) {
+        List<Task> tasks = taskService.getTasksByChildUsername(childUsername);
+        if (tasks.isEmpty()) { // Check if the list is empty
+            return ResponseEntity.noContent().build();
         }
-        // Otherwise, convert it into a TaskResponses and return it
-        TaskResponse taskResponse = createTaskResponse(task);
-        return ResponseEntity.ok(taskResponse);
+
+        List<TaskResponse> taskResponseList = new ArrayList<>();
+        for (Task task : tasks) {
+            TaskResponse taskResponse = createTaskResponse(task);
+            taskResponseList.add(taskResponse);
+        }
+
+        return ResponseEntity.ok(taskResponseList);
     }
+
+
 
 
     @PutMapping
     public ResponseEntity<TaskResponse> updateTask(@RequestBody TaskUpdateRequest taskUpdateRequest) {
-        Task task = new Task(UUID.randomUUID().toString(), taskUpdateRequest.getParentUsername(), taskUpdateRequest.getChildUsername(),
-                taskUpdateRequest.getTaskTitle(), false);
+        Task task = new Task(taskUpdateRequest.getParentUsername(),taskUpdateRequest.getChildUsername(),taskUpdateRequest.getTaskId(),taskUpdateRequest.getTaskTitle(),taskUpdateRequest.getIsCompleted());
         taskService.updateTask(task);
 
         TaskResponse taskResponse1 = createTaskResponse(task);

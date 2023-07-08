@@ -14,16 +14,16 @@ public class ParentUserLoginResponse {
 
     //whats in this list? child usernames or child ids
     //are the tasks tied to each child
-    @JsonProperty("children")
-    private List<String> children;
+    @JsonProperty("childUsername")
+    private String childUsername;
 
-    public List<String> getChildren() {
-        return children;
+    public String getChildUsername() {
+        return childUsername;
     }
 
 
-    public void setChildren(List<String> children) {
-        this.children = children;
+    public void setChildUsername(String childUsername) {
+        this.childUsername = childUsername;
     }
 
     public String getParentId() {

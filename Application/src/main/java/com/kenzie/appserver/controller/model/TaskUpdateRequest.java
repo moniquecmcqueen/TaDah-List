@@ -6,10 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
+import java.util.UUID;
 
 
-    public class TaskUpdateRequest {
+public class TaskUpdateRequest {
 
+        @JsonProperty("taskId")
+        private String taskId;
         @NotEmpty
         @JsonProperty("parentUsername")
         private String parentUsername;
@@ -24,6 +27,8 @@ import java.time.LocalDate;
         @NotEmpty
         @JsonProperty("taskTitle")
         private String taskTitle;
+
+
 
         public String getTaskTitle() {
             return taskTitle;
@@ -56,4 +61,13 @@ import java.time.LocalDate;
         public void setParentUsername(String parentUsername) {
             this.parentUsername = parentUsername;
         }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
+
+    public String getTaskId() {
+            return taskId;
+    }
+}
+

@@ -8,7 +8,11 @@ module.exports = {
     usedExports: true
   },
   entry: {
+
+    checkusername: './src/checkusername.js', // Update the entry point
+
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
+
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -18,6 +22,11 @@ module.exports = {
     https: false,
     port: 8080,
     open: true,
+
+    // Proxy configuration (uncomment if necessary)
+    // proxy: {
+    //   '/example': 'http://localhost:5001'
+    // }
     //proxy is what tells your frontend where to find the backend and what requests to send there
     //if you  notice in the example we are sending all requests that start with /example to
     //http://localhost:5001 which is where the backend is, when sent to the backend it will become
@@ -33,20 +42,36 @@ module.exports = {
 //            target: 'http://localhost:5001'
 //          }
 //        ]
+
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html',
+
+      inject: true // Set inject to true for script injection
+
       inject: false
     }),
     new CopyPlugin({
       patterns: [
         {
+
+          from: 'src/css',
+          to: 'css'
+        }
+      ]
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/tasklist.html',
+      filename: 'tasklist.html',
+      inject: true // Set inject to true for script injection
+
           from: path.resolve('src/css'),
           to: path.resolve("dist/css")
         }
       ]
+
     }),
     new CleanWebpackPlugin()
   ]

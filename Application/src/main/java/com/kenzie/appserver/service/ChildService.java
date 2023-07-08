@@ -38,7 +38,7 @@ public class ChildService {
     public Child findByChildUsername(String childUsername)  {
         if (childUsername != null && parentRepository.existsById(childUsername)) {
             ParentRecord record =  parentRepository.findById(childUsername).get();
-            return new Child(record.getChildren().toString(),record.getParentUsername());
+            return new Child(record.getChildUsername(),record.getParentUsername());
 
         }
         return null;
