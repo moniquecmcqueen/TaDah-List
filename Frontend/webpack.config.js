@@ -12,9 +12,6 @@ module.exports = {
     '02_tasklist': './src/tasklist.js',
     '03_signup': './src/signup.js',
     '04_childtasklist': './src/childtasklist.js'
-
-
-    checkusername: './src/checkusername.js', // Update the entry point
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
