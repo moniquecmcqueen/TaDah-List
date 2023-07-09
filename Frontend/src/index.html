@@ -1,59 +1,131 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>User Login</title>
+  <title>TaDah</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    :root {
+      /* CSS variables: https://developer.mozilla.org/en-US/docs/Web/CSS/var */
+      --primary-color: #bd2020;
+      --secondary-color: #fff;
+      --error-color: rgba(194, 0, 0, 0.71);
+    }
+
+    body {
+      background-color: var(--primary-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: var(--secondary-color);
+    }
+
+    .container {
+      background-color: var(--secondary-color);
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      max-width: 400px; /* Limit the width */
+      width: 90%; /* Adjust as needed */
+    }
+
+    h2 {
+      text-align: center;
+      color: #ffffff;
+      font-family: cursive;
+      font-size: 8rem;    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    /* Adjust the styling as needed */
+    .tab-pane {
+      padding: 15px;
+    }
+    label[for="parent-username"] {
+      color: black;
+    }
+    label[for="child-username"]{
+      color:black;
+    }
+    label[for="new-parent-account-input"] {
+      color: black;
+    }
+    label[for="new-child-account-input"]{
+      color:black;
+    }
+
+
+
+    /* Hide the signup fields by default */
+    .signup-fields {
+      display: none;
+    }
+
+    .show-signup-fields .signup-fields {
+      display: block;
+    }
+  </style>
 </head>
 <body>
-<h2>User Login</h2>
-<form id="login-form">
-  <div>
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
+<h2>TaDah</h2>
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#parent-tab" onclick="selectUserType('parent')">Parent</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#child-tab" onclick="selectUserType('child')">Child</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#signup-tab" onclick="selectUserType('signup')">Signup</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div id="parent-tab" class="tab-pane fade show active">
+      <div class="form-group">
+        <label for="parent-username">Parent Username:</label>
+        <input type="text" id="parent-username" name="parent-username" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <button id="parent-login-button" class="btn btn-primary">Parent Login</button>
+      </div>
+      <div id="child-button-container" class="button"></div>
+    </div>
+    <div id="child-tab" class="tab-pane fade">
+      <div class="form-group">
+        <label for="child-username">Child Username:</label>
+        <input type="text" id="child-username" name="child-username" class="form-control">
+      </div>
+      <div class="form-group">
+        <button id="child-login-button" class="btn btn-primary">Child Login</button>
+      </div>
+    </div>
+    <div id="signup-tab" class="tab-pane fade">
+      <div class="form-group">
+        <label for="new-parent-account-input">Enter Parent Username:</label>
+        <input type="text" id="new-parent-account-input" name="new-parent-account-input" class="form-control" required>
+        <label for="new-child-account-input">Enter Child Username:</label>
+        <input type="text" id="new-child-account-input" name="new-child-account-input" class="form-control">
+      </div>
+      <div class="form-group">
+        <div class="mb-3">
+          <button id="signup-create-account-button" class="btn btn-primary">Create Account</button>
+        </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div>
-    <input type="submit" value="Login">
-  </div>
-</form>
+</div>
+
 <div id="response-container"></div>
-
-<script>
-  document.getElementById('login-form').addEventListener('submit', checkUsername);
-
-    function checkUsername(event) {
-    event.preventDefault(); // Prevent form submission
-
-    const enteredUsername = document.getElementById('username').value;
-
-    // Remove event listener to prevent multiple submissions
-    document.getElementById('login-form').removeEventListener('submit', checkUsername);
-
-    // Make fetch request to check if parent username exists
-    fetch('/parents/' + enteredUsername)
-            .then(response => {
-              if (response.ok) {
-                return response.json();
-              } else if (response.status === 404) {
-                throw new Error('Username does not exist! Please try again.');
-              } else {
-                throw new Error('An error occurred while checking the username. Please try again later.');
-              }
-            })
-            .then(data => {
-              const parentUsername = data.parentUsername;
-              const childUsername = data.childUsername;
-              const responseContainer = document.getElementById('response-container');
-              responseContainer.textContent = `Username exists in parent records! You can proceed with the login as a parent. Child Username: ${childUsername}`;
-              // Perform parent login logic or redirect to another page
-
-              // Redirect to the task list page with both child and parent usernames
-              window.location.href = `tasklist.html?childUsername=${childUsername}&parentUsername=${parentUsername}`;
-            })
-            .catch(error => {
-              const responseContainer = document.getElementById('response-container');
-              responseContainer.textContent = error.message;
-              // Clear the input field or perform any other desired action
-            });
-  }
-</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

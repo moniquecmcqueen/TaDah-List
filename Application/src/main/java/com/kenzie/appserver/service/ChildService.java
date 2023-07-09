@@ -1,5 +1,8 @@
 package com.kenzie.appserver.service;
 
+import com.kenzie.appserver.controller.model.ChildUserLoginRequest;
+import com.kenzie.appserver.controller.model.ChildUserLoginResponse;
+import com.kenzie.appserver.controller.model.ParentCreateLoginRequest;
 import com.kenzie.appserver.repositories.ChildRepository;
 import com.kenzie.appserver.repositories.ParentRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
@@ -9,6 +12,7 @@ import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Parent;
 import com.kenzie.appserver.service.model.Task;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -35,29 +39,21 @@ public class ChildService {
 
 
 
-    public Child findByChildUsername(String childUsername)  {
-        if (childUsername != null && parentRepository.existsById(childUsername)) {
-            ParentRecord record =  parentRepository.findById(childUsername).get();
-            return new Child(record.getChildUsername(),record.getParentUsername());
-
+    public Child findByChildUsername(String childUsername) {
+        ChildRecord childRecord = childRepository.findByChildUsername(childUsername);
+        if (childRecord != null) {
+            return new Child(childRecord.getParentUsername(), childRecord.getChildUsername());
         }
         return null;
-
     }
 
-    public ChildRecord addChild(Child child) throws Exception {
-        //retrieve a parent
-        Parent parent = parentService.findByParentUsername(child.getParentUsername());
-        //add new child
-        ChildRecord newChild = new ChildRecord();
-        newChild.setParentUsername(parent.getParentUsername());
-        newChild.setChildUsername(child.getChildUsername());
-        //save
-        childRepository.save(newChild);
+    public void addNewChild(ChildUserLoginRequest child) {
+        //taking in a request object will not have to repeat when using method in controller
+        ChildRecord childRecord = new ChildRecord();
+        childRecord.setParentUsername(child.getParentUsername());
+        childRecord.setChildUsername(child.getChildUsername());
 
-        //return
-        return newChild;
-
+        childRepository.save(childRecord);
     }
 
 

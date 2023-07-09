@@ -7,7 +7,7 @@ import java.util.*;
 public class Child {
     //roles authorized user,limited access to account
 @Id
-    private final String childUsername;
+    private String childUsername;
     //if we want to use age to help with verification of child??
     //can delete if we do not want to use- monique
     //I dont think this is necessary- brandon
@@ -29,6 +29,10 @@ public class Child {
 
     public String getParentUsername() {
         return parentUsername;
+    }
+
+    public void setChildUsername(String childUsername) {
+        this.childUsername = childUsername;
     }
 }
 
