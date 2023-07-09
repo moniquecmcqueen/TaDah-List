@@ -13,6 +13,8 @@ module.exports = {
     '03_signup': './src/signup.js',
     '04_childtasklist': './src/childtasklist.js'
 
+
+    checkusername: './src/checkusername.js', // Update the entry point
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -32,6 +34,7 @@ module.exports = {
       template: './src/index.html',
       filename: 'index.html',
       inject: true // Set inject to true for script injection
+
     }),
     new CopyPlugin({
       patterns: [
@@ -46,6 +49,7 @@ module.exports = {
       filename: 'tasklist.html',
       inject: true // Set inject to true for script injection
     }),
+
     new HtmlWebpackPlugin({
       template: './src/signup.html',
       filename: 'signup.html',
@@ -56,6 +60,14 @@ module.exports = {
       filename: 'childTaskList.html',
       inject: true // Set inject to true for script injection
     }),
+
+
+    //       // from: path.resolve('src/css'),
+    //       // to: path.resolve("dist/css")
+    //     }
+    //   ]
+    //
+    // }),
 
     new CleanWebpackPlugin()
   ]
