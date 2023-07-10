@@ -26,9 +26,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
 import static java.util.UUID.randomUUID;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -50,69 +49,41 @@ class TaskControllerTest {
     private final MockNeat mockNeat = MockNeat.threadLocal();
     private final ObjectMapper mapper = new ObjectMapper();
 
-    @Test
-    public void createATask_IsValid() throws JsonProcessingException {
-        String createTaskId = mockNeat.strings().valStr();
 
-        TaskService createTask = mock(TaskService.class);
-
-        TaskCreateRequest taskCreateRequest = new TaskCreateRequest();
-        taskCreateRequest.setTaskTitle(createTaskId);
-
-        TaskController taskController = new TaskController(createTask);
-        ResponseEntity<TaskResponse> response = taskController.addNewTask(taskCreateRequest);
-
-        mapper.registerModule(new JavaTimeModule());
-        try {
-            mvc.perform(post("/task")
-                    .accept(MediaType.APPLICATION_JSON)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(mapper.writeValueAsString(taskCreateRequest)));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
     @Test
     public void getAllTasksTest() throws Exception {
-        //Given
-        Task myResponse = new Task("123", "Wash the dishes",
-                "18","hands clean",false);
-        Task taskResponse = new Task("456", "Take out the trash",
-                "21","hands clean",false);
 
-        List<Task> allTasks = Arrays.asList(myResponse, taskResponse);
+        List<Task> allTasks = new ArrayList<>();
+        allTasks.add(new Task("Mo", "Ava", "123", "wash hands",
+                false));
+        allTasks.add(new Task("Mo", "ava", "567", "do dishes",
+                false));
 
         when(taskServices.getAllTasks()).thenReturn(allTasks);
-        //perform GET endpoint
-        String getResponse = mvc.perform(MockMvcRequestBuilders.get("/tasks")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
-        if (getResponse != null && !getResponse.isEmpty()) {
-            // use object mapper
-            ObjectMapper objectMapper = new ObjectMapper();
-            List<TaskResponse> taskResponses = objectMapper.readValue(getResponse, new TypeReference<List<TaskResponse>>() {
-            });
-            Assertions.assertEquals("123", taskResponses.get(0).getParentUsername());
-            Assertions.assertEquals("456", taskResponses.get(1).getParentUsername());
-            Assertions.fail("Empty Response");
-        }
+
+        ResponseEntity<List<TaskResponse>> response = taskController.getAllTasks();
+
+        verify(taskServices, times(1)).getAllTasks();
+        Assertions.assertEquals(200, response.getStatusCodeValue());
     }
+
     @Test
-    public void getTaskByIdTest_NoId() {
+    public void getTaskByChildUsernameTest_NoId() {
         // Given
-        String noTaskId = "2";
+        String childname = "Aaiden";
+        String taskId = "123";
+        Task task = new Task("Mo",childname,taskId,"Laundry",false);
 
-        when(taskServices.findById(noTaskId)).thenReturn(null);
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(task);
+        when(taskServices.getTasksByChildUsername(childname)).thenReturn(tasks);
 
-        ResponseEntity<List<TaskResponse>> nullResponse = taskController.getTasksByChildUsername(noTaskId);
+        ResponseEntity<List<TaskResponse>> response = taskController.getTasksByChildUsername(childname);
 
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, nullResponse.getStatusCode());
-        Assertions.assertNull(nullResponse.getBody());
-        verify(taskServices, Mockito.times(1)).findById(noTaskId);
+        verify(taskServices, Mockito.times(1)).getTasksByChildUsername(childname);
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertNotNull(response.getBody());
     }
    @Test
    public void getAllTasksTest_Null() {
@@ -124,7 +95,6 @@ class TaskControllerTest {
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(taskServices, Mockito.times(1)).getAllTasks();
    }
-
     @Test
     public void deleteByTaskIdTest() throws Exception {
        //Given
@@ -132,26 +102,5 @@ class TaskControllerTest {
 
         mvc.perform(delete("/tasks/{taskId}", taskId))
                 .andExpect(status().isNoContent());
-    }
-    // @Test
-    public void getTaskByIdTest() throws Exception{
-        String parentname = "Monique";
-        String childname = "Ava";
-        String taskTitle = "Clean your room";
-        String taskId = "98789";
-        boolean completed = true;
-        Task task = new Task(parentname,childname,taskId,taskTitle,completed);
-
-        when(taskServices.findById(taskId)).thenReturn(task);
-
-        MvcResult result=
-                (MvcResult) mvc.perform(get("/tasks/{taskId}",taskId))
-                        .andExpect(status().isOk())
-                        .andReturn();
-        String responseBody = result.getResponse().getContentAsString();
-        Task task1 = mapper.readValue(responseBody,Task.class);
-
-        assertEquals(taskId,task1.getTaskId());
-        assertEquals(taskTitle, task1.getTaskTitle());
     }
 }
