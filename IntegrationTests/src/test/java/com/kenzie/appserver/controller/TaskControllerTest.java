@@ -96,8 +96,8 @@ class TaskControllerTest {
             ObjectMapper objectMapper = new ObjectMapper();
             List<TaskResponse> taskResponses = objectMapper.readValue(getResponse, new TypeReference<List<TaskResponse>>() {
             });
-            Assertions.assertEquals("123", taskResponses.get(0).getTaskTitle());
-            Assertions.assertEquals("456", taskResponses.get(1).getTaskTitle());
+            Assertions.assertEquals("123", taskResponses.get(0).getParentUsername());
+            Assertions.assertEquals("456", taskResponses.get(1).getParentUsername());
             Assertions.fail("Empty Response");
         }
     }

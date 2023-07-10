@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TaDah - Child Task List</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 30px;
+    }
+    .tasklist-heading {
+      text-align: center;
+      color: black;
+      margin-bottom: 20px;
+    }
+    .task-table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    .task-table th, .task-table td {
+      color: black;
+      border: 1px solid black;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2 class="tasklist-heading">Child Task List</h2>
+
+  <table class="task-table">
+    <thead>
+    <tr>
+      <th>Task ID</th>
+      <th>Task Title</th>
+      <th>Parent Username</th>
+      <th>Completed</th>
+    </tr>
+    </thead>
+    <tbody id="task-table-body"></tbody>
+  </table>
+  <div id="response-container"></div>
+
+
+  <script src="childTaskList.js"></script>
+</div>
+</body>
+</html>

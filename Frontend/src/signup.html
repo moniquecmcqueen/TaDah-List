@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Signup</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<h2>User Signup</h2>
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#parent-tab" onclick="selectUserType('parent')">Parent</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#child-tab" onclick="selectUserType('child')">Child</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="parent-tab" class="tab-pane fade show active">
+            <form id="parent-login-form">
+                <div class="form-group">
+                    <label for="parent-username">Parent Username:</label>
+                    <input type="text" id="parent-username" name="parent-username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <button id="parent-login-button" type="submit" class="btn btn-primary">Parent Login</button>
+                </div>
+                <div id="signup-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="signup-parent-username">Parent Username:</label>
+                        <input type="text" id="signup-parent-username" name="signup-parent-username" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-child-username">Child Username:</label>
+                        <input type="text" id="signup-child-username" name="signup-child-username" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <button id="signup-confirm-button" type="button" class="btn btn-primary">Sign Up Confirm</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="child-tab" class="tab-pane fade">
+            <form id="child-login-form">
+                <div class="form-group">
+                    <label for="child-username">Child Username:</label>
+                    <input type="text" id="child-username" name="child-username" class="form-control">
+                </div>
+                <div class="form-group">
+                    <button id="child-login-button" type="submit" class="btn btn-primary">Child Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="response-container"></div>
+
+<script src="checkusername.js"></script>
+<script src="signup.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
