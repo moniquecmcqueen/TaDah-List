@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +29,6 @@ public class TaskServiceTest {
         taskService = new TaskService(taskRepository, parentService);
     }
 
-//    /**
-//     * ------------------------------------------------------------------------
-//     * exampleService.findById
-//     * ------------------------------------------------------------------------
-//     **/
-//
     @Test
     void findById() {
         // GIVEN
@@ -163,4 +157,21 @@ public class TaskServiceTest {
         verify(taskRepository1).save(taskRecordArgumentCaptor.capture());
 
     }
-}
+    @Test
+    void getTasksByChildusernameTest() {
+
+        String childname = "Ava";
+
+        List<TaskRecord> taskRecords = new ArrayList<>();
+
+        when(taskRepository.getTasksByChildUsername(childname)).thenReturn(taskRecords);
+
+        List<Task> tasks = taskService.getTasksByChildUsername(childname);
+
+
+        verify(taskRepository, times(1)).getTasksByChildUsername(childname);
+        Assertions.assertNotNull(tasks);
+        Assertions.assertEquals(0,tasks.size());
+    }
+    }
+
