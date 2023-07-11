@@ -190,11 +190,14 @@ function showModalPopup(title, content) {
     const modal = new bootstrap.Modal(document.getElementById('completionModal'));
     const modalTitle = document.getElementById('completionModalLabel');
     const modalContent = document.querySelector('#completionModal .modal-body');
-    const modalGif = document.getElementById('completion-gif');
+    const starImage = document.getElementById('star-image');
 
     modalTitle.textContent = title;
     modalContent.textContent = content;
-    modalGif.style.zIndex = '9999'; // Set a high z-index to bring the GIF to the foreground
+
+    // Clone the star image from the HTML and append it to the modal content
+    const clonedStarImage = starImage.cloneNode(true);
+    modalContent.appendChild(clonedStarImage);
 
     modal.show();
 }
@@ -240,7 +243,24 @@ function markTaskCompleteChild(taskId, isCompleted, childUsername, taskTitle, pa
                     isCompletedCell.textContent = updatedTask.isCompleted ? 'Complete' : 'Incomplete'; // Update the cell content
 
                     if (updatedTask.isCompleted) {
-                        showModalPopup('Task Completed!', 'TaDah, you completed a task! Good Job!');
+                        const completionModal = new bootstrap.Modal(document.getElementById('completionModal'));
+                        // Display the image
+                        const popupImage = document.createElement('img');
+                        popupImage.src = popupGif;
+                        popupImage.alt = 'Popup Image';
+                        popupImage.classList.add('popup-image');
+                        document.body.appendChild(popupImage);
+
+                        // Play the sound
+                        const audio = new Audio(tadahSound);
+                        audio.play();
+
+                        // Close the popup after a certain time (e.g., 3 seconds)
+                        setTimeout(() => {
+                            popupImage.remove();
+                        }, 5000);
+                        completionModal.show();
+                        setTimeout(() =>{completionModal.remove()}, 3000)
                     }
                 })
                 .catch(error => {

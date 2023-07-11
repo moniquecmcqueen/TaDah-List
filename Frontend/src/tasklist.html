@@ -56,19 +56,18 @@
       color: black;
       position: relative; /* Add this line to make the content container relative */
     }
-
     .modal-body {
       position: relative;
     }
 
-    .modal-body img# {
-      position: absolute; /* Change the position to absolute */
-      top: 50%; /* Position the GIF in the middle vertically */
-      left: 50%; /* Position the GIF in the middle horizontally */
-      transform: translate(-50%, -50%); /* Center the GIF */
+    .modal-body img#popup-image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       max-width: 100%;
-      filter: brightness(100%); /* Adjust the brightness as needed */
-      z-index: 9999; /* Ensure the GIF appears in the foreground */
+      filter: brightness(150%); /* Adjust the brightness as needed */
+      z-index: 9999;
     }
 
   </style>
@@ -121,7 +120,6 @@
         <div class="modal-body">
           <h5>Congratulations!</h5>
           <p>TaDah, you completed a task! Good Job!</p>
-          <img id="completion-gif" src="../src/assets/tadahPopup.gif">
         </div>
       </div>
     </div>
