@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="./css/style.css">
   <style>
+
     :root {
       /* CSS variables: https://developer.mozilla.org/en-US/docs/Web/CSS/var */
       --primary-color: #bd2020;
@@ -76,10 +77,48 @@
     .show-signup-fields .signup-fields {
       display: block;
     }
+    .stars-left,
+    .stars-right {
+      position: absolute;
+      top: 0;
+      width: 150px;
+      height: 100%;
+    }
+
+    .stars-left {
+      left: 0;
+    }
+
+    .stars-right {
+      right: 0;
+    }
+
+    .star {
+      position: absolute;
+      top: 10%;
+      right: 410%;
+      /* left: 310%; */
+      transform: translate(-50%, -50%);
+      width: 150px;
+      height: 150px;
+      background-image: url(assets/tadahPopup.gif);
+      background-size: cover;
+    }
+
+
+
   </style>
 </head>
 <body>
+<audio id="background-audio" src="assets/magic.mp3" autoplay loop></audio>
+
 <h2>TaDah</h2>
+<div class="stars-left">
+  <div class="star"></div>
+</div>
+<div class="stars-right">
+  <div class="star"></div>
+</div>
 <div class="container">
   <ul class="nav nav-tabs">
     <li class="nav-item">
@@ -134,5 +173,17 @@
 <div id="response-container"></div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const audio = document.getElementById('background-audio');
+
+    // Play audio after a user interaction event
+    document.addEventListener('click', () => {
+      audio.play();
+    });
+  });
+</script>
+
+
 </body>
 </html>

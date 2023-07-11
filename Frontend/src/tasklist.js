@@ -50,17 +50,6 @@ function displayQuoteOfTheDay() {
 displayQuoteOfTheDay();
 
 
-function showModalPopup(title, content) {
-    const modal = new bootstrap.Modal(document.getElementById('popup-modal'));
-    const modalTitle = document.getElementById('popup-modal-title');
-    const modalContent = document.getElementById('popup-modal-content');
-
-    modalTitle.textContent = title;
-    modalContent.textContent = content;
-
-    modal.show();
-}
-
 
 function fetchTasks() {
     fetch(`/tasks/${childUsername}`)
@@ -151,8 +140,8 @@ function renderTasks(tasks) {
             completeButton.classList.add('complete-button');
             completeButton.textContent = 'Complete';
             completeButton.addEventListener('click', () => {
-                updateTaskCompletionStatus(task.taskId, true, parentUsername, task.taskTitle);
-            });
+                updateTaskCompletionStatus(task.taskId, task.isCompleted,task.taskTitle);
+            })
             actionsCell.appendChild(completeButton);
 
             const deleteButton = document.createElement('button');
@@ -197,14 +186,23 @@ function renderTasks(tasks) {
         }
     }
 }
+function showModalPopup(title, content) {
+    const modal = new bootstrap.Modal(document.getElementById('completionModal'));
+    const modalTitle = document.getElementById('completionModalLabel');
+    const modalContent = document.querySelector('#completionModal .modal-body');
+    const starImage = document.getElementById('star-image');
+
+    modalTitle.textContent = title;
+    modalContent.textContent = content;
+
+    // Clone the star image from the HTML and append it to the modal content
+    const clonedStarImage = starImage.cloneNode(true);
+    modalContent.appendChild(clonedStarImage);
+
+    modal.show();
+}
 
 function markTaskCompleteChild(taskId, isCompleted, childUsername, taskTitle, parentUsername) {
-    console.log('isCompleted:', isCompleted);
-    console.log('taskId:', taskId);
-    console.log('childUsername:', childUsername);
-    console.log('taskTitle:', taskTitle);
-    console.log('parentUsername:', parentUsername);
-
     const tableBody = document.getElementById('child-table-body');
     const rows = tableBody.getElementsByTagName('tr');
 
@@ -217,9 +215,6 @@ function markTaskCompleteChild(taskId, isCompleted, childUsername, taskTitle, pa
             const currentStatus = isCompletedCell.textContent === 'Complete';
             const updatedStatus = !currentStatus;
 
-            console.log('currentStatus:', currentStatus);
-            console.log('updatedStatus:', updatedStatus);
-
             const taskUpdateRequest = {
                 taskId: taskId,
                 parentUsername: parentUsername,
@@ -227,8 +222,6 @@ function markTaskCompleteChild(taskId, isCompleted, childUsername, taskTitle, pa
                 isCompleted: updatedStatus,
                 taskTitle: taskTitle
             };
-
-            console.log('taskUpdateRequest:', taskUpdateRequest);
 
             // Perform the PUT request to update the task in the backend
             fetch(`/tasks`, {
@@ -249,29 +242,27 @@ function markTaskCompleteChild(taskId, isCompleted, childUsername, taskTitle, pa
                     console.log('Updated Task:', updatedTask);
                     isCompletedCell.textContent = updatedTask.isCompleted ? 'Complete' : 'Incomplete'; // Update the cell content
 
+                    if (updatedTask.isCompleted) {
+                        const completionModal = new bootstrap.Modal(document.getElementById('completionModal'));
+                        // Display the image
+                        const popupImage = document.createElement('img');
+                        popupImage.src = popupGif;
+                        popupImage.alt = 'Popup Image';
+                        popupImage.classList.add('popup-image');
+                        document.body.appendChild(popupImage);
 
-                    const completionModal = new bootstrap.Modal(document.getElementById('completionModal'));
-                    // Display the image
-                    const popupImage = document.createElement('img');
-                    popupImage.src = popupGif;
-                    popupImage.alt = 'Popup Image';
-                    popupImage.classList.add('popup-image');
-                    document.body.appendChild(popupImage);
+                        // Play the sound
+                        const audio = new Audio(tadahSound);
+                        audio.play();
 
-                    // Play the sound
-                    const audio = new Audio(tadahSound);
-                    audio.play();
+                        // Close the popup after a certain time (e.g., 3 seconds)
+                        setTimeout(() => {
+                            popupImage.remove();
+                        }, 5000);
 
-                    // Close the popup after a certain time (e.g., 3 seconds)
-                    setTimeout(() => {
-                        popupImage.remove();
-                    }, 3000);
-                    completionModal.show();
-                }
-
-
-                )
-
+                        completionModal.show();
+                    }
+                })
                 .catch(error => {
                     console.error(error);
                 });
@@ -282,6 +273,7 @@ function markTaskCompleteChild(taskId, isCompleted, childUsername, taskTitle, pa
 }
 
 
+
 function updateTaskCompletionStatus(taskId, isCompleted, taskTitle) {
     const tableBody = document.getElementById('task-table-body');
     const rows = tableBody.getElementsByTagName('tr');
@@ -290,13 +282,11 @@ function updateTaskCompletionStatus(taskId, isCompleted, taskTitle) {
         const taskIdCell = row.querySelector('td:nth-child(1)'); // Assuming taskId is in the 1st column
 
         if (taskIdCell.textContent === taskId) {
+            const taskTitleCell = row.querySelector('td:nth-child(2)'); // Assuming taskTitle is in the 2nd column
             const isCompletedCell = row.querySelector('td:nth-child(5)'); // Assuming isCompleted is in the 5th column
 
             const currentStatus = isCompletedCell.textContent === 'Complete';
             const updatedStatus = !currentStatus;
-
-            console.log('currentStatus:', currentStatus);
-            console.log('updatedStatus:', updatedStatus);
 
             const taskUpdateRequest = {
                 taskId: taskId,
@@ -306,9 +296,6 @@ function updateTaskCompletionStatus(taskId, isCompleted, taskTitle) {
                 taskTitle: taskTitle
             };
 
-            console.log('taskUpdateRequest:', taskUpdateRequest);
-
-            // Perform the PUT request to update the task in the backend
             fetch(`/tasks`, {
                 method: 'PUT',
                 headers: {
@@ -320,12 +307,16 @@ function updateTaskCompletionStatus(taskId, isCompleted, taskTitle) {
                     if (response.ok) {
                         return response.json();
                     } else {
-                        throw new Error('An error occurred while updating the task.');
+                        throw new Error('An error occurred while updating the task completion status.');
                     }
                 })
                 .then(updatedTask => {
                     console.log('Updated Task:', updatedTask);
                     isCompletedCell.textContent = updatedTask.isCompleted ? 'Complete' : 'Incomplete'; // Update the cell content
+
+                    if (updatedTask.isCompleted) {
+                        showModalPopup('Task Completed!', `Congratulations, you have completed the task: "${taskTitleCell.textContent}"`);
+                    }
                 })
                 .catch(error => {
                     console.error(error);

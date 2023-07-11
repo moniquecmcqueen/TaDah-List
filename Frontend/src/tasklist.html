@@ -16,6 +16,7 @@
       font-family: cursive;
       color: var(--secondary-color);
     }
+
     .container {
       display: flex;
       flex-direction: row;
@@ -25,28 +26,48 @@
       align-items: baseline;
       margin-top: 30px;
     }
+
     #tasklist-heading {
       text-align: center;
       color: white;
     }
+
     #task-input {
       margin-bottom: 10px;
     }
+
     #add-task-button {
       margin-bottom: 20px;
     }
+
     table {
       border-collapse: collapse;
       width: 100%;
       background-color: #FFEB3B;
     }
+
     th, td {
       color: black;
       border: 1px solid black;
       padding: 8px;
     }
+
     .modal-content {
       color: black;
+      position: relative; /* Add this line to make the content container relative */
+    }
+    .modal-body {
+      position: relative;
+    }
+
+    .modal-body img#popup-image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 100%;
+      filter: brightness(150%); /* Adjust the brightness as needed */
+      z-index: 9999;
     }
 
   </style>
@@ -88,21 +109,21 @@
 
 
   <!-- Modal -->
+  <!-- Modal -->
   <div class="modal fade" id="completionModal" tabindex="-1" aria-labelledby="completionModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="completionModalLabel">Task Completed!</h5>
+          <h5 class="modal-title" id="completionModalLabel">TaDah!!!</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <h5>Congratulations!</h5>
-          <p>You have completed the task successfully.</p>
-          <p>Stay motivated and keep up the good work!</p>
+          <p>Congratulations, you completed a task! Good Job!</p>
         </div>
       </div>
     </div>
   </div>
+
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

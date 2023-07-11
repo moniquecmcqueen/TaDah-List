@@ -50,8 +50,12 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: 'src/css',
+          from: path.resolve(__dirname, 'src/css'),
           to: 'css'
+        },
+        {
+          from: path.resolve(__dirname, 'src/assets'), // Update the source directory to 'src/assets'
+          to: 'assets'   // Update the output directory to 'assets'
         }
       ]
     }),
