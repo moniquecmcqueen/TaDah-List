@@ -5,9 +5,13 @@
     "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
-    "html-loader": "^4.2.0"
+    "file-loader": "^6.2.0",
+    "html-loader": "^4.2.0",
+    "url-loader": "^4.1.1"
   },
   "dependencies": {
-    "ignore-loader": "^0.1.2"
+    "bootstrap": "^5.3.0",
+    "ignore-loader": "^0.1.2",
+    "jquery": "^3.7.0"
   }
 }

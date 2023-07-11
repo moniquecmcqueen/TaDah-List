@@ -11,9 +11,14 @@
       --secondary-color: #fff;
       --error-color: rgba(194, 0, 0, 0.71);
     }
+    .btn-primary {
+      color: #000;
+      background-color: #f2b4c0;
+      border-color: black;
+    }
 
     body {
-      background-color: var(--primary-color);
+      background-color: #f2b4c0;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -22,7 +27,7 @@
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      color: var(--secondary-color);
+      color: black;
     }
 
     .container {
@@ -96,6 +101,8 @@
       <div class="form-group">
         <button id="parent-login-button" class="btn btn-primary">Parent Login</button>
       </div>
+      <p id="child-selection-text" style="display: none;">Please choose the child you want to edit:</p>
+
       <div id="child-button-container" class="button"></div>
     </div>
     <div id="child-tab" class="tab-pane fade">

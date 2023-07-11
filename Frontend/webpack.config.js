@@ -10,8 +10,7 @@ module.exports = {
   entry: {
     '01_checkusername': './src/checkusername.js',
     '02_tasklist': './src/tasklist.js',
-    '03_signup': './src/signup.js',
-    '04_childtasklist': './src/childtasklist.js'
+    '03_signup': './src/signup.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -26,12 +25,27 @@ module.exports = {
     //   '/example': 'http://localhost:5001'
     // }
   },
+  module: {
+    rules: [
+      {
+        test: /\.(gif|mp3)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'assets'
+            }
+          }
+        ]
+      }
+    ]
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html',
       inject: true // Set inject to true for script injection
-
     }),
     new CopyPlugin({
       patterns: [
@@ -46,26 +60,11 @@ module.exports = {
       filename: 'tasklist.html',
       inject: true // Set inject to true for script injection
     }),
-
     new HtmlWebpackPlugin({
       template: './src/signup.html',
       filename: 'signup.html',
       inject: true // Set inject to true for script injection
     }),
-    new HtmlWebpackPlugin({
-      template: './src/childTaskList.html',
-      filename: 'childTaskList.html',
-      inject: true // Set inject to true for script injection
-    }),
-
-
-    //       // from: path.resolve('src/css'),
-    //       // to: path.resolve("dist/css")
-    //     }
-    //   ]
-    //
-    // }),
-
     new CleanWebpackPlugin()
   ]
 };
