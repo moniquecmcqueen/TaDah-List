@@ -50,17 +50,6 @@ function displayQuoteOfTheDay() {
 displayQuoteOfTheDay();
 
 
-function showModalPopup(title, content) {
-    const modal = new bootstrap.Modal(document.getElementById('popup-modal'));
-    const modalTitle = document.getElementById('popup-modal-title');
-    const modalContent = document.getElementById('popup-modal-content');
-
-    modalTitle.textContent = title;
-    modalContent.textContent = content;
-
-    modal.show();
-}
-
 
 function fetchTasks() {
     fetch(`/tasks/${childUsername}`)
@@ -197,14 +186,20 @@ function renderTasks(tasks) {
         }
     }
 }
+function showModalPopup(title, content) {
+    const modal = new bootstrap.Modal(document.getElementById('completionModal'));
+    const modalTitle = document.getElementById('completionModalLabel');
+    const modalContent = document.querySelector('#completionModal .modal-body');
+    const modalGif = document.getElementById('completion-gif');
+
+    modalTitle.textContent = title;
+    modalContent.textContent = content;
+    modalGif.style.zIndex = '9999'; // Set a high z-index to bring the GIF to the foreground
+
+    modal.show();
+}
 
 function markTaskCompleteChild(taskId, isCompleted, childUsername, taskTitle, parentUsername) {
-    console.log('isCompleted:', isCompleted);
-    console.log('taskId:', taskId);
-    console.log('childUsername:', childUsername);
-    console.log('taskTitle:', taskTitle);
-    console.log('parentUsername:', parentUsername);
-
     const tableBody = document.getElementById('child-table-body');
     const rows = tableBody.getElementsByTagName('tr');
 
@@ -217,9 +212,6 @@ function markTaskCompleteChild(taskId, isCompleted, childUsername, taskTitle, pa
             const currentStatus = isCompletedCell.textContent === 'Complete';
             const updatedStatus = !currentStatus;
 
-            console.log('currentStatus:', currentStatus);
-            console.log('updatedStatus:', updatedStatus);
-
             const taskUpdateRequest = {
                 taskId: taskId,
                 parentUsername: parentUsername,
@@ -227,8 +219,6 @@ function markTaskCompleteChild(taskId, isCompleted, childUsername, taskTitle, pa
                 isCompleted: updatedStatus,
                 taskTitle: taskTitle
             };
-
-            console.log('taskUpdateRequest:', taskUpdateRequest);
 
             // Perform the PUT request to update the task in the backend
             fetch(`/tasks`, {
@@ -249,29 +239,10 @@ function markTaskCompleteChild(taskId, isCompleted, childUsername, taskTitle, pa
                     console.log('Updated Task:', updatedTask);
                     isCompletedCell.textContent = updatedTask.isCompleted ? 'Complete' : 'Incomplete'; // Update the cell content
 
-
-                    const completionModal = new bootstrap.Modal(document.getElementById('completionModal'));
-                    // Display the image
-                    const popupImage = document.createElement('img');
-                    popupImage.src = popupGif;
-                    popupImage.alt = 'Popup Image';
-                    popupImage.classList.add('popup-image');
-                    document.body.appendChild(popupImage);
-
-                    // Play the sound
-                    const audio = new Audio(tadahSound);
-                    audio.play();
-
-                    // Close the popup after a certain time (e.g., 3 seconds)
-                    setTimeout(() => {
-                        popupImage.remove();
-                    }, 3000);
-                    completionModal.show();
-                }
-
-
-                )
-
+                    if (updatedTask.isCompleted) {
+                        showModalPopup('Task Completed!', 'TaDah, you completed a task! Good Job!');
+                    }
+                })
                 .catch(error => {
                     console.error(error);
                 });
@@ -280,6 +251,7 @@ function markTaskCompleteChild(taskId, isCompleted, childUsername, taskTitle, pa
         }
     }
 }
+
 
 
 function updateTaskCompletionStatus(taskId, isCompleted, taskTitle) {
