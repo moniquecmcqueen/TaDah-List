@@ -140,8 +140,8 @@ function renderTasks(tasks) {
             completeButton.classList.add('complete-button');
             completeButton.textContent = 'Complete';
             completeButton.addEventListener('click', () => {
-                updateTaskCompletionStatus(task.taskId, true, parentUsername, task.taskTitle);
-            });
+                updateTaskCompletionStatus(task.taskId, task.isCompleted,task.taskTitle);
+            })
             actionsCell.appendChild(completeButton);
 
             const deleteButton = document.createElement('button');
@@ -259,8 +259,8 @@ function markTaskCompleteChild(taskId, isCompleted, childUsername, taskTitle, pa
                         setTimeout(() => {
                             popupImage.remove();
                         }, 5000);
+
                         completionModal.show();
-                        setTimeout(() =>{completionModal.remove()}, 3000)
                     }
                 })
                 .catch(error => {
@@ -282,13 +282,11 @@ function updateTaskCompletionStatus(taskId, isCompleted, taskTitle) {
         const taskIdCell = row.querySelector('td:nth-child(1)'); // Assuming taskId is in the 1st column
 
         if (taskIdCell.textContent === taskId) {
+            const taskTitleCell = row.querySelector('td:nth-child(2)'); // Assuming taskTitle is in the 2nd column
             const isCompletedCell = row.querySelector('td:nth-child(5)'); // Assuming isCompleted is in the 5th column
 
             const currentStatus = isCompletedCell.textContent === 'Complete';
             const updatedStatus = !currentStatus;
-
-            console.log('currentStatus:', currentStatus);
-            console.log('updatedStatus:', updatedStatus);
 
             const taskUpdateRequest = {
                 taskId: taskId,
@@ -298,9 +296,6 @@ function updateTaskCompletionStatus(taskId, isCompleted, taskTitle) {
                 taskTitle: taskTitle
             };
 
-            console.log('taskUpdateRequest:', taskUpdateRequest);
-
-            // Perform the PUT request to update the task in the backend
             fetch(`/tasks`, {
                 method: 'PUT',
                 headers: {
@@ -312,12 +307,16 @@ function updateTaskCompletionStatus(taskId, isCompleted, taskTitle) {
                     if (response.ok) {
                         return response.json();
                     } else {
-                        throw new Error('An error occurred while updating the task.');
+                        throw new Error('An error occurred while updating the task completion status.');
                     }
                 })
                 .then(updatedTask => {
                     console.log('Updated Task:', updatedTask);
                     isCompletedCell.textContent = updatedTask.isCompleted ? 'Complete' : 'Incomplete'; // Update the cell content
+
+                    if (updatedTask.isCompleted) {
+                        showModalPopup('Task Completed!', `Congratulations, you have completed the task: "${taskTitleCell.textContent}"`);
+                    }
                 })
                 .catch(error => {
                     console.error(error);
