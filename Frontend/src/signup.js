@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to select the user type
 
     // Function to handle signup
+
+
     function handleSignup() {
         const parentUsername = document.getElementById('signup-parent-username').value;
         const childUsername = document.getElementById('signup-child-username').value;

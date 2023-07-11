@@ -1,6 +1,19 @@
+
 let PARENT_PARENT_USERNAME_URL = '/parents/parent/';
 let CHILD_USERNAME_URL = '/parents/child/';
 let PARENT_USERNAME_URL = '/parents';
+
+function addLogMessage(message, logContainerId) {
+    const logContainer = document.getElementById(logContainerId);
+    if (logContainer) {
+        const logMessage = document.createElement('p');
+        logMessage.textContent = message;
+        logContainer.appendChild(logMessage);
+    } else {
+        console.error('Log container not found:', logContainerId);
+    }
+}
+
 
 
 // Function to check if parent username exists
@@ -24,8 +37,6 @@ function checkParentUsername(parentUsername) {
         })
         .then(data => {
             const childUsername = data.childUsername; // Access childUsername value from the response
-            const responseContainer = document.getElementById('response-container');
-            responseContainer.textContent = ''; // Clear the response container
 
             const childButtonContainer = document.getElementById('child-button-container');
             childButtonContainer.textContent = '';
@@ -33,33 +44,28 @@ function checkParentUsername(parentUsername) {
             const childSelectionText = document.getElementById('child-selection-text');
             if (childUsername) {
                 childSelectionText.style.display = 'block'; // Show the child selection text
-                const button = document.createElement('button');
-                button.textContent = childUsername;
-                button.addEventListener('click', () => {
+                const childButton = document.createElement('button');
+                childButton.textContent = childUsername;
+                childButton.addEventListener('click', () => {
                     // Handle button click event
                     handleChildUsernameSelection(parentUsername, childUsername);
                 });
 
-                childButtonContainer.appendChild(button);
+                childButtonContainer.appendChild(childButton);
             } else {
                 childSelectionText.style.display = 'none'; // Hide the child selection text
             }
 
-            const parentButtonContainer = document.querySelector('#parent-login-button').parentElement;
-            parentButtonContainer.appendChild(createAccountButton);
-
-            // Perform child login logic or redirect to another page
-            if (childUsername) {
-                // Only redirect when the child button is clicked
-                button.addEventListener('click', () => {
-                    window.location.href = `tasklist.html?parentUsername=${parentUsername}&childUsername=${childUsername}`;
-                });
-            }
+            const parentLoginForm = document.getElementById('parent-login-form');
+            parentLoginForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent form submission
+                window.location.href = `tasklist.html?parentUsername=${parentUsername}&childUsername=${childUsername}`;
+            });
         })
         .catch(error => {
-            const responseContainer = document.getElementById('response-container');
-            console.log(responseContainer);
+            console.log(error);
             // Clear the input field or perform any other desired action
+            addLogMessage(error, 'log-container-parent');
         });
 }
 
@@ -87,6 +93,8 @@ function checkChildUsername(childUsername) {
         .catch(error => {
             const responseContainer = document.getElementById('response-container');
             responseContainer.textContent = error.message;
+            addLogMessage(error, 'log-container-child');
+
             // Clear the input field or perform any other desired action
         });
 }
@@ -139,9 +147,31 @@ function createAccount() {
         })
         .catch(error => {
             console.error(error);
+            addLogMessage(error, 'log-container-signup');
+
             // Handle the error
         });
 }
+function selectUserType(userType) {
+    const parentTab = document.getElementById('parent-tab');
+    const childTab = document.getElementById('child-tab');
+    const signupTab = document.getElementById('signup-tab');
+
+    // Hide all tabs
+    parentTab.classList.remove('show', 'active');
+    childTab.classList.remove('show', 'active');
+    signupTab.classList.remove('show', 'active');
+
+    // Show the selected tab
+    if (userType === 'parent') {
+        parentTab.classList.add('show', 'active');
+    } else if (userType === 'child') {
+        childTab.classList.add('show', 'active');
+    } else if (userType === 'signup') {
+        signupTab.classList.add('show', 'active');
+    }
+}
+
 
 document.getElementById('parent-login-button').addEventListener('click', handleParentLogin);
 document.getElementById('child-login-button').addEventListener('click', () => {
