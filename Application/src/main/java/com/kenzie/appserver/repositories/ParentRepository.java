@@ -17,4 +17,5 @@ public interface ParentRepository extends CrudRepository<ParentRecord, String> {
 //    List<ParentRecord> findAll(String parentUsername);
     ParentRecord findByParentUsername(String parentUsername);
 
+    ParentRecord findByChildUsername(String childUsername);
 }

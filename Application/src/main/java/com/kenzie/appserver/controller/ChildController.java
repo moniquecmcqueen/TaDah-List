@@ -26,17 +26,6 @@ public class ChildController {
 
 
 
-    public ResponseEntity<ChildUserLoginResponse> getChildByUsername(@PathVariable("childUsername") String childUsername) {
-        Child child = childService.findByChildUsername(childUsername);
-        // If there are no tasks, then return a 204
-        if (child == null) {
-            return ResponseEntity.notFound().build();
-        }
-        // Otherwise, convert it into a prentResponses and return it
-        ChildUserLoginResponse childUserLoginResponse = createChildResponse(child);
-        return ResponseEntity.ok(childUserLoginResponse);
-    }
-
     private ChildUserLoginResponse createChildResponse(Child child) {
         ChildUserLoginResponse childUserLoginResponse = new ChildUserLoginResponse();
         childUserLoginResponse.setChildUsername(child.getChildUsername());

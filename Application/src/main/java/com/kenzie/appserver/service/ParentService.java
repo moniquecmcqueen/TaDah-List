@@ -4,6 +4,7 @@ package com.kenzie.appserver.service;
 import com.kenzie.appserver.controller.model.ParentCreateLoginRequest;
 import com.kenzie.appserver.repositories.ParentRepository;
 import com.kenzie.appserver.repositories.model.ParentRecord;
+import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,15 @@ public class ParentService {
         ParentRecord record = parentRepository.findByParentUsername(parentUsername);
         if (record != null) {
             return new Parent(record.getParentUsername(), record.getChildUsername());
+        }
+        return null;
+    }
+
+    public Child findByChildUsername(String childUsername) {
+
+        ParentRecord record = parentRepository.findByChildUsername(childUsername);
+        if (record != null) {
+            return new Child(record.getChildUsernameIndex(),record.getParentUsername());
         }
         return null;
     }

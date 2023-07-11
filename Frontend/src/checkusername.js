@@ -1,5 +1,8 @@
-let PARENT_USERNAME_URL = '/parents/';
-const childUsername =document.getElementById('child-username').value;
+let PARENT_PARENT_USERNAME_URL = '/parents/parent/';
+let CHILD_USERNAME_URL = '/parents/child/';
+let PARENT_USERNAME_URL = '/parents';
+
+
 // Function to check if parent username exists
 function handleChildUsernameSelection(parentUsername, childUsername) {
     // Redirect to tasklist.html with the parentUsername and childUsername in the URL
@@ -9,7 +12,7 @@ function handleChildUsernameSelection(parentUsername, childUsername) {
 // Function to check if parent username exists
 function checkParentUsername(parentUsername) {
     // Make fetch request to check if parent username exists
-    fetch(PARENT_USERNAME_URL + parentUsername)
+    fetch(PARENT_PARENT_USERNAME_URL + parentUsername)
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -27,7 +30,9 @@ function checkParentUsername(parentUsername) {
             const childButtonContainer = document.getElementById('child-button-container');
             childButtonContainer.textContent = '';
 
+            const childSelectionText = document.getElementById('child-selection-text');
             if (childUsername) {
+                childSelectionText.style.display = 'block'; // Show the child selection text
                 const button = document.createElement('button');
                 button.textContent = childUsername;
                 button.addEventListener('click', () => {
@@ -36,6 +41,8 @@ function checkParentUsername(parentUsername) {
                 });
 
                 childButtonContainer.appendChild(button);
+            } else {
+                childSelectionText.style.display = 'none'; // Hide the child selection text
             }
 
             const parentButtonContainer = document.querySelector('#parent-login-button').parentElement;
@@ -56,32 +63,40 @@ function checkParentUsername(parentUsername) {
         });
 }
 
-function checkChildUsername() {
-    // Make fetch request to retrieve tasks based on child username
-    const childUsername =document.getElementById('child-username').value;
-
-    fetch(`/tasks/${(childUsername)}`)
+function checkChildUsername(childUsername) {
+    // Make fetch request to check if child username exists
+    fetch(CHILD_USERNAME_URL + childUsername)
         .then(response => {
             if (response.ok) {
                 return response.json();
-            } else if (response.status === 204) {
-                throw new Error('No tasks found for the specified child username.');
+            } else if (response.status === 404) {
+                throw new Error('Child username does not exist! Please try again.');
             } else {
-                throw new Error('An error occurred while retrieving tasks. Please try again later.');
+                throw new Error('An error occurred while checking the child username. Please try again later.');
             }
         })
         .then(data => {
-            // Handle the tasks data as needed
-            console.log(data);
+            const childUsername = data.childUsername; // Access childUsername value from the response
 
-            // Redirect to tasklist.html with the childUsername in the URL
-            window.location.href = `childTaskList.html?childUsername=${(childUsername)}`;
+            // Perform child login logic or redirect to another page
+            if (childUsername) {
+                const tasklistUrl2 = `tasklist.html?childUsername=${childUsername}`;
+                window.location.href = tasklistUrl2;
+            }
         })
         .catch(error => {
             const responseContainer = document.getElementById('response-container');
-            console.log(responseContainer);
+            responseContainer.textContent = error.message;
             // Clear the input field or perform any other desired action
         });
+}
+
+// Function to handle child login
+function handleChildLogin() {
+    const childUsernameInput = document.getElementById('child-username');
+    const childUsername = childUsernameInput.value;
+    console.log('Child Username:', childUsername);
+    checkChildUsername(childUsername);
 }
 
 
@@ -94,11 +109,6 @@ function handleParentLogin() {
 }
 
 // Function to handle create account button
-function handleCreateAccount(parentUsername) {
-    // Redirect to create account page with the parentUsername in the URL
-    window.location.href = `signup.html`;
-}
-
 function createAccount() {
     const parentUsername = document.getElementById('new-parent-account-input').value;
     const childUsername = document.getElementById('new-child-account-input').value;
@@ -111,9 +121,9 @@ function createAccount() {
         childUsername: childUsername
     };
 
-    // Create a PUT request to the parents/ endpoint
+    // Create a POST request to the parents/ endpoint
     fetch(PARENT_USERNAME_URL, {
-        method: 'PUT',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -134,5 +144,10 @@ function createAccount() {
 }
 
 document.getElementById('parent-login-button').addEventListener('click', handleParentLogin);
-document.getElementById('child-login-button').addEventListener('click', checkChildUsername);
+document.getElementById('child-login-button').addEventListener('click', () => {
+    const childUsername = document.getElementById('child-username').value;
+    console.log('Child Username:', childUsername);
+    checkChildUsername(childUsername);
+});
+
 document.getElementById('signup-create-account-button').addEventListener('click', createAccount);

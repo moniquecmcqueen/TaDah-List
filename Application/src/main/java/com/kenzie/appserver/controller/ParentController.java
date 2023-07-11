@@ -1,10 +1,12 @@
 package com.kenzie.appserver.controller;
 
+import com.kenzie.appserver.controller.model.ChildUserLoginResponse;
 import com.kenzie.appserver.controller.model.ParentCreateLoginRequest;
 import com.kenzie.appserver.controller.model.ParentCreateLoginResponse;
 import com.kenzie.appserver.controller.model.ParentUserLoginResponse;
 import com.kenzie.appserver.service.ChildService;
 import com.kenzie.appserver.service.ParentService;
+import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,8 +49,7 @@ public class ParentController {
         //return (ResponseEntity<ParentCreateLoginResponse>) ResponseEntity.ok();
     }
 
-    @GetMapping("/{parentUsername}")
-
+    @GetMapping("/parent/{parentUsername}")
         public ResponseEntity<ParentCreateLoginResponse> getParentByUsername(@PathVariable("parentUsername") String parentUsername) {
             Parent parent = parentService.findByParentUsername(parentUsername);
             // If there are no tasks, then return a 204
@@ -58,6 +59,26 @@ public class ParentController {
             // Otherwise, convert it into a prentResponses and return it
         ParentCreateLoginResponse parentCreateLoginResponse = createParentResponse(parent);
           return ResponseEntity.ok(parentCreateLoginResponse);
+    }
+
+    @GetMapping("/child/{childUsername}")
+    public ResponseEntity<ChildUserLoginResponse> getChildByUsername(@PathVariable("childUsername") String childUsername) {
+        Child child = parentService.findByChildUsername(childUsername);
+        // If there are no tasks, then return a 204
+        if (child == null) {
+            return ResponseEntity.notFound().build();
+        }
+        // Otherwise, convert it into a prentResponses and return it
+        ChildUserLoginResponse childUserLoginResponse = createChildResponse(child);
+        return ResponseEntity.ok(childUserLoginResponse);
+    }
+
+    private ChildUserLoginResponse createChildResponse(Child child) {
+        ChildUserLoginResponse childUserLoginResponse = new ChildUserLoginResponse();
+        childUserLoginResponse.setChildUsername(child.getChildUsername());
+        childUserLoginResponse.setParentUsername(child.getParentUsername());
+
+        return childUserLoginResponse;
     }
 
 
