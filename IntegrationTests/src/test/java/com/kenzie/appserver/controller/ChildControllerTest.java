@@ -1,8 +1,5 @@
 package com.kenzie.appserver.controller;
 
-
-
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.appserver.IntegrationTest;
 import com.kenzie.appserver.controller.model.ChildUserLoginRequest;
@@ -34,9 +31,7 @@ import static org.mockito.Mockito.*;
         @InjectMocks
         private ChildController childController;
 
-
         private final MockNeat mockNeat = MockNeat.threadLocal();
-
         private final ObjectMapper mapper = new ObjectMapper();
 
 

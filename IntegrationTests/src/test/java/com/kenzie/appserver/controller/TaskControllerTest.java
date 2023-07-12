@@ -1,9 +1,6 @@
 package com.kenzie.appserver.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.kenzie.appserver.IntegrationTest;
-
 import com.kenzie.appserver.controller.model.TaskResponse;
 import com.kenzie.appserver.service.TaskService;
 import com.fasterxml.jackson.databind.ObjectMapper;

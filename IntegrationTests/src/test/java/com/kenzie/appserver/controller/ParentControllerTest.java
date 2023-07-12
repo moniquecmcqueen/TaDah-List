@@ -19,13 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import static java.util.UUID.randomUUID;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @IntegrationTest
@@ -35,30 +31,30 @@ class ParentControllerTest {
         private MockMvc mvc;
         @Autowired
         ParentService parentService;
-
+        @Mock
+        private ParentService parentServices;
         @InjectMocks
         private ParentController parentController;
         private final MockNeat mockNeat = MockNeat.threadLocal();
         private final ObjectMapper mapper = new ObjectMapper();
-
 
         @Test
         public void getParentBynameTest_Null() throws Exception {
                 //Given
                 String parentnameNull = "NoRealId";
 
-                mvc.perform(MockMvcRequestBuilders.get("/parents/{parentusername}", parentnameNull))
+                mvc.perform(MockMvcRequestBuilders.get("/parent/{parentusername}", parentnameNull))
                         .andExpect(status().isNotFound());
         }
         @Test
         public void deleteParentTest() {
                 //Given
                 String parentname = "12345";
-
                 ResponseEntity<Void> response = parentController.deleteParent(parentname);
                 // verify
                 Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
                 Assertions.assertNull(response.getBody());
-
+                verify(parentServices, Mockito.times(1)).deleteParent(parentname);
         }
 }
+
