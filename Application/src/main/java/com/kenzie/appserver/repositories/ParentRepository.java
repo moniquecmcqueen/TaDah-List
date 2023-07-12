@@ -13,6 +13,8 @@ import java.util.Optional;
 
 @EnableScan
 public interface ParentRepository extends CrudRepository<ParentRecord, String> {
+    Optional<ParentRecord> findById(String taskId);
+  //  Child addChild(Child child);
 
 //    List<ParentRecord> findAll(String parentUsername);
     ParentRecord findByParentUsername(String parentUsername);

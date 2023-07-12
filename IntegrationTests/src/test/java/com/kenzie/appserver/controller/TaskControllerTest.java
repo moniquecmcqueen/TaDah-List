@@ -103,4 +103,5 @@ class TaskControllerTest {
         mvc.perform(delete("/tasks/{taskId}", taskId))
                 .andExpect(status().isNoContent());
     }
+
 }
