@@ -5,6 +5,8 @@ import com.kenzie.appserver.repositories.ChildRepository;
 import com.kenzie.appserver.repositories.ParentRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.repositories.model.ParentRecord;
+
+import com.kenzie.appserver.service.model.Child;
 import com.kenzie.appserver.service.model.Parent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -88,5 +90,32 @@ public class ParentServiceTest {
         verify(parentRepository,times(2)).findByParentUsername("no parent name");
 
           Assertions.assertNull(nullName);
+    }
+@Test
+void findChildByUsernameTest() {
+
+    String name = "Alex";
+
+    ParentRecord childRecord = new ParentRecord();
+    childRecord.setChildUsername(name);
+
+    when(parentRepository.findByChildUsername(name)).thenReturn(childRecord);
+
+    Child myResult = parentService.findByChildUsername(name);
+
+    verify(parentRepository,times(1)).findByChildUsername(name);
+
+    Assertions.assertNotNull(myResult);
+}
+    @Test
+    void findChildByUsername_Null() {
+
+        String childname = "Leah";
+        
+        when(parentRepository.findByChildUsername(childname)).thenReturn(null);
+
+        Child noChild = parentService.findByChildUsername(childname);
+
+        Assertions.assertNull(noChild);
     }
 }
