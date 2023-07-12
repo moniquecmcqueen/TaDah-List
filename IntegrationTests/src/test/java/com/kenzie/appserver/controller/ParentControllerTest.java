@@ -19,13 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import static java.util.UUID.randomUUID;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @IntegrationTest
@@ -33,70 +29,32 @@ class ParentControllerTest {
 
         @Autowired
         private MockMvc mvc;
-
         @Autowired
         ParentService parentService;
-
         @Mock
         private ParentService parentServices;
         @InjectMocks
         private ParentController parentController;
-
-
         private final MockNeat mockNeat = MockNeat.threadLocal();
-
         private final ObjectMapper mapper = new ObjectMapper();
 
-
-    //    @Test
-        public void addAparentTest() {
-                ParentService myNewParent = mock(ParentService.class);
-                String parentname = "Mom";
-
-                // fake request
-                ParentCreateLoginRequest myRequest = new ParentCreateLoginRequest();
-                myRequest.setParentUsername(parentname);
-                //task object
-
-                Parent parent = new Parent(myRequest.getParentUsername(),myRequest.getChildUsername());
-                when(myNewParent.findByParentUsername(String.valueOf(any(Parent.class)))).thenReturn(parent);
-
-                ParentController parentController = new ParentController();
-                ResponseEntity<ParentCreateLoginResponse> response = parentController.createParent(myRequest);
-
-                assertEquals(HttpStatus.CREATED, response.getStatusCode());
-
-        }
         @Test
         public void getParentBynameTest_Null() throws Exception {
                 //Given
                 String parentnameNull = "NoRealId";
 
-            //    when(parentServices.findById(parentIdNull)).thenReturn(null);
-
-
-                mvc.perform(MockMvcRequestBuilders.get("/parents/{parentusername}", parentnameNull))
+                mvc.perform(MockMvcRequestBuilders.get("/parent/{parentusername}", parentnameNull))
                         .andExpect(status().isNotFound());
         }
         @Test
         public void deleteParentTest() {
                 //Given
                 String parentname = "12345";
-
                 ResponseEntity<Void> response = parentController.deleteParent(parentname);
-
                 // verify
                 Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
                 Assertions.assertNull(response.getBody());
                 verify(parentServices, Mockito.times(1)).deleteParent(parentname);
-
-        }
-    //    @Test
-    public void deleteParentByUsernameTest() throws Exception {
-            String parentname = "monique";
-
-            mvc.perform(delete("/parents/{parentusername}",parentname))
-                    .andExpect(status().isNoContent())
-                    .andExpect(content().string(""));
         }
 }
+
